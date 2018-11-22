@@ -15,7 +15,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (other.gameObject.layer == 15/*EnemyHit*/&&other.gameObject.tag!="SearchTrigger")
         {
-            controller.Damgae();
+            controller.Damage();
         }
     }
     

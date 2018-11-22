@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class JudgeBiggerBoxCollider: MonoBehaviour {
-
+/// <summary>
+/// FIXME:体積で大きさを比較に変更
+/// </summary>
+public class CalculateBiggerBoxCollider : MonoBehaviour
+{
     /// <summary>
     /// _boxAが_boxBより大きい場合、Trueを返す、
     /// _boxAが_boxBより小さい場合、Falseを返す、
     /// </summary>
-    /// <param name="enemy"></param>
-    /// <param name="bubble"></param>
-    /// <returns></returns>
-    public bool JudegeWhichBoxIsBigger(GameObject enemy, GameObject bubble)
+    public bool JudgeWhichBoxIsBigger(GameObject enemy, GameObject bubble)
     {
         //FIXME:ここのreturn文がおかしい
         if (enemy == null || bubble == null)
@@ -22,27 +22,23 @@ public class JudgeBiggerBoxCollider: MonoBehaviour {
         bool isEnemyHigherThanBubble = false;
         bool isEnemyDeeperThanBubble = false;
 
-        isEnemyLongerThanBubble = JudgeTwoBoxColliderInLength(enemy.GetComponent<SetBoxColliderVertice>().lengthVertices,
-            bubble.GetComponent<SetBoxColliderVertice>().lengthVertices);
+        isEnemyLongerThanBubble = JudgeTwoBoxColliderInLength(enemy.GetComponent<CalculateBoxColliderVertices>().LengthVertices,
+            bubble.GetComponent<CalculateBoxColliderVertices>().LengthVertices);
 
-        isEnemyHigherThanBubble = JudgeTwoBoxColliderInHeight(enemy.GetComponent<SetBoxColliderVertice>().heightVertices,
-    bubble.GetComponent<SetBoxColliderVertice>().heightVertices);
+        isEnemyHigherThanBubble = JudgeTwoBoxColliderInHeight(enemy.GetComponent<CalculateBoxColliderVertices>().HeightVertices,
+    bubble.GetComponent<CalculateBoxColliderVertices>().HeightVertices);
 
-        isEnemyDeeperThanBubble = JudgeTwoBoxColliderInDepth(enemy.GetComponent<SetBoxColliderVertice>().depthVertices,
-    bubble.GetComponent<SetBoxColliderVertice>().depthVertices);
+        isEnemyDeeperThanBubble = JudgeTwoBoxColliderInDepth(enemy.GetComponent<CalculateBoxColliderVertices>().DepthVertices,
+    bubble.GetComponent<CalculateBoxColliderVertices>().DepthVertices);
 
-        if(isEnemyDeeperThanBubble&&isEnemyHigherThanBubble&&isEnemyLongerThanBubble)
+        if (isEnemyDeeperThanBubble && isEnemyHigherThanBubble && isEnemyLongerThanBubble)
         {
             isEnemyBiggerThanBubble = true;
         }
-        else if(!isEnemyDeeperThanBubble&&!isEnemyHigherThanBubble&&!isEnemyLongerThanBubble)
+        else if (!isEnemyDeeperThanBubble && !isEnemyHigherThanBubble && !isEnemyLongerThanBubble)
         {
 
             isEnemyBiggerThanBubble = false;
-        }
-        else
-        {
-            isEnemyBiggerThanBubble = true;
         }
 
 
@@ -56,7 +52,7 @@ public class JudgeBiggerBoxCollider: MonoBehaviour {
         float boxLength = (_boxLengthVertices[0] - _boxLengthVertices[1]).magnitude;
         float bubbleLength = (_bubbleLengthVertices[0] - _bubbleLengthVertices[1]).magnitude;
 
-        if(boxLength > bubbleLength)
+        if (boxLength > bubbleLength)
         {
             isBoxLoggerThanBubble = true;
         }

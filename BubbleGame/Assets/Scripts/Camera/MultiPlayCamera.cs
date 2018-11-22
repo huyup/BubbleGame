@@ -13,7 +13,6 @@ public class MultiPlayCamera : MonoBehaviour
     [SerializeField]
     private float distanceToForcusPointZ = -10f;
     
-    Vector3 centerPos;
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +22,9 @@ public class MultiPlayCamera : MonoBehaviour
         {
             positionSum += players[i].transform.position;
         }
+
+        Vector3 centerPos = Vector3.zero;
+
         centerPos = positionSum / players.Count;
 
         transform.position = new Vector3(centerPos.x,

@@ -3,104 +3,86 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput; //マルチコントローラーアセット
 
-public enum AttackButtonState
-{
-    NoInput,
-    ButtonDown,
-    ButtonKeep,
-    ButtonUp,
-}
-
 public class PlayerInputManager : MonoBehaviour
 {
-    AttackButtonState attackButtonState;
-
+    /// <summary>
+    /// FIXME:必要か？
+    /// </summary>
     [SerializeField]
-    private float maxControllerLerance = 0.02f;
+    private float maxControllerTolerance = 0.02f;
 
-    PlayerController playerController;
-    PlayerStatus property;
-    PlayerBubbleShooting bubbleShooting;
+    private PlayerController playerController;
+    private PlayerAnimator playerAnimator;
+    private PlayerStatus property;
 
-    int playerNum;
+    private int playerNum;
 
     /// <summary>
     /// 左スティックの入力量
     /// </summary>
-    float leftXAsisInput;
-    float leftYAsisInput;
+    private float leftXAxisInput;
+    private float leftYAxisInput;
 
     /// <summary>
     /// 右スティックの入力量
     /// </summary>
-    float rightXAsisInput;
-    float rightYAsisInput;
+    private float rightXAxisInput;
+    private float rightYAxisInput;
 
-    bool isOverMoveableSize = false;
+    //入力前の位置
+    private Vector3 prevPlayerPos;
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
-        property = GetComponent<PlayerStatus>();
-        bubbleShooting = GetComponent<PlayerBubbleShooting>();
-        playerNum = property.Num;
+        playerAnimator = GetComponent<PlayerAnimator>();
 
-        attackButtonState = AttackButtonState.NoInput;
+        property = GetComponent<PlayerStatus>();
+        playerNum = property.Num;
+        prevPlayerPos = transform.position;
     }
 
     private void Update()
     {
         //左スティック
-        leftXAsisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
-        leftYAsisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;
+        leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
+        leftYAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;
 
         //右スティック
-        rightXAsisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).x;
-
+        rightXAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).x;
         //y軸を反転させる
-        rightYAsisInput = -GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
+        rightYAxisInput = -GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
+
+        playerController.MoveByRigidBody(leftXAxisInput, leftYAxisInput, maxControllerTolerance, prevPlayerPos);
+
+        playerController.Rotate(rightXAxisInput, rightYAxisInput, maxControllerTolerance, prevPlayerPos);
 
         //攻撃ボタン
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            bubbleShooting.CreateTheBubbleSet();
-            attackButtonState = AttackButtonState.ButtonDown;
-            bubbleShooting.SetAttackAnimation(attackButtonState);
+            playerController.GetWeapon().OnAttackButtonDown();
         }
         if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            //長押しの時かつ泡が一定の大きさ以上の時は、移動を禁止させる
-            isOverMoveableSize = bubbleShooting.CheckIsBubbleOverMoveableSize();
-            bubbleShooting.ChangeTheBubbleScale();
-            attackButtonState = AttackButtonState.ButtonKeep;
-
-            bubbleShooting.SetAttackAnimation(attackButtonState);
+            playerController.GetWeapon().OnAttackButtonStay(); ;
         }
         if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            bubbleShooting.PushTheBubbleOnceTime();
-            //ボタンを離したとき、移動を回復させる
-            isOverMoveableSize = false;
-
-            attackButtonState = AttackButtonState.ButtonUp;
-            bubbleShooting.SetAttackAnimation(attackButtonState);
+            playerController.GetWeapon().OnAttackButtonUp();
         }
 
+        //武器の切り替えボタン
+        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, (GamePad.Index)playerNum))
+        {
+            playerController.ChangeWeapon();
+        }
         //ジャンプボタン
-        if(GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)playerNum))
+        if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)playerNum))
         {
             playerController.Jump();
-
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (!isOverMoveableSize)
-        {
-            playerController.MoveByRigidBody(leftXAsisInput, leftYAsisInput, maxControllerLerance);
-        }
-        playerController.SetMoveAnimation();
-        playerController.RotatePlayer(rightXAsisInput, rightYAsisInput, maxControllerLerance);
+        //入力後の位置を更新させる
+        prevPlayerPos = transform.position;
     }
-
 }

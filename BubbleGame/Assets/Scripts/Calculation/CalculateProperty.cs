@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CalculationProperty : MonoBehaviour {
+public class CalculateProperty : MonoBehaviour {
     /// <summary>
     /// 泡に包まれたときに上昇する力
     /// </summary>
@@ -11,9 +11,5 @@ public class CalculationProperty : MonoBehaviour {
     public float UpForce
     {
         get { return upForce; }
-        private set
-        {
-            upForce = value;
-        }
     }
 }
