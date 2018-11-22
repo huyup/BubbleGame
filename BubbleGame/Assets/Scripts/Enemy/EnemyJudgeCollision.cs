@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyJudgeCollision : MonoBehaviour
 {
     GameObject calculationController;
-    CalculationProperty calculationProperty;
+    CalculateProperty calculationProperty;
 
-    JudgeBoxBContainBoxA judgeContainFunc;
-    JudgeBiggerBoxCollider judgeBiggerFunc;
+    CalculateBoxContainBox judgeContainFunc;
+    CalculateBiggerBoxCollider calculateBiggerFunc;
 
     EnemyController controller;
     EnemyMove enemyMove;
@@ -29,10 +29,10 @@ public class EnemyJudgeCollision : MonoBehaviour
 
         calculationController = GameObject.Find("CalculationController");
 
-        calculationProperty = calculationController.GetComponent<CalculationProperty>();
+        calculationProperty = calculationController.GetComponent<CalculateProperty>();
 
-        judgeContainFunc = calculationController.GetComponent<JudgeBoxBContainBoxA>();
-        judgeBiggerFunc = calculationController.GetComponent<JudgeBiggerBoxCollider>();
+        judgeContainFunc = calculationController.GetComponent<CalculateBoxContainBox>();
+        calculateBiggerFunc = calculationController.GetComponent<CalculateBiggerBoxCollider>();
 
         controller = transform.parent.GetComponent<EnemyController>();
     }
@@ -45,10 +45,10 @@ public class EnemyJudgeCollision : MonoBehaviour
         if (other.gameObject.tag == "BubbleCollider")
         {
             //当たった時に、大きさを比較
-            if (judgeBiggerFunc.JudegeWhichBoxIsBigger(this.gameObject, other.gameObject))
+            if (calculateBiggerFunc.JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
             {
                 //泡に破裂命令
-                other.transform.parent.GetComponent<BubbleSetController>().DestoryNow();
+                other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
                 enemyMove.ChangeSpeed();
             }
         }
@@ -62,7 +62,6 @@ public class EnemyJudgeCollision : MonoBehaviour
             if (isBubbleContainEnemy)
             {
                 canAddUpForce = true;
-                other.transform.parent.GetComponent<BubbleSetController>().SaveInsideObj(transform.parent.gameObject);
                 bubble = other.gameObject;
             }
             else
@@ -94,10 +93,10 @@ public class EnemyJudgeCollision : MonoBehaviour
         {
             Vector3 upForce = Vector3.up * _upForce;
             GameObject bubble = _boxColider.transform.parent.Find("Bubble").gameObject;
-            bubble.GetComponent<BubbleController>().SetRigibodyVelocityOnce(upForce);
+            bubble.GetComponent<BubbleController>().SetRigidbodyVelocityOnce(upForce);
         }
 
-        //controller.SetRigibodyVelocityOnce(upForce);
+        //controller.SetRigidbodyVelocityOnce(upForce);
         controller.MoveToCenterPos(_boxColider.transform.parent.Find("Bubble"));
     }
 }

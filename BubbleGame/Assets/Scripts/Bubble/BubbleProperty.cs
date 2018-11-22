@@ -12,10 +12,6 @@ public class BubbleProperty : MonoBehaviour
     public float RotateSpeed
     {
         get { return rotateSpeed; }
-        private set
-        {
-            rotateSpeed = value;
-        }
     }
 
     /// <summary>
@@ -26,10 +22,6 @@ public class BubbleProperty : MonoBehaviour
     public float LastTime
     {
         get { return lastTime; }
-        private set
-        {
-            lastTime = value;
-        }
     }
 
     /// <summary>
@@ -40,23 +32,19 @@ public class BubbleProperty : MonoBehaviour
     public float MaxSize
     {
         get { return maxSize; }
-        private set
-        {
-            maxSize = value;
-        }
     }
 
     /// <summary>
-    ///上昇状態
+    ///敵を連れて上昇しているかどうか
     /// </summary>
     [SerializeField]
-    private bool isFloating =false;
-    public bool IsFloating
+    private bool isForceFloating =false;
+    public bool IsForceFloating
     {
-        get { return isFloating; }
+        get { return isForceFloating; }
         set
         {
-            isFloating = value;
+            isForceFloating = value;
         }
     }
 }

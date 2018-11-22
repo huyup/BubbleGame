@@ -9,29 +9,28 @@ public class PlayerBubbleShooting : MonoBehaviour
     /// <summary>
     /// アタッチするオブジェ
     /// </summary>
-    BubbleProperty bubbleProperty;
-    Rigidbody rb;
-    PlayerStatus status;
-    Animator animator;
+    private BubbleProperty bubbleProperty;
+    private Rigidbody rb;
+    private PlayerStatus status;
+    private Animator animator;
 
     /// <summary>
     /// 泡のオブジェ
     /// </summary>
     [SerializeField]
-    GameObject bubbleSet;
+    private GameObject bubbleSet;
 
-    List<GameObject> bubbles = new List<GameObject>();
+    private List<GameObject> bubbles = new List<GameObject>();
 
     /// <summary>
     /// 泡の出現参照オブジェ
     /// </summary>
-    GameObject bubbleStartObj;
-    Vector3 bubbleStartPos;
+    private GameObject bubbleStartObj;
+    private Vector3 bubbleStartPos;
 
-    float spaceKeyStorage = 0.0f;
-    bool canSetBubbleStartPos = false;
-    bool isPushed = false;
-
+    private float spaceKeyStorage = 0.0f;
+    private bool canSetBubbleStartPos = false;
+    private bool isPushed = false;
     #endregion
 
     // Use this for initialization
@@ -128,13 +127,13 @@ public class PlayerBubbleShooting : MonoBehaviour
         if (bubbles[bubbles.Count - 1] == null || isPushed)
             return;
 
-        if (!bubbles[bubbles.Count - 1].GetComponent<BubbleProperty>().IsFloating)
+        if (!bubbles[bubbles.Count - 1].GetComponent<BubbleProperty>().IsForceFloating)
         {
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleFowardPower,
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);
-            bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyFlag();
+            bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class JudgeBoxBContainBoxA : MonoBehaviour
+/// <summary>
+/// XXX:計算が間違う場合がある
+/// </summary>
+public class CalculateBoxContainBox : MonoBehaviour
 {
     /// <summary>
     /// 物体bの中に物体aがあるかどうかをチェック
     /// </summary>
-    /// <param name="_boxA"></param>
-    /// <param name="_boxB"></param>
-    /// <returns></returns>
     public bool JudgeIsBoxBContainBoxA(GameObject _boxA, GameObject _boxB)
     {
         //FIXME:ここのreturn文がおかしい
@@ -20,14 +19,14 @@ public class JudgeBoxBContainBoxA : MonoBehaviour
         bool isInsideInHeight = false;
         bool isInsideInDepth = false;
 
-        isInsideInLength = JudgeIsInsideInLength(_boxA.GetComponent<SetBoxColliderVertice>().lengthVertices,
-    _boxB.GetComponent<SetBoxColliderVertice>().lengthVertices);
+        isInsideInLength = JudgeIsInsideInLength(_boxA.GetComponent<CalculateBoxColliderVertices>().LengthVertices,
+    _boxB.GetComponent<CalculateBoxColliderVertices>().LengthVertices);
 
-        isInsideInHeight = JudgeIsInsideInHeight(_boxA.GetComponent<SetBoxColliderVertice>().heightVertices,
-    _boxB.GetComponent<SetBoxColliderVertice>().heightVertices);
+        isInsideInHeight = JudgeIsInsideInHeight(_boxA.GetComponent<CalculateBoxColliderVertices>().HeightVertices,
+    _boxB.GetComponent<CalculateBoxColliderVertices>().HeightVertices);
 
-        isInsideInDepth = JudgeIsInsideInDepth(_boxA.GetComponent<SetBoxColliderVertice>().depthVertices,
-    _boxB.GetComponent<SetBoxColliderVertice>().depthVertices);
+        isInsideInDepth = JudgeIsInsideInDepth(_boxA.GetComponent<CalculateBoxColliderVertices>().DepthVertices,
+    _boxB.GetComponent<CalculateBoxColliderVertices>().DepthVertices);
 
         if (isInsideInLength && isInsideInHeight && isInsideInDepth)
         {
@@ -41,54 +40,52 @@ public class JudgeBoxBContainBoxA : MonoBehaviour
     /// <summary>
     /// [0]はmin,[1]はmax
     /// </summary>
-    /// <param name="_boxLengthVertices"></param>
-    /// <param name="_bubbleLengthVertices"></param>
-    /// <returns></returns>
     private bool JudgeIsInsideInLength(Vector3[] _boxLengthVertices, Vector3[] _bubbleLengthVertices)
     {
-        bool isVertice1Inside = false;
-        bool isVertice2Inside = false;
+        bool isVertex1Inside = false;
+        bool isVertex2Inside = false;
 
         if (_boxLengthVertices[0].x >= _bubbleLengthVertices[0].x &&
             _boxLengthVertices[0].x <= _bubbleLengthVertices[1].x)
         {
-            isVertice1Inside = true;
+            isVertex1Inside = true;
         }
 
         if (_boxLengthVertices[1].x >= _bubbleLengthVertices[0].x &&
             _boxLengthVertices[1].x <= _bubbleLengthVertices[1].x)
         {
-            isVertice2Inside = true;
+            isVertex2Inside = true;
         }
 
-        if (isVertice1Inside && isVertice2Inside)
+        if (isVertex1Inside && isVertex2Inside)
         {
             return true;
         }
         else
+        {
             return false;
-
+        }
     }
 
     private bool JudgeIsInsideInHeight(Vector3[] _boxHeightVertices, Vector3[] _bubbleHeightVertices)
     {
-        bool isVertice1Inside = false;
-        bool isVertice2Inside = false;
+        bool isVertex1Inside = false;
+        bool isVertex2Inside = false;
 
 
         if (_boxHeightVertices[0].y >= _bubbleHeightVertices[0].y &&
             _boxHeightVertices[0].y <= _bubbleHeightVertices[1].y)
         {
-            isVertice1Inside = true;
+            isVertex1Inside = true;
         }
 
         if (_boxHeightVertices[1].y >= _bubbleHeightVertices[0].y &&
             _boxHeightVertices[1].y <= _bubbleHeightVertices[1].y)
         {
-            isVertice2Inside = true;
+            isVertex2Inside = true;
         }
 
-        if (isVertice1Inside && isVertice2Inside)
+        if (isVertex1Inside && isVertex2Inside)
         {
 
             return true;
@@ -100,22 +97,22 @@ public class JudgeBoxBContainBoxA : MonoBehaviour
 
     private bool JudgeIsInsideInDepth(Vector3[] _boxDepthVertices, Vector3[] _bubbleDepthVertices)
     {
-        bool isVertice1Inside = false;
-        bool isVertice2Inside = false;
+        bool isVertex1Inside = false;
+        bool isVertex2Inside = false;
 
         if (_boxDepthVertices[0].z >= _bubbleDepthVertices[0].z &&
             _boxDepthVertices[0].z <= _bubbleDepthVertices[1].z)
         {
-            isVertice1Inside = true;
+            isVertex1Inside = true;
         }
 
         if (_boxDepthVertices[1].z >= _bubbleDepthVertices[0].z &&
             _boxDepthVertices[1].z <= _bubbleDepthVertices[1].z)
         {
-            isVertice2Inside = true;
+            isVertex2Inside = true;
         }
 
-        if (isVertice1Inside && isVertice2Inside)
+        if (isVertex1Inside && isVertex2Inside)
         {
             return true;
         }

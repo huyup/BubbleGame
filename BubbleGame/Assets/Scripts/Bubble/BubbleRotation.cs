@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BubbleRotation : MonoBehaviour
 {
-    BubbleProperty property;
+    private BubbleProperty property;
 
     // Use this for initialization
     void Start()
@@ -15,11 +15,9 @@ public class BubbleRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FIXME:ほかのオブジェに影響を与えないように修正
-
         //ランダム軸から回転する
-        Vector3 randomAxis = new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
-        float speed = property.RotateSpeed * Time.deltaTime;
+        Vector3 randomAxis = new Vector3(Time.fixedDeltaTime, Time.fixedDeltaTime, Time.fixedDeltaTime);
+        float speed = property.RotateSpeed * Time.fixedDeltaTime;
         Quaternion rot = Quaternion.AngleAxis(speed, randomAxis);
         transform.rotation = rot * transform.rotation;
     }
