@@ -8,7 +8,7 @@ public class BubbleJudgeColliderFollow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bubble = transform.parent.Find("bubble").gameObject;
+        bubble = transform.parent.Find("Bubble").gameObject;
     }
     // Update is called once per frame
     void Update()

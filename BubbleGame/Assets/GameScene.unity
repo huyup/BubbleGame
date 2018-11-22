@@ -518,11 +518,13 @@ GameObject:
   - component: {fileID: 84273615}
   - component: {fileID: 84273614}
   - component: {fileID: 84273620}
-  - component: {fileID: 84273619}
   - component: {fileID: 84273622}
   - component: {fileID: 84273624}
+  - component: {fileID: 84273626}
+  - component: {fileID: 84273619}
   - component: {fileID: 84273621}
   - component: {fileID: 84273623}
+  - component: {fileID: 84273625}
   m_Layer: 11
   m_Name: Player1
   m_TagString: Player
@@ -541,6 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce1761a5ae46274296cb2a25d875af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponA: {fileID: 84273626}
+  weaponB: {fileID: 84273619}
 --- !u!136 &84273615
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -614,7 +618,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 84273613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5545b2fecdeb6eb4a83582525eb08503, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eba901fc9beaa84084f4e10772a09fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bubbleSet: {fileID: 1124367558409386, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
@@ -629,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f30d66c9c996a46a2dd0315c6548c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxControllerLerance: 0.02
+  maxControllerTolerance: 0.02
 --- !u!114 &84273621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +688,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c9064314494344bba3c2edcf602344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &84273625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84273613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34769df80e8afea46bd27874fd1365f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &84273626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84273613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae70aab762c01bb48b2a1eb6a2117d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleSet: {fileID: 1124367558409386, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
 --- !u!1 &91536762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,13 +1916,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a897284f5b2e34b98b2164b283e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lengthVertices:
+  LengthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  heightVertices:
+  HeightVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  depthVertices:
+  DepthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
 --- !u!65 &284860133
@@ -6838,13 +6865,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a897284f5b2e34b98b2164b283e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lengthVertices:
+  LengthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  heightVertices:
+  HeightVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  depthVertices:
+  DepthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
 --- !u!65 &1266719523
@@ -9989,13 +10016,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a897284f5b2e34b98b2164b283e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lengthVertices:
+  LengthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  heightVertices:
+  HeightVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  depthVertices:
+  DepthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
 --- !u!65 &1859647944
@@ -10873,13 +10900,16 @@ GameObject:
   - component: {fileID: 2054798086}
   - component: {fileID: 2054798085}
   - component: {fileID: 2054798084}
+  - component: {fileID: 2054798092}
+  - component: {fileID: 2054798091}
   - component: {fileID: 2054798083}
   - component: {fileID: 2054798082}
-  - component: {fileID: 2054798081}
   - component: {fileID: 2054798079}
   - component: {fileID: 2054798080}
   - component: {fileID: 2054798089}
   - component: {fileID: 2054798088}
+  - component: {fileID: 2054798090}
+  - component: {fileID: 2054798081}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Player
@@ -10927,7 +10957,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2054798078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5545b2fecdeb6eb4a83582525eb08503, type: 3}
+  m_Script: {fileID: 11500000, guid: ae70aab762c01bb48b2a1eb6a2117d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bubbleSet: {fileID: 1124367558409386, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
@@ -10942,7 +10972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f30d66c9c996a46a2dd0315c6548c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxControllerLerance: 0.02
+  maxControllerTolerance: 0.02
 --- !u!114 &2054798083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10954,6 +10984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce1761a5ae46274296cb2a25d875af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponA: {fileID: 2054798092}
+  weaponB: {fileID: 2054798091}
 --- !u!136 &2054798084
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11041,6 +11073,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c9064314494344bba3c2edcf602344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2054798090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054798078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34769df80e8afea46bd27874fd1365f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2054798091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054798078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eba901fc9beaa84084f4e10772a09fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleSet: {fileID: 1124367558409386, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
+--- !u!114 &2054798092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054798078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae70aab762c01bb48b2a1eb6a2117d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleSet: {fileID: 1124367558409386, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
 --- !u!1 &2057519635
 GameObject:
   m_ObjectHideFlags: 0

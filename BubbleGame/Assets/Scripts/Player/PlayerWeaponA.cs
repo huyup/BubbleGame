@@ -1,45 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GamepadInput; //マルチコントローラーアセット
 
-public class PlayerBubbleShooting : MonoBehaviour
+public class PlayerWeaponA : PlayerWeapon
 {
-    #region フィールド
     /// <summary>
-    /// アタッチするオブジェ
-    /// </summary>
-    private BubbleProperty bubbleProperty;
-    private Rigidbody rb;
-    private PlayerStatus status;
-    private Animator animator;
-
-    /// <summary>
-    /// 泡のオブジェ
+    /// 泡のオブジェs
     /// </summary>
     [SerializeField]
     private GameObject bubbleSet;
-
     private List<GameObject> bubbles = new List<GameObject>();
 
-    /// <summary>
-    /// 泡の出現参照オブジェ
-    /// </summary>
     private GameObject bubbleStartObj;
     private Vector3 bubbleStartPos;
 
-    private float spaceKeyStorage = 0.0f;
-    private bool canSetBubbleStartPos = false;
-    private bool isPushed = false;
-    #endregion
+    private Rigidbody rb;
 
+    private PlayerStatus status;
+    private BubbleProperty bubbleProperty;
+
+    private float spaceKeyStorage = 0.0f;
+    private bool isPushed = false;
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
+
         bubbleStartObj = transform.Find("BubbleStartObj").gameObject;
-        animator = GetComponent<Animator>();
 
         bubbleProperty = bubbleSet.transform.Find("Bubble").GetComponent<BubbleProperty>();
     }
@@ -49,29 +37,11 @@ public class PlayerBubbleShooting : MonoBehaviour
         //泡の発射位置を更新させる
         bubbleStartPos = bubbleStartObj.transform.position;
     }
-
-    public void SetAttackAnimation(AttackButtonState _attackButtonState)
+    public override void OnAttackButtonDown()
     {
-        if (_attackButtonState == AttackButtonState.ButtonDown)
-        {
-            animator.SetBool("Attacking", true);
-        }
-        if (_attackButtonState == AttackButtonState.ButtonKeep)
-        {
-            animator.speed = 0.5f;
-        }
-        if (_attackButtonState == AttackButtonState.ButtonUp)
-        {
-            animator.speed = 1;
-            animator.SetBool("Attacking", false);
-        }
-    }
-    
-    public void CreateTheBubbleSet()
-    {
+        base.OnAttackButtonDown();
         rb.velocity = Vector3.zero;
 
-        canSetBubbleStartPos = true;
         isPushed = false;
         spaceKeyStorage = 0;
 
@@ -80,33 +50,32 @@ public class PlayerBubbleShooting : MonoBehaviour
         GameObject bubbleInstance = bubbleSetInstance.transform.Find("Bubble").gameObject;
 
         bubbles.Add(bubbleInstance);
+
+        bubbles[bubbles.Count - 1].transform.position = bubbleStartPos;
+
     }
 
-    public void ChangeTheBubbleScale()
+    public override void OnAttackButtonStay()
     {
         if (bubbles.Count == 0)
             return;
 
+        base.OnAttackButtonStay();
+
         if (bubbles[bubbles.Count - 1])
         {
-            rb.velocity = Vector3.zero;
-
             if (spaceKeyStorage < bubbleProperty.MaxSize)
             {
-                spaceKeyStorage += status.SpaceKeySpeed * Time.deltaTime;
+                spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
                 bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
-                if (canSetBubbleStartPos)
-                {
-                    bubbles[bubbles.Count - 1].transform.position = bubbleStartPos;
-                    canSetBubbleStartPos = false;
-                }
                 //少しずつ前に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.forward * Time.deltaTime * 1.2f;
+                bubbles[bubbles.Count - 1].transform.position += transform.forward * Time.fixedDeltaTime * 1.2f;
                 //少しずつ上に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.up * Time.deltaTime * 0.8f;
+                bubbles[bubbles.Count - 1].transform.position += transform.up * Time.fixedDeltaTime * 0.8f;
             }
             else
             {
+                //最大値を超えたら、自動的に前へ出す
                 if (!isPushed)
                 {
                     PushTheBubbleOnceTime();
@@ -115,14 +84,13 @@ public class PlayerBubbleShooting : MonoBehaviour
             }
         }
     }
-    public bool CheckIsBubbleOverMoveableSize()
+
+    public override void OnAttackButtonUp()
     {
-        if (spaceKeyStorage > 0)
-            return true;
-        else
-            return false;
+        base.OnAttackButtonUp();
+        PushTheBubbleOnceTime();
     }
-    public void PushTheBubbleOnceTime()
+    private void PushTheBubbleOnceTime()
     {
         if (bubbles[bubbles.Count - 1] == null || isPushed)
             return;
@@ -134,8 +102,7 @@ public class PlayerBubbleShooting : MonoBehaviour
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
+            isPushed = true;
         }
     }
 }
-
-
