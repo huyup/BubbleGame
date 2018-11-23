@@ -7,14 +7,14 @@ using UnityEngine;
 public class WargAnimator : EnemyAnimator
 {
     WargController controller;
-    WargsStatus status;
+    WargSearch status;
     Animator animator;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<WargController>();
-        status = transform.GetComponent<WargsStatus>();
+        status = transform.GetComponent<WargSearch>();
     }
 
 
