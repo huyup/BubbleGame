@@ -645,16 +645,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9988775dd571314c9a6d644200db5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNum: 1
+  playerNum: 1
   runSpeed: 5
   jumpPower: 18
   factorToCalGravity: 0.05
-  bubbleForwardPower: 15
+  bubbleFowardPower: 3
   bubbleUpPower: 0
   spaceKeySpeed: 0.1
   invincibleInterval: 0.1
   invincibleTotalTime: 10
-  NowHp: 0
+  nowHp: 0
 --- !u!114 &84273622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591e2a9995143ff48b974e4074eb5e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrow: {fileID: 250728708}
 --- !u!114 &84273623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3476,8 +3475,8 @@ MonoBehaviour:
   players:
   - {fileID: 84273613}
   - {fileID: 2054798078}
-  distanceToFocusPointY: 8.5
-  distanceToFocusPointZ: -10
+  distanceToForcusPointY: 10
+  distanceToForcusPointZ: -13
 --- !u!1 &663133060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5371,7 +5370,7 @@ GameObject:
   - component: {fileID: 1031786649}
   - component: {fileID: 1031786648}
   m_Layer: 0
-  m_Name: UICtr
+  m_Name: UIController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5442,7 +5441,7 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
     m_FontStyle: 0
     m_Alignment: 0
@@ -5456,11 +5455,6 @@ MonoBehaviour:
     m_StretchWidth: 1
     m_StretchHeight: 0
   heartImg: {fileID: 2800000, guid: 73727289250a0064da67b66ba246873b, type: 3}
-  players:
-  - {fileID: 84273621}
-  - {fileID: 2054798080}
-  baseWidth: 854
-  baseHeight: 480
 --- !u!4 &1031786649
 Transform:
   m_ObjectHideFlags: 0
@@ -5877,7 +5871,7 @@ GameObject:
   - component: {fileID: 1106191152}
   - component: {fileID: 1106191154}
   m_Layer: 0
-  m_Name: CalculationCtr
+  m_Name: CalculationController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6350,7 +6344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1182354611}
   m_Layer: 0
-  m_Name: EnemyCtr
+  m_Name: EnemyController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8220,10 +8214,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1497398982}
-  - component: {fileID: 1497398983}
   - component: {fileID: 1497398981}
   m_Layer: 0
-  m_Name: SceneCtr
+  m_Name: GameRuleController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8237,10 +8230,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1497398980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f59219458a8a84fa3aa078ff28a960, type: 3}
+  m_Script: {fileID: 11500000, guid: ab713ef4711fee842813074a5250fee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraCtr: {fileID: 659450029}
 --- !u!4 &1497398982
 Transform:
   m_ObjectHideFlags: 0
@@ -8254,18 +8246,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1497398983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1497398980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a85239a3d7f09fb4eb206dcd87744077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  traps: []
 --- !u!1 &1503582308
 GameObject:
   m_ObjectHideFlags: 0
@@ -10948,7 +10928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591e2a9995143ff48b974e4074eb5e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrow: {fileID: 1138409177}
 --- !u!114 &2054798080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10960,16 +10939,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9988775dd571314c9a6d644200db5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNum: 2
+  playerNum: 2
   runSpeed: 5
   jumpPower: 18
   factorToCalGravity: 0.05
-  bubbleForwardPower: 15
+  bubbleFowardPower: 3
   bubbleUpPower: 0
   spaceKeySpeed: 0.1
   invincibleInterval: 0.1
   invincibleTotalTime: 10
-  NowHp: 0
+  nowHp: 0
 --- !u!114 &2054798081
 MonoBehaviour:
   m_ObjectHideFlags: 0

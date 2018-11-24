@@ -47,4 +47,23 @@ public static class HitDetector
         
         return result;
     }
+    
+    public interface IFantasiticClass
+    {
+        int Number { get; }
+    }
+
+    public class SuperLongNameFantasticClassOfTheYear : IFantasiticClass
+    {
+        public int Number
+        {
+            get { return 1; }
+        }
+
+        public int DangerousNumber
+        {
+            get { return 9999; }
+        }
+        
+    }
 }

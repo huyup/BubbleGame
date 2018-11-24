@@ -2,35 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WargSearch : EnemySearch
-{
-    private WargsStatus status;
+public class WargSearch : EnemySearch {
+    WargsStatus status;
 
-    private WargController wargController;
+    WargController wargController;
 
     private class Targets
     {
-        public GameObject Target;
-        public float Distance;
-        public bool IsVisible;
+        public GameObject target;
+        public float distance;
+        public bool visible;
     }
 
-    private Targets[] targets = new Targets[GameSetting.MaxPlayerNum];
+    Targets[] targets = new Targets[GameSetting.MaxPlayerNum];
 
-    private bool isSetFinished = false;
+    bool isSetFinished = false;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start () {
         wargController = transform.parent.GetComponent<WargController>();
         status = transform.root.GetComponent<WargsStatus>();
 
         for (int i = 0; i < targets.Length; i++)
         {
             targets[i] = new Targets();
-            targets[i].Target = GameObject.Find("Player" + (i + 1).ToString());
-            targets[i].Distance = 0;
-            targets[i].IsVisible = false;
+            targets[i].target = GameObject.Find("Player" + (i + 1).ToString());
+            targets[i].distance = 0;
+            targets[i].visible = false;
         }
     }
 
@@ -45,37 +43,35 @@ public class WargSearch : EnemySearch
             Debug.Log("プレイヤー名を設定してください");
             return;
         }
-
         if (!isSetFinished)
         {
             for (int i = 0; i < targets.Length; i++)
             {
                 float angle = 0;
-                angle = CalculateAngleFromEyeToTarget(targets[i].Target.transform);
-                targets[i].Distance = Vector3.Distance(
-                    transform.parent.position - new Vector3(0, transform.parent.position.y),
-                    targets[i].Target.transform.position - new Vector3(0, targets[i].Target.transform.position.y));
-                if (angle <= status.MaxViewAngle && targets[i].Distance <= status.EyeDistance)
+                angle = CalculateAngleFromEyeToTarget(targets[i].target.transform);
+                targets[i].distance = Vector3.Distance(transform.parent.position-new Vector3(0,transform.parent.position.y),
+    targets[i].target.transform.position - new Vector3(0, targets[i].target.transform.position.y));
+                if (angle <= status.MaxViewAngle && targets[i].distance <= status.EyeDistance)
                 {
-                    targets[i].IsVisible = true;
+                    targets[i].visible = true;
                 }
             }
 
             float nearDistance = 999;
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].IsVisible)
+                if (targets[i].visible)
                 {
-                    if (targets[i].Distance < nearDistance)
-                        nearDistance = targets[i].Distance;
+                    if (targets[i].distance < nearDistance)
+                        nearDistance = targets[i].distance;
                 }
             }
 
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].IsVisible && targets[i].Distance - nearDistance == 0)
+                if (targets[i].visible && targets[i].distance - nearDistance == 0)
                 {
-                    wargController.SetAttackTarget(targets[i].Target.transform);
+                    wargController.SetAttackTarget(targets[i].target.transform);
                     SetFinished();
                     break;
                 }
@@ -97,7 +93,6 @@ public class WargSearch : EnemySearch
 
         return angleFromEyeToTarget;
     }
-
     void OnTriggerStay(Collider other)
     {
         // Playerタグをターゲットにする
@@ -107,26 +102,21 @@ public class WargSearch : EnemySearch
             isSetFinished = true;
         }
     }
-
     void SetFinished()
     {
         isSetFinished = true;
     }
-
     public void Research()
     {
         wargController.SetAttackTarget(null);
         isSetFinished = false;
     }
-
     #region Debug用
-
     /// <summary>
     /// TODO:ここにデバッグ用のrayを表示する
     /// </summary>
     private void DrawRayAsEyeArea()
     {
     }
-
     #endregion
 }

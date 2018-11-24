@@ -20,7 +20,7 @@ public class ParticleMenu : MonoBehaviour {
 	// where to spawn prefabs 
 	public Transform spawnLocation;
 
-	// references to the UIBase Text components
+	// references to the UI Text components
 	public Text title;
 	public Text description;
 	public Text navigationDetails;
@@ -49,7 +49,7 @@ public class ParticleMenu : MonoBehaviour {
 		// only activate the gun GameObject if the current effect is a weapon effect
 		gunGameObject.SetActive (particleSystems[currentIndex].isWeaponEffect);
 
-		// setup the UIBase texts according to the strings in the array 
+		// setup the UI texts according to the strings in the array 
 		title.text = particleSystems [currentIndex].title;
 		description.text = particleSystems [currentIndex].description;
 		navigationDetails.text = "" + (currentIndex+1) + " out of " + particleSystems.Length.ToString();

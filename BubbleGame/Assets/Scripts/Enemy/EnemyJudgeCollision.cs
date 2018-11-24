@@ -27,7 +27,7 @@ public class EnemyJudgeCollision : MonoBehaviour
     {
         enemyMove = transform.parent.GetComponent<EnemyMove>();
 
-        calculationController = GameObject.Find("CalculationCtr");
+        calculationController = GameObject.Find("CalculationController");
 
         calculationProperty = calculationController.GetComponent<CalculateProperty>();
 

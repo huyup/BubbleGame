@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimatorCtr : PlayerController
+public class PlayerAnimator : MonoBehaviour
 {
-    #region アニメーション用メソッド
-
-    public void Test()
+    private Animator animator;
+    // Use this for initialization
+    void Start()
     {
-        Debug.Log("Test");
+        animator = GetComponent<Animator>();
     }
+
+    #region アニメーション用メソッド
     public void SetMoveAnimation(Vector3 _preInputPlayerPos)
     {
         //最新の位置-入力前の位置=方向
@@ -17,25 +19,25 @@ public class PlayerAnimatorCtr : PlayerController
 
         if (direction.magnitude > 0)
         {
-            Animator.SetBool("Moving", true);
+            animator.SetBool("Moving", true);
         }
         else
         {
-            Animator.SetBool("Moving", false);
+            animator.SetBool("Moving", false);
         }
     }
     public void SetAttackAnimationOnButtonDown()
     {
-        Animator.SetBool("Attacking", true);
+        animator.SetBool("Attacking", true);
     }
     public void SetAttackAnimationOnButtonStay()
     {
-        Animator.speed = 0.5f;
+        animator.speed = 0.5f;
     }
     public void SetAttackAnimationOnButtonUp()
     {
-        Animator.speed = 1;
-        Animator.SetBool("Attacking", false);
+        animator.speed = 1;
+        animator.SetBool("Attacking", false);
 
     }
     #endregion
