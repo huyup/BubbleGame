@@ -179,10 +179,10 @@ public class WargController : EnemyController
         // 移動を止める.
         moveController.StopMove();
         //TODO:ここに攻撃の処理を入れる
-        if (attackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
-        {
-            searchController.Research();
-        }
+        //if (attackTarget.GetComponent<PlayerStatus>().NowHp <= 0)
+        //{
+        //    searchController.Research();
+        //}
         ChangeState(WargState.Searching);
     }
 

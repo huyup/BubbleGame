@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput; //マルチコントローラーアセット
 
-public class PlayerWeapon : MonoBehaviour
+public class PlayerWeaponBase : MonoBehaviour
 {
     public virtual void OnAttackButtonDown()
     {
-        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonDown();
+        GetComponent<PlayerAnimatorCtr>().SetAttackAnimationOnButtonDown();
     }
 
     public virtual void OnAttackButtonStay()
     {
-        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonStay();
+        GetComponent<PlayerAnimatorCtr>().SetAttackAnimationOnButtonStay();
     }
 
     public virtual void OnAttackButtonUp()
     {
-        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
+        GetComponent<PlayerAnimatorCtr>().SetAttackAnimationOnButtonUp();
     }
 }
 

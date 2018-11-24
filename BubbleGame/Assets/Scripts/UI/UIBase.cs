@@ -1,49 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class UI : MonoBehaviour
+/// <summary>
+/// TODO:UIの配置に関する修正
+/// </summary>
+public class UIBase : MonoBehaviour
 {
-    public GUIStyle fontStyle;
-    float baseWidth = 854f;
-    float baseHeight = 480f;
-    public Texture2D heartImg;
+    [SerializeField]
+    private GUIStyle fontStyle;
 
-    GameObject[] players;
-    int player1HP;
-    int player2HP;
-    
-    private void Awake()
+    [SerializeField]
+    private Texture2D heartImg;
+
+    [SerializeField]
+    private PlayerStatus[] players;
+
+    [SerializeField]
+    private float baseWidth = 854f;
+
+    [SerializeField]
+    private float baseHeight = 480f;
+
+    public bool IsVisible { get; private set; }
+
+
+    public void SetUIVisible(bool _isVisible)
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        IsVisible = _isVisible;
     }
-    private void Update()
-    {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players[i].GetComponent<PlayerStatus>().playerNum == PlayerStatus.PlayerSelection.Player1)
-                player1HP = players[i].GetComponent<PlayerStatus>().nowHp;
-            if (players[i].GetComponent<PlayerStatus>().playerNum == PlayerStatus.PlayerSelection.Player2)
-                player2HP = players[i].GetComponent<PlayerStatus>().nowHp;
-        }
-    }
+
     private void OnGUI()
     {
-        // 解像度対応.
-        GUI.matrix = Matrix4x4.TRS(
-            Vector3.zero,
-            Quaternion.identity,
-            new Vector3(Screen.width / baseWidth, Screen.height / baseHeight, 1f));
+        if (IsVisible)
+        {
+            // 解像度対応.
+            GUI.matrix = Matrix4x4.TRS(
+                Vector3.zero,
+                Quaternion.identity,
+                new Vector3(Screen.width / baseWidth, Screen.height / baseHeight, 1f));
 
-        GUI.Label(new Rect(10, 450, 100, 100), "Player1:", fontStyle);
-        
-        DrawPlayer1Life(player1HP);
+            //GUI.Label(new Rect(10, 450, 100, 100), "Player1:", fontStyle);
+            //DrawPlayer1Life(players[0].GetNowHp());
 
-        GUI.Label(new Rect(690, 450, 100, 100), "Player2:", fontStyle);
-        DrawPlayer2Life(player2HP);
+            //GUI.Label(new Rect(690, 450, 100, 100), "Player2:", fontStyle);
+            //DrawPlayer2Life(players[1].GetNowHp());
 
-        GUI.Label(new Rect(10, 10, 100, 100), "残りの狼:"+GameSetting.WargsNum+"匹", fontStyle);
-        GUI.Label(new Rect(10, 30, 100, 100), "残りのタコ:" + GameSetting.OctopusNum + "匹", fontStyle);
+            GUI.Label(new Rect(10, 10, 100, 100), "残りの狼:" + GameSetting.Instance.GetWargsNum() + "匹", fontStyle);
+            GUI.Label(new Rect(10, 30, 100, 100), "残りのタコ:" + GameSetting.Instance.GetOctopusNum() + "匹", fontStyle);
+        }
     }
 
     void DrawPlayer1Life(int _player1hp)

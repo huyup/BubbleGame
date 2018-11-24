@@ -12,8 +12,7 @@ public class PlayerInputManager : MonoBehaviour
     private float maxControllerTolerance = 0.02f;
 
     private PlayerController playerController;
-    private PlayerAnimator playerAnimator;
-    private PlayerStatus property;
+    private PlayerStatus status;
 
     private int playerNum;
 
@@ -32,17 +31,19 @@ public class PlayerInputManager : MonoBehaviour
     //入力前の位置
     private Vector3 prevPlayerPos;
 
-    private void Start()
+    public void OnInitialize()
     {
         playerController = GetComponent<PlayerController>();
-        playerAnimator = GetComponent<PlayerAnimator>();
 
-        property = GetComponent<PlayerStatus>();
-        playerNum = property.Num;
+        status = GetComponent<PlayerStatus>();
+        playerNum = status.Num;
         prevPlayerPos = transform.position;
     }
+    public void OnStart()
+    {
 
-    private void Update()
+    }
+    public void OnUpdate()
     {
         //左スティック
         leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
@@ -53,33 +54,33 @@ public class PlayerInputManager : MonoBehaviour
         //y軸を反転させる
         rightYAxisInput = -GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
 
-        playerController.MoveByRigidBody(leftXAxisInput, leftYAxisInput, maxControllerTolerance, prevPlayerPos);
+        playerController.GetMoveCtr().MoveByRigidBody(leftXAxisInput, leftYAxisInput, maxControllerTolerance, prevPlayerPos);
 
-        playerController.Rotate(rightXAxisInput, rightYAxisInput, maxControllerTolerance, prevPlayerPos);
+        playerController.GetRotateCtr().Rotate(rightXAxisInput, rightYAxisInput, maxControllerTolerance, prevPlayerPos);
 
         //攻撃ボタン
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonDown();
+            playerController.GetAttackCtr().GetWeapon().OnAttackButtonDown();
         }
         if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonStay(); ;
+            playerController.GetAttackCtr().GetWeapon().OnAttackButtonStay(); ;
         }
         if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonUp();
+            playerController.GetAttackCtr().GetWeapon().OnAttackButtonUp();
         }
 
         //武器の切り替えボタン
         if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, (GamePad.Index)playerNum))
         {
-            playerController.ChangeWeapon();
+            playerController.GetAttackCtr().ChangeWeapon();
         }
         //ジャンプボタン
         if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)playerNum))
         {
-            playerController.Jump();
+            playerController.GetJumpCtr().Jump();
         }
 
         //入力後の位置を更新させる

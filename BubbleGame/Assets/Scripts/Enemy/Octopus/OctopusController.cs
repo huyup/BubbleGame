@@ -136,8 +136,8 @@ public class OctopusController : EnemyController
             StartCoroutine(DiveAndAttackCoroutine());
         }
         //FIXME:敵のhpが0以下の場合、再設定へ
-        if (attackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
-            attackTarget = null;
+        //if (attackTarget.GetComponent<PlayerStatus>().NowHp <= 0)
+        //    attackTarget = null;
 
 
     }

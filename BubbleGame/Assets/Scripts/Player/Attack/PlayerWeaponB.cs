@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponA : PlayerWeapon
+public class PlayerWeaponB : PlayerWeaponBase
 {
     /// <summary>
-    /// 泡のオブジェs
+    /// 泡のオブジェ
     /// </summary>
     [SerializeField]
     private GameObject bubbleSet;
@@ -16,10 +16,8 @@ public class PlayerWeaponA : PlayerWeapon
 
     private Rigidbody rb;
 
-    private PlayerStatus status;
-    private BubbleProperty bubbleProperty;
-
-    private float spaceKeyStorage = 0.0f;
+    private PlayerStatus status; 
+    
     private bool isPushed = false;
     // Use this for initialization
     void Start()
@@ -28,8 +26,7 @@ public class PlayerWeaponA : PlayerWeapon
         status = GetComponent<PlayerStatus>();
 
         bubbleStartObj = transform.Find("BubbleStartObj").gameObject;
-
-        bubbleProperty = bubbleSet.transform.Find("Bubble").GetComponent<BubbleProperty>();
+        
     }
     // Update is called once per frame
     void Update()
@@ -43,7 +40,6 @@ public class PlayerWeaponA : PlayerWeapon
         rb.velocity = Vector3.zero;
 
         isPushed = false;
-        spaceKeyStorage = 0;
 
         GameObject bubbleSetInstance = Instantiate(bubbleSet) as GameObject;
 
@@ -62,26 +58,12 @@ public class PlayerWeaponA : PlayerWeapon
 
         base.OnAttackButtonStay();
 
-        if (bubbles[bubbles.Count - 1])
+
+        //最大値を超えたら、自動的に前へ出す
+        if (!isPushed)
         {
-            if (spaceKeyStorage < bubbleProperty.MaxSize)
-            {
-                spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
-                bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
-                //少しずつ前に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.forward * Time.fixedDeltaTime * 1.2f;
-                //少しずつ上に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.up * Time.fixedDeltaTime * 0.8f;
-            }
-            else
-            {
-                //最大値を超えたら、自動的に前へ出す
-                if (!isPushed)
-                {
-                    PushTheBubbleOnceTime();
-                    isPushed = true;
-                }
-            }
+            PushTheBubbleOnceTime();
+            isPushed = true;
         }
     }
 
@@ -97,7 +79,7 @@ public class PlayerWeaponA : PlayerWeapon
 
         if (!bubbles[bubbles.Count - 1].GetComponent<BubbleProperty>().IsForceFloating)
         {
-            bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleFowardPower,
+            bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleForwardPower,
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);

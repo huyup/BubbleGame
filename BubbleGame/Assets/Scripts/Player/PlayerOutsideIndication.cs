@@ -8,18 +8,17 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerOutsideIndication : MonoBehaviour
 {
-    GameObject arrow;
-    Camera targetCamera;
+    [SerializeField]
+    private GameObject arrow;
 
-    Rect viewPortRect = new Rect(0, 0, 1, 1);
+    private Camera targetCamera;
+
+    private Rect viewPortRect = new Rect(0, 0, 1, 1);
 
     void Start()
     {
         targetCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-
-        arrow=transform.Find("Arrow").gameObject;
     }
-
     void Update()
     {
         Vector3 viewportPos = targetCamera.WorldToViewportPoint(transform.position);
