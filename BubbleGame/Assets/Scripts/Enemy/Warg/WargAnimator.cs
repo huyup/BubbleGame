@@ -25,7 +25,7 @@ public class WargAnimator : EnemyAnimator
             controller.TurnOffAttackedFlag();
         }
 
-        if (controller.isInsideBubble)
+        if (controller.IsInsideBubble)
         {     
             animator.SetFloat("Speed",0);
             animator.SetBool("Attacking", false);

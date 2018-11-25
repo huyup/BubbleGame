@@ -6,6 +6,7 @@ public class BubbleCollision : MonoBehaviour
 {
     private BubbleSetController setController;
 
+    [SerializeField]
     private bool canBeDestroy;
 
     // Use this for initialization
@@ -16,7 +17,7 @@ public class BubbleCollision : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && canBeDestroy)
+        if (collision.gameObject.layer==16 && canBeDestroy)
         {
             setController.DestroyBubbleSet();
         }

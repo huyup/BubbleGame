@@ -1,42 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
     // 重力値.
-    const float GravityPower = 9.8f;
+    private const float GravityPower = 9.8f;
 
     //　目的地についたとみなす停止距離.
-    const float StoppingDistance = 0.6f;
+    private const float StoppingDistance = 0.6f;
 
-    CharacterController characterController;
+    private CharacterController characterController;
 
     // 目的地.
-    public Vector3 destination;
+    public Vector3 Destination;
 
     // 到着したか（到着した true/到着していない false)
-    bool isArrived = false;
+    private bool isArrived = false;
 
     // 現在の移動速度.
-    Vector3 velocity;
+    private Vector3 velocity;
 
     // 向きを強制的に指示するか.
-    bool forceRotate = false;
+    private bool forceRotate = false;
 
     //重力を使うかどうか
-    bool isUseGravity = true;
+    private bool isUseGravity = true;
 
     // 強制的に向かせたい方向.
-    Vector3 forceRotateDirection;
+    private Vector3 forceRotateDirection;
 
     //今の状態
-    EnemyController controller;
+    private EnemyController controller;
 
-    EnemyStatus enemyStatus;
+    private EnemyStatus enemyStatus;
+    
+    private float speed;
 
-
-    float speed;
+    private float initSpeed;
     // Use this for initialization
     void Start()
     {
@@ -44,15 +46,16 @@ public class EnemyMove : MonoBehaviour
         controller = GetComponent<EnemyController>();
 
         characterController = GetComponent<CharacterController>();
-        destination = transform.position;
+        Destination = transform.position;
         velocity = Vector3.zero;
         speed = enemyStatus.WalkSpeed;
+        initSpeed = enemyStatus.WalkSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!controller.isInsideBubble&&!controller.IsDied)
+        if (!controller.IsInsideBubble && !controller.IsDied)
         {
             Move();
         }
@@ -91,7 +94,7 @@ public class EnemyMove : MonoBehaviour
         // 強制的に向きを変えるを解除.
         if (forceRotate && Vector3.Dot(transform.forward, forceRotateDirection) > 0.99f)
             forceRotate = false;
-        float distance = Vector3.Distance(transform.position, destination);
+        float distance = Vector3.Distance(transform.position, Destination);
 
         //　目的地にちかづいたら到着.
         if (distance < StoppingDistance)
@@ -107,7 +110,7 @@ public class EnemyMove : MonoBehaviour
     public void SetDestination(Vector3 _destination)
     {
         isArrived = false;
-        destination = _destination;
+        Destination = _destination;
     }
 
     // 指定した向きを向かせる.
@@ -122,7 +125,7 @@ public class EnemyMove : MonoBehaviour
     // 移動をやめる.
     public void StopMove()
     {
-        destination = transform.position; // 現在地点を目的地にしてしまう.
+        Destination = transform.position; // 現在地点を目的地にしてしまう.
     }
 
     // 目的地に到着したかを調べる. true　到着した/ false 到着していない.
@@ -134,7 +137,7 @@ public class EnemyMove : MonoBehaviour
     void CalculateVelocityAndRotation()
     {
         //　水平面での移動を考えるのでXZのみ扱う.
-        Vector3 destinationXZ = destination;
+        Vector3 destinationXZ = Destination;
         destinationXZ.y = transform.position.y;// 高さを目的地と現在地を同じにしておく.
 
         float distance = Vector3.Distance(transform.position, destinationXZ);
@@ -155,8 +158,8 @@ public class EnemyMove : MonoBehaviour
     {
         //********* ここからXZのみで考える. ********
         // 目的地までの距離と方角を求める.
-        Vector3 direction = (destination - transform.position).normalized;
-        
+        Vector3 direction = (Destination - transform.position).normalized;
+
         SetRotation(direction, enemyStatus.RotateSpeed);
     }
     private void SetVelocityXZ(Vector3 _direction, float _walkSpeed)
@@ -192,8 +195,16 @@ public class EnemyMove : MonoBehaviour
         }
     }
 
-    public void ChangeSpeed()
+    public void SetSpeedByHp(int _nowHp)
     {
-        speed = speed*0.90f;
+        Debug.Log("_nowHp" + _nowHp);
+        int maxHp = enemyStatus.MaxHp;
+        Debug.Log("maxHp" + enemyStatus.MaxHp);
+
+        decimal rate = _nowHp * 100 / maxHp;
+
+        Debug.Log("rate" + rate);
+        speed = initSpeed * ((float)rate * 0.01f);
+        Debug.Log("speed(Before)" + speed);
     }
 }

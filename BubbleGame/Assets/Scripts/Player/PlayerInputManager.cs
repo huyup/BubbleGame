@@ -48,10 +48,23 @@ public class PlayerInputManager : MonoBehaviour
         leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
         leftYAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;
 
+        //Debug.Log("leftXAxisInput" + leftXAxisInput);
+        //Debug.Log("leftYAxisInput" + leftYAxisInput);
+
         //右スティック
         rightXAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).x;
         //y軸を反転させる
-        rightYAxisInput = -GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
+        rightYAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
+
+        if (rightXAxisInput * leftXAxisInput < 0 || rightYAxisInput * leftYAxisInput < 0
+            || rightXAxisInput * leftYAxisInput < 0 || rightYAxisInput * leftXAxisInput < 0 )
+        {
+            playerController.Slow();
+        }
+        else
+        {
+            playerController.ResetSlow();
+        }
 
         playerController.MoveByRigidBody(leftXAxisInput, leftYAxisInput, maxControllerTolerance, prevPlayerPos);
 

@@ -8,7 +8,7 @@ public class EnemyBodyCollision : MonoBehaviour
     EnemyMove enemyMove;
     GameObject explosion;
     Vector3 explosionInitPos;
-    
+
     bool canSetExplodeParameter = true;
     private void Start()
     {
@@ -17,20 +17,10 @@ public class EnemyBodyCollision : MonoBehaviour
         explosionInitPos = explosion.transform.localPosition;
         controller = GetComponent<EnemyController>();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Ground" && controller.isInsideBubble &&
-    !controller.isFloating && transform.tag == "Octopus")
-        {
-            Destroy(this.gameObject);
-        }
-    }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground" && controller.isInsideBubble &&
-            !controller.isFloating)
+        if (controller.IsFalling)
         {
-            Debug.Log(">>>");
             controller.ResetComponent();
             Explode(collision);
         }
@@ -41,7 +31,7 @@ public class EnemyBodyCollision : MonoBehaviour
         {
             Debug.Log("Explode");
             controller.IsDied = true;
-            
+
             explosion.transform.localPosition = explosionInitPos;
 
             ParticleSystem[] particles;
@@ -49,10 +39,10 @@ public class EnemyBodyCollision : MonoBehaviour
 
             GameObject bodyMesh = transform.Find("RETMESH2").gameObject;
             bodyMesh.SetActive(false);
-            
+
             foreach (ParticleSystem particle in particles)
             {
-                particle.transform.localPosition= Vector3.zero;
+                particle.transform.localPosition = Vector3.zero;
                 if (!particle.isPlaying)
                     particle.Play();
             }

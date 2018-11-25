@@ -17,6 +17,7 @@ public class PlayerWeaponA : PlayerWeapon
     private Rigidbody rb;
 
     private PlayerStatus status;
+    private PlayerController controller;
     private BubbleProperty bubbleProperty;
 
     private float spaceKeyStorage = 0.0f;
@@ -26,7 +27,7 @@ public class PlayerWeaponA : PlayerWeapon
     {
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
-
+        controller = GetComponent<PlayerController>();
         bubbleStartObj = transform.Find("BubbleStartObj").gameObject;
 
         bubbleProperty = bubbleSet.transform.Find("Bubble").GetComponent<BubbleProperty>();
@@ -39,7 +40,9 @@ public class PlayerWeaponA : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
-        base.OnAttackButtonDown();
+        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonDown();
+        controller.BanMove();
+        controller.BanJump();
         rb.velocity = Vector3.zero;
 
         isPushed = false;
@@ -59,8 +62,7 @@ public class PlayerWeaponA : PlayerWeapon
     {
         if (bubbles.Count == 0)
             return;
-
-        base.OnAttackButtonStay();
+        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonStay();
 
         if (bubbles[bubbles.Count - 1])
         {
@@ -87,8 +89,14 @@ public class PlayerWeaponA : PlayerWeapon
 
     public override void OnAttackButtonUp()
     {
-        base.OnAttackButtonUp();
-        PushTheBubbleOnceTime();
+        controller.ResetJump();
+        controller.ResetMove();
+        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
+        if (!isPushed)
+        {
+            PushTheBubbleOnceTime();
+            isPushed = true;
+        }
     }
     private void PushTheBubbleOnceTime()
     {
@@ -102,7 +110,7 @@ public class PlayerWeaponA : PlayerWeapon
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
-            isPushed = true;
+
         }
     }
 }

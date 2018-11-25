@@ -47,7 +47,9 @@ public class WargController : EnemyController
         initPosition = transform.position;
         // 待機時間
         waitTime = status.MinWaitTime;
-        
+
+        NowHp = status.MaxHp;
+
 
         nowState = WargState.Searching;
         nextState = WargState.Searching;
@@ -56,8 +58,12 @@ public class WargController : EnemyController
     // Update is called once per frame
     void Update()
     {
-        if (IsDied)
+        base.Update();
+        animator.SetMoveAnimatorParameter();
+
+        if (IsDied||IsFalling||IsFloating)
             return;
+
         switch (nowState)
         {
             case WargState.Searching:
@@ -90,7 +96,7 @@ public class WargController : EnemyController
                     break;
             }
         }
-        animator.SetMoveAnimatorParameter();
+
     }
 
 
@@ -107,7 +113,7 @@ public class WargController : EnemyController
     void Searching()
     {
         // ターゲットを発見したら追跡
-        if (attackTarget)
+        if (AttackTarget)
         {
             ChangeState(WargState.Chasing);
             //waitTime = 0;
@@ -151,11 +157,11 @@ public class WargController : EnemyController
     void Chasing()
     {
         // 移動先をプレイヤーに設定
-        moveController.SetDestination(attackTarget.position);
+        moveController.SetDestination(AttackTarget.position);
 
         // FIXME:攻撃範囲内に近づいたら攻撃、攻撃範囲の値がマジックナンバーなってる
-        if (Vector3.Distance(attackTarget.position, transform.position) <= 2.5f)
-        {       
+        if (Vector3.Distance(AttackTarget.position, transform.position) <= 2.8f)
+        {
             ChangeState(WargState.Attacking);
         }
     }
@@ -167,7 +173,7 @@ public class WargController : EnemyController
         attacking = true;
 
         // 敵の方向に振り向かせる.
-        Vector3 targetDirection = (attackTarget.position - transform.position).normalized;
+        Vector3 targetDirection = (AttackTarget.position - transform.position).normalized;
         moveController.SetDirectionXZ(targetDirection);
 
         // 移動を止める.
@@ -179,7 +185,7 @@ public class WargController : EnemyController
         // 移動を止める.
         moveController.StopMove();
         //TODO:ここに攻撃の処理を入れる
-        if (attackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
+        if (AttackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
         {
             searchController.Research();
         }
@@ -231,5 +237,12 @@ public class WargController : EnemyController
     public void TurnOnAttackedFlag()
     {
         attacked = false;
+    }
+
+    public void Damage()
+    {
+        if (NowHp > 0)
+            NowHp-=2;
+        GetComponent<EnemyMove>().SetSpeedByHp(NowHp);
     }
 }
