@@ -7,30 +7,22 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     /// <summary>
-    /// 落下できるかどうか
-    /// FIXME:回数にしたほうがいいか？
-    /// </summary>
-    //[HideInInspector]
-    public bool canAddDownForce = true;
-
-    /// <summary>
-    /// 上昇できるかどうか
-    /// FIXME:回数にしたほうがいいか？
-    /// </summary>
-    //[HideInInspector]
-    public bool canAddUpForce = true;
-
-    /// <summary>
     /// 泡の中にいるかどうか
     /// </summary>
     //[HideInInspector]
-    public bool isInsideBubble { get; private set; }
+    public bool IsInsideBubble { get; private set; }
 
     /// <summary>
     /// 上昇中かどうか
     /// </summary>
     //[HideInInspector]
-    public bool isFloating = false;
+    public bool IsFloating = false;
+
+    /// <summary>
+    /// 落下中かどうか
+    /// </summary>
+    //[HideInInspector]
+    public bool IsFalling = false;
 
     /// <summary>
     /// 速度を変えられるかどうか
@@ -42,28 +34,49 @@ public class EnemyController : MonoBehaviour
     /// 死亡したかどうか
     /// </summary>
     [HideInInspector]
-    public bool IsDied { get;  set; }
+    public bool IsDied { get; set; }
 
     /// <summary>
     /// 攻撃目標
     /// </summary>
-    protected Transform attackTarget;
+    protected Transform AttackTarget;
 
+    /// <summary>
+    /// 現在のHp
+    /// </summary>
+    protected int NowHp;
 
-    public void MoveToCenterPos(Transform bubble)
+    private Transform bubble;
+
+    public void SetCenterPos(Transform _bubble)
+    {
+        this.bubble = _bubble;
+        IsFloating = true;
+    }
+
+    protected void Update()
+    {
+        if (IsFloating)
+        {
+            MoveToCenterPos();
+        }
+    }
+
+    private void MoveToCenterPos()
     {
         if (bubble == null)
         {
             GetComponent<Rigidbody>().velocity = Physics.gravity;
+            IsFalling = true;
             ResetFloatFlag();
             return;
         }
-        if (canAddUpForce && !isInsideBubble)
+        if (!IsInsideBubble)
         {
             canChangeVelocity = true;
-            isInsideBubble = true;
+            IsInsideBubble = true;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            StartCoroutine(SetFloatingFlag());
+            IsFloating = true;
             GetComponent<CharacterController>().enabled = false;
         }
         if (Vector3.Distance(transform.position, bubble.position) > 0.1f)
@@ -79,35 +92,15 @@ public class EnemyController : MonoBehaviour
             canChangeVelocity = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
         }
-
-    }
-    public void SetRigibodyVelocityOnce(Vector3 _velocity)
-    {
-        if (canAddUpForce && !isInsideBubble)
-        {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            StartCoroutine(SetFloatingFlag());
-            GetComponent<CharacterController>().enabled = false;
-            GetComponent<Rigidbody>().velocity = _velocity * 2f;
-            canAddUpForce = false;
-        }
-    }
-    IEnumerator SetFloatingFlag()
-    {
-        yield return new WaitForSeconds(1f);
-        isFloating = true;
     }
     public void ResetFloatFlag()
     {
-        //GetComponent<Rigidbody>().velocity = Vector3.zero;
-        canAddDownForce = true;
-        canAddUpForce = true;
-        isFloating = false;
+        IsFloating = false;
+        IsInsideBubble = false;
     }
     public void ResetComponent()
     {
         ResetFloatFlag();
-        isInsideBubble = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
@@ -115,6 +108,7 @@ public class EnemyController : MonoBehaviour
     // 攻撃対象を設定する
     public void SetAttackTarget(Transform target)
     {
-        attackTarget = target;
+        AttackTarget = target;
     }
+
 }

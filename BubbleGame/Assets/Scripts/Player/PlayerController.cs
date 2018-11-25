@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private PlayerWeaponA weaponA;
     [SerializeField]
     private PlayerWeaponB weaponB;
-    #region フィールド
+
     /// <summary>
     /// アタッチするコンポーネント
     /// </summary>
@@ -29,9 +29,12 @@ public class PlayerController : MonoBehaviour
 
     //無敵かどうか
     private bool isVincible = false;
+    private bool isSlow = false;
+    private bool canJump = false;
+    private bool canMove = false;
 
-    #endregion
-
+    //TODO:いつ攻撃を禁止するか？
+    private bool canAttack = false;
     #region 初期化
     void Start()
     {
@@ -46,6 +49,10 @@ public class PlayerController : MonoBehaviour
         groundDetector.Initialize(0.25f, 2.0f, 0.01f, 0.05f, groundLayer);
 
         nowWeaponType = WeaponType.WeaponA;
+        isSlow = false;
+        canJump = true;
+        canAttack = true;
+        canMove = true;
     }
     #endregion
 
@@ -94,9 +101,10 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCharacterByAxis2(float _h, float _v)
     {
+
         //なぜか右のスティックが上下反転しているため、
         //vの値をマイナスにした
-        Vector3 velocity = new Vector3(_h, 0, -_v) * Time.fixedDeltaTime;
+        Vector3 velocity = new Vector3(_h, 0, _v) * Time.fixedDeltaTime;
 
         if (velocity.magnitude > 0)
             transform.rotation = Quaternion.LookRotation(new Vector3
@@ -107,11 +115,24 @@ public class PlayerController : MonoBehaviour
     #region 移動用メソッド
     public void MoveByRigidBody(float _h, float _v, float _maxControllerTolerance, Vector3 _prevPosition)
     {
-        Vector3 velocity = new Vector3(_h * status.RunSpeed, 0, _v * status.RunSpeed) * Time.fixedDeltaTime;
+        if (!canMove)
+            return;
+        if (!isSlow)
+        {
+            Vector3 velocity = new Vector3(_h * status.RunSpeed, 0, _v * status.RunSpeed) * Time.fixedDeltaTime;
 
-        if (velocity.magnitude > _maxControllerTolerance)
-            //現在の位置＋入力した数値の場所に移動する
-            rb.MovePosition(transform.position + velocity);
+            if (velocity.magnitude > _maxControllerTolerance)
+                //現在の位置＋入力した数値の場所に移動する
+                rb.MovePosition(transform.position + velocity);
+        }
+        else
+        {
+            Vector3 velocity = new Vector3(_h * status.BackRunSpeed, 0, _v * status.BackRunSpeed) * Time.fixedDeltaTime;
+
+            if (velocity.magnitude > _maxControllerTolerance)
+                //現在の位置＋入力した数値の場所に移動する
+                rb.MovePosition(transform.position + velocity);
+        }
 
         animatorCtr.SetMoveAnimation(_prevPosition);
     }
@@ -151,7 +172,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("ErrorToSetWeapon");
         }
-
         return nowWeapon;
     }
     #endregion
@@ -159,13 +179,12 @@ public class PlayerController : MonoBehaviour
     #region ジャンプ用メソッド
     public void Jump()
     {
-        if (!groundDetector.IsHit)
+        if (!groundDetector.IsHit || !canJump)
             return;
         rb.velocity = Vector3.zero;
         Vector3 velocity = transform.up * status.JumpPower * Time.fixedDeltaTime * 60;
         rb.velocity = velocity;
     }
-
     private void ChangeGravity()
     {
         //重力を増やせる
@@ -207,6 +226,49 @@ public class PlayerController : MonoBehaviour
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
             this.gameObject.SetActive(false);
         }
+    }
+    #endregion
+
+    #region 禁止機能・スピード低下機能
+
+    public void Slow()
+    {
+        isSlow = true;
+    }
+
+    public void ResetSlow()
+    {
+        isSlow = false;
+    }
+
+    public void BanMove()
+    {
+        canMove = false;
+    }
+
+    public void BanJump()
+    {
+        canJump = false;
+    }
+
+    public void BanAttack()
+    {
+        canAttack = false;
+    }
+
+    public void ResetMove()
+    {
+        canMove = true;
+    }
+
+    public void ResetJump()
+    {
+        canJump = true;
+    }
+
+    public void ResetAttack()
+    {
+        canAttack = true;
     }
     #endregion
 }

@@ -39,6 +39,16 @@ public class PlayerStatus : MonoBehaviour
     }
 
     /// <summary>
+    /// 移動時の速度
+    /// </summary>
+    [SerializeField]
+    private float backRunSpeed = 3;
+    public float BackRunSpeed
+    {
+        get { return backRunSpeed; }
+    }
+
+    /// <summary>
     /// ジャンプパワー
     /// </summary>
     [SerializeField]

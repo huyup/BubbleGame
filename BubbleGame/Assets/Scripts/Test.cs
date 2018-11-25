@@ -6,6 +6,6 @@ public class Test : MonoBehaviour {
 
     void OnParticleCollision(GameObject obj)
     {
-        Debug.Log("衝突");
+        obj.GetComponent<WargController>().Damage();
     }
 }

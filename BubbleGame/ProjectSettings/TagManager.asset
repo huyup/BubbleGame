@@ -29,8 +29,8 @@ TagManager:
   - JudgeBox
   - Sky
   - EnemyHit
-  - 
-  - 
+  - PlayerTrigger
+  - Environment
   - 
   - 
   - 

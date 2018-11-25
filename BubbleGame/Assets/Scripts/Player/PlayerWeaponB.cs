@@ -14,10 +14,12 @@ public class PlayerWeaponB : PlayerWeapon
 
     private Rigidbody rb;
 
-    private PlayerStatus status; 
+    private PlayerStatus status;
+    private PlayerController controller;
     // Use this for initialization
     void Start()
     {
+        controller = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
 
@@ -32,7 +34,6 @@ public class PlayerWeaponB : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
-        base.OnAttackButtonDown();
         rb.velocity = Vector3.zero;
         
         OnCreateBubble();
@@ -40,14 +41,12 @@ public class PlayerWeaponB : PlayerWeapon
 
     public override void OnAttackButtonStay()
     {
-        base.OnAttackButtonStay();
         rapidFireBubble.transform.position = bubbleStartPos;
         rapidFireBubble.transform.rotation = Quaternion.LookRotation(transform.forward);
     }
 
     public override void OnAttackButtonUp()
     {
-        base.OnAttackButtonUp();
         rapidFireBubble.GetComponent<ParticleSystem>().Stop();
     }
 
@@ -56,9 +55,5 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.transform.position = bubbleStartPos;
         rapidFireBubble.transform.rotation = Quaternion.LookRotation(transform.forward);
         rapidFireBubble.GetComponent<ParticleSystem>().Play();
-    }
-
-    private void OnCreateBubbleInterval()
-    {
     }
 }

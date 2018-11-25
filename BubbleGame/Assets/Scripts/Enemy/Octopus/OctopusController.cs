@@ -100,7 +100,7 @@ public class OctopusController : EnemyController
     }
     void StandBy()
     {
-        if (attackTarget != null)
+        if (AttackTarget != null)
         {
             ChangeState(OctopusState.Attacking);
         }
@@ -112,7 +112,7 @@ public class OctopusController : EnemyController
         ResetStateFlag();
 
         // 敵の方向に振り向かせる.
-        Vector3 targetDirection = (attackTarget.position - transform.position).normalized;
+        Vector3 targetDirection = (AttackTarget.position - transform.position).normalized;
         moveController.SetDirectionXZ(targetDirection);
 
         // 移動を止める.
@@ -121,7 +121,7 @@ public class OctopusController : EnemyController
     // 攻撃中
     void Attacking()
     {
-        if (attackTarget == null || isInsideBubble)
+        if (AttackTarget == null || IsInsideBubble)
         {
             searchController.isSetFinished = false;
             ChangeState(OctopusState.StandBy);
@@ -136,21 +136,21 @@ public class OctopusController : EnemyController
             StartCoroutine(DiveAndAttackCoroutine());
         }
         //FIXME:敵のhpが0以下の場合、再設定へ
-        if (attackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
-            attackTarget = null;
+        if (AttackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
+            AttackTarget = null;
 
 
     }
     IEnumerator DiveAndAttackCoroutine()
     {
-        if (attacked||attackTarget==null||isInsideBubble)
+        if (attacked||AttackTarget==null||IsInsideBubble)
             yield break;
 
         attacked = true;
         //status.FloatingTotalTimeカウント分上昇
         for (int i = 0; i < status.FloatingTotalTime; i++)
         {
-            if (isInsideBubble)
+            if (IsInsideBubble)
                 break;
             transform.position += new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -175,7 +175,7 @@ public class OctopusController : EnemyController
         ////status.FloatingTotalTimeカウント分落下
         for (int i = 0; i < status.FloatingTotalTime; i++)
         {
-            if (isInsideBubble)
+            if (IsInsideBubble)
                 break;
             transform.position -= new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -185,20 +185,20 @@ public class OctopusController : EnemyController
     }
     void SetBullets(GameObject bulletInstance)
     {
-        if (attackTarget == null || isInsideBubble)
+        if (AttackTarget == null || IsInsideBubble)
         {
             Destroy(bulletInstance);
             return;
         }
         // 敵の方向に振り向かせる.
-        Vector3 targetDirection = (attackTarget.position - transform.position).normalized;
+        Vector3 targetDirection = (AttackTarget.position - transform.position).normalized;
         moveController.SetDirectionXZ(targetDirection);
 
         bullets.Add(bulletInstance);
 
         bullets[bullets.Count - 1].transform.position = shootStartPos;
 
-        Vector3 direction= (attackTarget.position - transform.position).normalized;
+        Vector3 direction= (AttackTarget.position - transform.position).normalized;
         bullets[bullets.Count - 1].transform.LookAt(direction);
         bullets[bullets.Count - 1].GetComponent<Rigidbody>().AddForce(direction*status.BulletSpeed,ForceMode.VelocityChange);
         bullets.Remove(bulletInstance);

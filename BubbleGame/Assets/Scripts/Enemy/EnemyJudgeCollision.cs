@@ -20,7 +20,7 @@ public class EnemyJudgeCollision : MonoBehaviour
     bool isBubbleContainEnemy = false;
 
     bool canAddUpForce = false;
-
+    
     GameObject bubble;
     // Use this for initialization
     void Start()
@@ -49,7 +49,6 @@ public class EnemyJudgeCollision : MonoBehaviour
             {
                 //泡に破裂命令
                 other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
-                enemyMove.ChangeSpeed();
             }
         }
     }
@@ -66,7 +65,7 @@ public class EnemyJudgeCollision : MonoBehaviour
             }
             else
             {
-                //一定時間後に、泡を破滅させる
+                //TODO:ここに含まれていない状態の処理を入れる
             }
         }
     }
@@ -87,7 +86,7 @@ public class EnemyJudgeCollision : MonoBehaviour
     {
         if (_boxColider == null)
             return;
-
+        
         //FIXME:ずっと探すではなく、一回だけにする
         if (_boxColider.transform.parent.Find("Bubble"))
         {
@@ -96,7 +95,7 @@ public class EnemyJudgeCollision : MonoBehaviour
             bubble.GetComponent<BubbleController>().SetRigidbodyVelocityOnce(upForce);
         }
 
-        //controller.SetRigidbodyVelocityOnce(upForce);
-        controller.MoveToCenterPos(_boxColider.transform.parent.Find("Bubble"));
+        controller.SetCenterPos(_boxColider.transform.parent.Find("Bubble"));
+        canAddUpForce = false;
     }
 }

@@ -60,9 +60,6 @@ public class EnemyStatus : MonoBehaviour
             upFactor = value;
         }
     }
-    //現在のhp
-    public int nowHP = 100;
-
     // 最後に攻撃した対象.
     public GameObject lastAttackTarget = null;
 
