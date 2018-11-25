@@ -88,7 +88,11 @@ public class PlayerWeaponA : PlayerWeapon
     public override void OnAttackButtonUp()
     {
         base.OnAttackButtonUp();
-        PushTheBubbleOnceTime();
+        if (!isPushed)
+        {
+            PushTheBubbleOnceTime();
+            isPushed = true;
+        }
     }
     private void PushTheBubbleOnceTime()
     {
@@ -102,7 +106,7 @@ public class PlayerWeaponA : PlayerWeapon
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
-            isPushed = true;
+
         }
     }
 }

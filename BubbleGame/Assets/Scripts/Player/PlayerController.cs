@@ -8,7 +8,6 @@ public enum WeaponType
 {
     WeaponA = 1,
     WeaponB,
-    WeaponC,
     Max,
 }
 public class PlayerController : MonoBehaviour
@@ -142,9 +141,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 nowWeapon = weaponB;
-                break;
-            case WeaponType.WeaponC:
-                nowWeapon = null;
                 break;
             default:
                 nowWeapon = null;
