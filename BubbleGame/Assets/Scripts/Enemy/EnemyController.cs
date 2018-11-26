@@ -48,37 +48,33 @@ public class EnemyController : MonoBehaviour
 
     private Transform bubble;
 
-    public void SetCenterPos(Transform _bubble)
+    public void InitFloatFunction(Transform _bubble)
     {
         this.bubble = _bubble;
         IsFloating = true;
+        canChangeVelocity = true;
+        IsInsideBubble = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<CharacterController>().enabled = false;
     }
 
     protected void Update()
     {
         if (IsFloating)
         {
-            MoveToCenterPos();
+            if (bubble == null)
+            {
+                AddFallForce();
+            }
+            else
+            {
+                MoveToCenterPos();
+            }
         }
     }
 
     private void MoveToCenterPos()
     {
-        if (bubble == null)
-        {
-            GetComponent<Rigidbody>().velocity = Physics.gravity;
-            IsFalling = true;
-            ResetFloatFlag();
-            return;
-        }
-        if (!IsInsideBubble)
-        {
-            canChangeVelocity = true;
-            IsInsideBubble = true;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            IsFloating = true;
-            GetComponent<CharacterController>().enabled = false;
-        }
         if (Vector3.Distance(transform.position, bubble.position) > 0.1f)
         {
             if (canChangeVelocity)
@@ -93,22 +89,24 @@ public class EnemyController : MonoBehaviour
             GetComponent<Rigidbody>().velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
         }
     }
-    public void ResetFloatFlag()
+
+    private void AddFallForce()
+    {
+        GetComponent<Rigidbody>().velocity = Physics.gravity;
+        IsFalling = true;
+    }
+    public void ResetFloatFunction()
     {
         IsFloating = false;
         IsInsideBubble = false;
-    }
-    public void ResetComponent()
-    {
-        ResetFloatFlag();
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
     }
     // 攻撃対象を設定する
-    public void SetAttackTarget(Transform target)
+    public void SetAttackTarget(Transform _target)
     {
-        AttackTarget = target;
+        AttackTarget = _target;
     }
 
 }

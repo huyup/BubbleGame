@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
     #region 攻撃用メソッド
     public void ChangeWeapon()
     {
+        GetWeapon().Reset();
         int nextWeaponTypeNum = (int)nowWeaponType;
 
         nextWeaponTypeNum++;
