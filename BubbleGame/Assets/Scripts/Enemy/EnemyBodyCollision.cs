@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyBodyCollision : MonoBehaviour
 {
     EnemyController controller;
-    EnemyMove enemyMove;
     GameObject explosion;
     Vector3 explosionInitPos;
 
@@ -13,15 +12,14 @@ public class EnemyBodyCollision : MonoBehaviour
     private void Start()
     {
         explosion = transform.Find("ExplosionEffect").gameObject;
-        enemyMove = GetComponent<EnemyMove>();
         explosionInitPos = explosion.transform.localPosition;
         controller = GetComponent<EnemyController>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (controller.IsFalling)
+        if (controller.IsFalling&&collision.gameObject.layer==9/*Ground*/)
         {
-            controller.ResetComponent();
+            controller.ResetFloatFunction();
             Explode(collision);
         }
     }

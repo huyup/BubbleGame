@@ -113,4 +113,17 @@ public class PlayerWeaponA : PlayerWeapon
 
         }
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        controller.ResetJump();
+        controller.ResetMove();
+        GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
+        if (!isPushed)
+        {
+            PushTheBubbleOnceTime();
+            isPushed = true;
+        }
+    }
 }

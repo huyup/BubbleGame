@@ -56,4 +56,10 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.transform.rotation = Quaternion.LookRotation(transform.forward);
         rapidFireBubble.GetComponent<ParticleSystem>().Play();
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        rapidFireBubble.GetComponent<ParticleSystem>().Stop();
+    }
 }

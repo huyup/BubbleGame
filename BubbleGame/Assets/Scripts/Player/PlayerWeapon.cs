@@ -19,6 +19,11 @@ public class PlayerWeapon : MonoBehaviour
     {
 
     }
+
+    public virtual void Reset()
+    {
+
+    }
 }
 
 

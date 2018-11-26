@@ -95,7 +95,7 @@ public class EnemyJudgeCollision : MonoBehaviour
             bubble.GetComponent<BubbleController>().SetRigidbodyVelocityOnce(upForce);
         }
 
-        controller.SetCenterPos(_boxColider.transform.parent.Find("Bubble"));
+        controller.InitFloatFunction(_boxColider.transform.parent.Find("Bubble"));
         canAddUpForce = false;
     }
 }
