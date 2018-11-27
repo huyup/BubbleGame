@@ -48,6 +48,9 @@ public class EnemyController : MonoBehaviour
 
     private Transform bubble;
 
+    [SerializeField]
+    private EnemyFloatByDamage floatByDamage;
+
     public void InitFloatFunction(Transform _bubble)
     {
         this.bubble = _bubble;
@@ -70,6 +73,11 @@ public class EnemyController : MonoBehaviour
             {
                 MoveToCenterPos();
             }
+        }
+
+        if (NowHp < 20)
+        {
+            floatByDamage.CreateBubbleByDamage();
         }
     }
 
@@ -109,4 +117,11 @@ public class EnemyController : MonoBehaviour
         AttackTarget = _target;
     }
 
+    public void Damage(int _power)
+    {
+        if (NowHp > 0)
+            NowHp -= _power;
+
+        GetComponent<EnemyMove>().SetSpeedByHp(NowHp);
+    }
 }

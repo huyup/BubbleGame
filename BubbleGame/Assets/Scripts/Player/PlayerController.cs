@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     private WeaponType nowWeaponType;
     private PlayerWeapon nowWeapon;
+
     [SerializeField]
     private PlayerWeaponA weaponA;
     [SerializeField]
@@ -165,7 +166,7 @@ public class PlayerController : MonoBehaviour
                 nowWeapon = weaponB;
                 break;
             default:
-                nowWeapon = null;
+                nowWeapon = weaponB;
                 break;
         }
 

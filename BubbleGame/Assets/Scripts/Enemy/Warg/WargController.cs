@@ -239,10 +239,5 @@ public class WargController : EnemyController
         attacked = false;
     }
 
-    public void Damage()
-    {
-        if (NowHp > 0)
-            NowHp-=2;
-        GetComponent<EnemyMove>().SetSpeedByHp(NowHp);
-    }
+
 }

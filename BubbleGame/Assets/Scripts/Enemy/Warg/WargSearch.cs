@@ -9,9 +9,9 @@ public class WargSearch : EnemySearch {
 
     private class Targets
     {
-        public GameObject target;
-        public float distance;
-        public bool visible;
+        public GameObject Target;
+        public float Distance;
+        public bool Visible;
     }
 
     Targets[] targets = new Targets[GameSetting.MaxPlayerNum];
@@ -26,9 +26,9 @@ public class WargSearch : EnemySearch {
         for (int i = 0; i < targets.Length; i++)
         {
             targets[i] = new Targets();
-            targets[i].target = GameObject.Find("Player" + (i + 1).ToString());
-            targets[i].distance = 0;
-            targets[i].visible = false;
+            targets[i].Target = GameObject.Find("Player" + (i + 1).ToString());
+            targets[i].Distance = 0;
+            targets[i].Visible = false;
         }
     }
 
@@ -48,30 +48,30 @@ public class WargSearch : EnemySearch {
             for (int i = 0; i < targets.Length; i++)
             {
                 float angle = 0;
-                angle = CalculateAngleFromEyeToTarget(targets[i].target.transform);
-                targets[i].distance = Vector3.Distance(transform.parent.position-new Vector3(0,transform.parent.position.y),
-    targets[i].target.transform.position - new Vector3(0, targets[i].target.transform.position.y));
-                if (angle <= status.MaxViewAngle && targets[i].distance <= status.EyeDistance)
+                angle = CalculateAngleFromEyeToTarget(targets[i].Target.transform);
+                targets[i].Distance = Vector3.Distance(transform.parent.position-new Vector3(0,transform.parent.position.y),
+    targets[i].Target.transform.position - new Vector3(0, targets[i].Target.transform.position.y));
+                if (angle <= status.MaxViewAngle && targets[i].Distance <= status.EyeDistance)
                 {
-                    targets[i].visible = true;
+                    targets[i].Visible = true;
                 }
             }
 
             float nearDistance = 999;
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].visible)
+                if (targets[i].Visible)
                 {
-                    if (targets[i].distance < nearDistance)
-                        nearDistance = targets[i].distance;
+                    if (targets[i].Distance < nearDistance)
+                        nearDistance = targets[i].Distance;
                 }
             }
 
             for (int i = 0; i < targets.Length; i++)
             {
-                if (targets[i].visible && targets[i].distance - nearDistance == 0)
+                if (targets[i].Visible && targets[i].Distance - nearDistance == 0)
                 {
-                    wargController.SetAttackTarget(targets[i].target.transform);
+                    wargController.SetAttackTarget(targets[i].Target.transform);
                     SetFinished();
                     break;
                 }

@@ -35,7 +35,7 @@ public class EnemyMove : MonoBehaviour
     private EnemyController controller;
 
     private EnemyStatus enemyStatus;
-    
+
     private float speed;
 
     private float initSpeed;
@@ -197,14 +197,10 @@ public class EnemyMove : MonoBehaviour
 
     public void SetSpeedByHp(int _nowHp)
     {
-        Debug.Log("_nowHp" + _nowHp);
         int maxHp = enemyStatus.MaxHp;
-        Debug.Log("maxHp" + enemyStatus.MaxHp);
 
         decimal rate = _nowHp * 100 / maxHp;
 
-        Debug.Log("rate" + rate);
         speed = initSpeed * ((float)rate * 0.01f);
-        Debug.Log("speed(Before)" + speed);
     }
 }
