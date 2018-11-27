@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     #region 初期化
     void Start()
     {
-        nowWeapon = null;
+        nowWeapon = weaponA;
         animatorCtr = GetComponent<PlayerAnimator>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
@@ -142,7 +142,8 @@ public class PlayerController : MonoBehaviour
     #region 攻撃用メソッド
     public void ChangeWeapon()
     {
-        GetWeapon().Reset();
+        if (nowWeapon != null)
+            GetWeapon().Reset();
         int nextWeaponTypeNum = (int)nowWeaponType;
 
         nextWeaponTypeNum++;
