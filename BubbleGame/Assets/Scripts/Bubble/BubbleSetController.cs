@@ -5,24 +5,24 @@ public class BubbleSetController : MonoBehaviour
 {
     private GameObject bubble;
     private GameObject bubbleExplosion;
-    private BubbleExplosionEffController bubbleExplosionEffCtr;
+    private BubbleExplosionEffController bubbleExplosionEffController;
     
     // Use this for initialization
     void Start()
     {
         bubble = transform.Find("Bubble").gameObject;
         bubbleExplosion = transform.Find("BubbleExplosion").gameObject;
-        bubbleExplosionEffCtr = bubbleExplosion.GetComponent<BubbleExplosionEffController>();
+        bubbleExplosionEffController = bubbleExplosion.GetComponent<BubbleExplosionEffController>();
     }
     public void DestroyBubbleSet()
     {
         if (this.gameObject == null || bubble == null)
             return;
 
-        bubbleExplosionEffCtr.SaveEffStartProperty(bubble.transform.localScale);
+        bubbleExplosionEffController.SaveEffStartProperty(bubble.transform.localScale);
 
         Destroy(bubble);
 
-        bubbleExplosionEffCtr.PlayExplosionEff(bubble.transform.position);
+        bubbleExplosionEffController.PlayExplosionEff(bubble.transform.position);
     }
 }

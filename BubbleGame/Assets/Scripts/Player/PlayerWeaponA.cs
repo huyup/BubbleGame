@@ -109,9 +109,8 @@ public class PlayerWeaponA : PlayerWeapon
                 ForceMode.VelocityChange);
             bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
                 ForceMode.VelocityChange);
-            bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
-
         }
+        bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
     }
 
     public override void Reset()

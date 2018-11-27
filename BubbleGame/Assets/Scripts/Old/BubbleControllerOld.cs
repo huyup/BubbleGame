@@ -2,7 +2,7 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//public class BubbleController : MonoBehaviour
+//public class BubbleCtr : MonoBehaviour
 //{
 //    Rigidbody rb;
 //    BubbleRotation bubbleRotation;

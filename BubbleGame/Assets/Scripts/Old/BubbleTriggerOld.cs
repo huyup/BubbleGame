@@ -6,14 +6,14 @@
 //{
 //    Vector3 objCenterPos;
 
-//    BubbleController bubbleController;
+//    BubbleCtr bubbleController;
 //    bool isHitEnemy;
 
 //    List<GameObject> hitEnemys=new List<GameObject>();
 //    // Use this for initialization
 //    void Start()
 //    {
-//        bubbleController = transform.parent.GetComponent<BubbleController>();
+//        bubbleController = transform.parent.GetComponent<BubbleCtr>();
 //        isHitEnemy = false;
 //    }
 

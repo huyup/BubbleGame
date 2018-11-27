@@ -15,13 +15,13 @@ public class BubbleCollision : MonoBehaviour
         canBeDestroy = false;
         setController = transform.parent.GetComponent<BubbleSetController>();
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision _collision)
     {
-        if (collision.gameObject.layer==16 && canBeDestroy)
+        if (_collision.gameObject.layer==16 && canBeDestroy)
         {
             setController.DestroyBubbleSet();
         }
-        if (collision.gameObject.tag == "Ground" && canBeDestroy)
+        if (_collision.gameObject.tag == "Ground" && canBeDestroy)
         {
             setController.DestroyBubbleSet();
         }

@@ -24,10 +24,22 @@ public class ObjController : MonoBehaviour
 
     private Transform bubble;
 
+    private float objInitMass;
+
+    private Rigidbody rb;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        objInitMass = GetComponent<Rigidbody>().mass;
+    }
+
     void Update()
     {
-        if(canFloat)
+        if (canFloat)
             MoveToCenterPos();
+
+        if (IsFalling)
+            GetComponent<BoxCollider>().isTrigger = true;
     }
 
     public void SetCenterPos(Transform _bubble)
@@ -35,13 +47,14 @@ public class ObjController : MonoBehaviour
         this.bubble = _bubble;
         canFloat = true;
         canChangeVelocity = true;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
     private void MoveToCenterPos()
     {
         if (bubble == null)
         {
-            GetComponent<Rigidbody>().velocity = Physics.gravity;
+            rb.velocity = Physics.gravity * 1.2f;
+            rb.mass = 1;
             IsFalling = true;
             canFloat = false;
             return;
@@ -51,19 +64,21 @@ public class ObjController : MonoBehaviour
             if (canChangeVelocity)
             {
                 Vector3 direction = (bubble.position - transform.position).normalized;
-                GetComponent<Rigidbody>().velocity = (direction * Time.fixedDeltaTime * 200);
+                rb.velocity = (direction * Time.fixedDeltaTime * 200);
             }
         }
         else if (Vector3.Distance(transform.position, bubble.position) < 0.1f)
         {
             canChangeVelocity = false;
-            GetComponent<Rigidbody>().velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
+            rb.velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
         }
     }
 
     public void ResetFloatFlag()
     {
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        rb.mass = objInitMass;
+        GetComponent<BoxCollider>().isTrigger = false;
         IsFalling = false;
         canFloat = false;
     }

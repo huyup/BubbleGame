@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
 
-        int groundLayer = (1 << 9) | (1 << 10);
+        int groundLayer = (1 << 9) | (1 << 10) | (1 << 10) | (1 << 17);
 
         groundDetector = GetComponent<GroundDetector>();
         groundDetector.Initialize(0.25f, 2.0f, 0.01f, 0.05f, groundLayer);

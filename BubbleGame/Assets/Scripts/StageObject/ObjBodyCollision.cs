@@ -18,4 +18,10 @@ public class ObjBodyCollision : MonoBehaviour
         if (_collision.gameObject.layer == 9/*Ground*/)
             controller.ResetFloatFlag();
     }
+
+    private void OnTriggerEnter(Collider _other)
+    {
+        if (_other.gameObject.layer == 9/*Ground*/)
+            controller.ResetFloatFlag();
+    }
 }
