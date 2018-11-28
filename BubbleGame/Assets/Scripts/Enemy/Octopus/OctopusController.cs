@@ -121,7 +121,7 @@ public class OctopusController : EnemyController
     // 攻撃中
     void Attacking()
     {
-        if (AttackTarget == null || IsInsideBubble)
+        if (AttackTarget == null || IsFloating)
         {
             searchController.isSetFinished = false;
             ChangeState(OctopusState.StandBy);
@@ -143,14 +143,14 @@ public class OctopusController : EnemyController
     }
     IEnumerator DiveAndAttackCoroutine()
     {
-        if (attacked||AttackTarget==null||IsInsideBubble)
+        if (attacked||AttackTarget==null||IsFloating)
             yield break;
 
         attacked = true;
         //status.FloatingTotalTimeカウント分上昇
         for (int i = 0; i < status.FloatingTotalTime; i++)
         {
-            if (IsInsideBubble)
+            if (IsFloating)
                 break;
             transform.position += new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -175,7 +175,7 @@ public class OctopusController : EnemyController
         ////status.FloatingTotalTimeカウント分落下
         for (int i = 0; i < status.FloatingTotalTime; i++)
         {
-            if (IsInsideBubble)
+            if (IsFloating)
                 break;
             transform.position -= new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -185,7 +185,7 @@ public class OctopusController : EnemyController
     }
     void SetBullets(GameObject bulletInstance)
     {
-        if (AttackTarget == null || IsInsideBubble)
+        if (AttackTarget == null || IsFloating)
         {
             Destroy(bulletInstance);
             return;

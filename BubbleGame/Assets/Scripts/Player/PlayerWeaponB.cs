@@ -24,7 +24,7 @@ public class PlayerWeaponB : PlayerWeapon
         status = GetComponent<PlayerStatus>();
 
         bubbleStartObj = transform.Find("BubbleStartObj2").gameObject;
-        
+
     }
     // Update is called once per frame
     void Update()
@@ -35,7 +35,7 @@ public class PlayerWeaponB : PlayerWeapon
     public override void OnAttackButtonDown()
     {
         rb.velocity = Vector3.zero;
-        
+
         OnCreateBubble();
     }
 

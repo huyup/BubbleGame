@@ -16,6 +16,13 @@ public class BubbleController : MonoBehaviour
     [SerializeField]
     private float upForceToFloat=1.5f;
 
+    [SerializeField] private float upForceWhenContain;
+    public float UpForceWhenContain
+    {
+        get { return upForceWhenContain; }
+    }
+
+
     private bool canAddAutoFloatForce = true;
     // Use this for initialization
     void Start()
@@ -47,14 +54,14 @@ public class BubbleController : MonoBehaviour
         }
     }
 
-    public void SetRigidbodyVelocityOnce(Vector3 _velocity)
+    public void SetFloatVelocityToBubble()
     {
         if (canSetVelocity)
         {
             bubbleProperty.IsForceFloating = true;
             bubbleCollision.SetDestroyEnable();
             rb.velocity = Vector3.zero;
-            rb.velocity = _velocity;
+            rb.velocity = Vector3.up * upForceWhenContain;
             canSetVelocity = false;
         }
     }

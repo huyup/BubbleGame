@@ -4,35 +4,17 @@ using UnityEngine;
 
 public class EnemyJudgeCollision : MonoBehaviour
 {
-    GameObject calculationController;
-    CalculateProperty calculationProperty;
+    private CalculationRef calculationController;
 
-    CalculateBoxContainBox judgeContainFunc;
-    CalculateBiggerBoxCollider calculateBiggerFunc;
+    private EnemyController controller;
 
-    EnemyController controller;
-    EnemyMove enemyMove;
+    [SerializeField]
+    private bool canBeContained = false;
 
-    /// <summary>
-    /// FIXME:ここをenumにできないか
-    /// </summary>
-    bool isEnemyBiggerThanBubble = false;
-    bool isBubbleContainEnemy = false;
-
-    bool canAddUpForce = false;
-    
-    GameObject bubble;
     // Use this for initialization
     void Start()
     {
-        enemyMove = transform.parent.GetComponent<EnemyMove>();
-
-        calculationController = GameObject.Find("CalculationController");
-
-        calculationProperty = calculationController.GetComponent<CalculateProperty>();
-
-        judgeContainFunc = calculationController.GetComponent<CalculateBoxContainBox>();
-        calculateBiggerFunc = calculationController.GetComponent<CalculateBiggerBoxCollider>();
+        calculationController = GameObject.Find("CalculationController").GetComponent<CalculationRef>();
 
         controller = transform.parent.GetComponent<EnemyController>();
     }
@@ -45,10 +27,14 @@ public class EnemyJudgeCollision : MonoBehaviour
         if (other.gameObject.tag == "BubbleCollider")
         {
             //当たった時に、大きさを比較
-            if (calculateBiggerFunc.JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
+            if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
             {
                 //泡に破裂命令
                 other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
+            }
+            else
+            {
+                canBeContained = true;
             }
         }
     }
@@ -57,11 +43,13 @@ public class EnemyJudgeCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "BubbleCollider")
         {
-            isBubbleContainEnemy = judgeContainFunc.JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject);
-            if (isBubbleContainEnemy)
+            if (calculationController.GetContainFunction().JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
             {
-                canAddUpForce = true;
-                bubble = other.gameObject;
+                if (canBeContained)
+                {
+                    SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
+                    canBeContained = false;
+                }
             }
             else
             {
@@ -69,33 +57,24 @@ public class EnemyJudgeCollision : MonoBehaviour
             }
         }
     }
-    private void Update()
-    {
-        if(canAddUpForce)
-        {
-            SetBoxAndBubbleVelocity(calculationProperty.UpForce, this.gameObject, bubble);
-        }
-    }
     /// <summary>
     /// FIXME:Controllerに置けないか？可変性がない
     /// </summary>
     /// <param name="_upForce"></param>
     /// <param name="_enemy"></param>
-    /// <param name="_boxColider"></param>
-    private void SetBoxAndBubbleVelocity(float _upForce, GameObject _enemy, GameObject _boxColider)
+    /// <param name="_boxCollider"></param>
+    private void SetBoxAndBubbleFloat(GameObject _enemy, GameObject _boxCollider)
     {
-        if (_boxColider == null)
+        if (_boxCollider == null)
             return;
-        
+
         //FIXME:ずっと探すではなく、一回だけにする
-        if (_boxColider.transform.parent.Find("Bubble"))
+        if (_boxCollider.transform.parent.Find("Bubble"))
         {
-            Vector3 upForce = Vector3.up * _upForce;
-            GameObject bubble = _boxColider.transform.parent.Find("Bubble").gameObject;
-            bubble.GetComponent<BubbleController>().SetRigidbodyVelocityOnce(upForce);
+            GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
+            bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
 
-        controller.InitFloatFunction(_boxColider.transform.parent.Find("Bubble"));
-        canAddUpForce = false;
+        controller.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
     }
 }

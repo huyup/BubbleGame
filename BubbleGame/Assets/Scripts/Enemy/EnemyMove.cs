@@ -55,14 +55,13 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!controller.IsInsideBubble && !controller.IsDied)
+        if (!controller.IsFloating && !controller.IsDied)
         {
             Move();
         }
     }
-    protected void Move()
+    private void Move()
     {
-
         // 移動速度velocityを更新する
         if (characterController.isGrounded)
         {

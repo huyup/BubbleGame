@@ -42,7 +42,7 @@ public class ObjController : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = true;
     }
 
-    public void SetCenterPos(Transform _bubble)
+    public void SetFloatOnInit(Transform _bubble)
     {
         this.bubble = _bubble;
         canFloat = true;

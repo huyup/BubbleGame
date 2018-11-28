@@ -58,4 +58,9 @@ public class EnemyFloatByDamage : MonoBehaviour
         }
 
     }
+
+    public void Reset()
+    {
+        //TODO:ここリセットする
+    }
 }

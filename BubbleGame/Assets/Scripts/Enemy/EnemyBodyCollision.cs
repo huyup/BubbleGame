@@ -17,10 +17,10 @@ public class EnemyBodyCollision : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (controller.IsFalling&&collision.gameObject.layer==9/*Ground*/)
+        if (controller.IsFloating&&collision.gameObject.layer==9/*Ground*/)
         {
-            controller.ResetFloatFunction();
             Explode(collision);
+            controller.ResetFloatFunction();
         }
     }
     private void Explode(Collision collision)

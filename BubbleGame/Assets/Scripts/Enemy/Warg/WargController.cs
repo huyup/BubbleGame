@@ -61,7 +61,7 @@ public class WargController : EnemyController
         base.Update();
         animator.SetMoveAnimatorParameter();
 
-        if (IsDied||IsFalling||IsFloating)
+        if (IsDied||IsFloating)
             return;
 
         switch (nowState)
