@@ -9,6 +9,7 @@ public class PlayerWeaponA : PlayerWeapon
     /// </summary>
     [SerializeField]
     private GameObject bubbleSet;
+
     private List<GameObject> bubbles = new List<GameObject>();
 
     private GameObject bubbleStartObj;

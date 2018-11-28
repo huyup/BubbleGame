@@ -47,4 +47,18 @@ public class BubbleProperty : MonoBehaviour
             isForceFloating = value;
         }
     }
+
+    /// <summary>
+    ///敵を連れて上昇しているかどうか
+    /// </summary>
+    [SerializeField]
+    private bool isCreatedByDamage = false;
+    public bool IsCreatedByDamage
+    {
+        get { return isCreatedByDamage; }
+        set
+        {
+            isCreatedByDamage = value;
+        }
+    }
 }

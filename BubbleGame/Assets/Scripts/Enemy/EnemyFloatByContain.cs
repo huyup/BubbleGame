@@ -12,9 +12,9 @@ public class EnemyFloatByContain : MonoBehaviour
     private bool canFloat = false;
     
     /// <summary>
-    /// 速度を変えられるかどうか
+    ///　中心点に移動できるかどうか
     /// </summary>
-    private bool canChangeVelocity = false;
+    private bool canChangeVelocityToCenter = false;
 
     private Transform bubble;
 
@@ -46,7 +46,7 @@ public class EnemyFloatByContain : MonoBehaviour
         this.bubble = _bubble;
         canFloat = true;
         controller.IsFloating = true;
-        canChangeVelocity = true;
+        canChangeVelocityToCenter = true;
         rb.velocity = Vector3.zero;
         GetComponent<CharacterController>().enabled = false;
     }
@@ -54,7 +54,7 @@ public class EnemyFloatByContain : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, bubble.position) > 0.1f)
         {
-            if (canChangeVelocity)
+            if (canChangeVelocityToCenter)
             {
                 Vector3 direction = (bubble.position - transform.position).normalized;
                 rb.velocity = (direction * Time.fixedDeltaTime * 200);
@@ -62,7 +62,7 @@ public class EnemyFloatByContain : MonoBehaviour
         }
         else if (Vector3.Distance(transform.position, bubble.position) < 0.1f)
         {
-            canChangeVelocity = false;
+            canChangeVelocityToCenter = false;
             rb.velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
         }
     }

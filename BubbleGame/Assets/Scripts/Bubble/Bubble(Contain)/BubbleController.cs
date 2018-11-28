@@ -16,13 +16,14 @@ public class BubbleController : MonoBehaviour
     [SerializeField]
     private float upForceToFloat=1.5f;
 
-    [SerializeField] private float upForceWhenContain;
+    [SerializeField]
+    private float upForceWhenContain;
+    
     public float UpForceWhenContain
     {
         get { return upForceWhenContain; }
     }
-
-
+    
     private bool canAddAutoFloatForce = true;
     // Use this for initialization
     void Start()
@@ -34,7 +35,7 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
-        if (!bubbleProperty.IsForceFloating)
+        if (!bubbleProperty.IsForceFloating&&!bubbleProperty.IsCreatedByDamage)
         {
             Invoke("FloatByTime", countToFloat);
         }
