@@ -14890,7 +14890,7 @@ MonoBehaviour:
   bubbleSetInstanceRef: {fileID: 4104882626856780, guid: 1f4956e688253ce4790d2017b0607066,
     type: 2}
   bubbleInstanceStartRef: {fileID: 1262417637}
-  bubbleMaxSize: 3
+  bubbleMaxSize: 3.5
   increaseScaleVelocity: 0.1
   factorToFloat: 0.1
 --- !u!114 &890432356
@@ -17915,7 +17915,7 @@ Prefab:
     - target: {fileID: 114188623466675552, guid: 4ad9066faca592b4c919ad8022d97c22,
         type: 2}
       propertyPath: power
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 198817693225316940, guid: 4ad9066faca592b4c919ad8022d97c22,
         type: 2}
