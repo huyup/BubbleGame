@@ -354,7 +354,8 @@ MonoBehaviour:
   rotateSpeed: 15
   lastTime: 11
   maxSize: 0.11
-  isFloating: 0
+  isForceFloating: 0
+  isCreatedByDamage: 0
 --- !u!114 &114178811544416230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,13 +378,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a897284f5b2e34b98b2164b283e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lengthVertices:
+  LengthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  heightVertices:
+  HeightVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  depthVertices:
+  DepthVertices:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
 --- !u!114 &114763497169143130
@@ -397,6 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155c8c49eec5e34b9c1d8f450c43937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDestroy: 0
 --- !u!114 &114771216524920832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -419,9 +421,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30a035a8812e6b48b17d5f05ddd8439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fatorToCalTheMinSize: 0.5
-  fatorToCalTheMaxSize: 1.3
-  fatorToCalTheRadius: 2
+  factorToCalTheMinSize: 0.5
+  factorToCalTheMaxSize: 1.3
+  factorToCalTheRadius: 2
+  explosionEffLastTime: 1.8
 --- !u!114 &114941156713230790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -433,6 +436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cf598e1da353b41926f8e9a2507e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countToFloat: 2
+  upForceToFloat: 1.5
+  upForceWhenContain: 2
 --- !u!135 &135083579305979332
 SphereCollider:
   m_ObjectHideFlags: 1

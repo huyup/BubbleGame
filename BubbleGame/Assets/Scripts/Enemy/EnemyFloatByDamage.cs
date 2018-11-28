@@ -23,6 +23,8 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     private Rigidbody rb;
 
+    private EnemyController enemyController;
+
     private bool canSetInitPosToBubble = true;
 
     private bool canFloat = false;
@@ -34,10 +36,13 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        enemyController = GetComponent<EnemyController>();
     }
     private void Update()
     {
+        if (enemyController.IsDied)
+            return;
         if (canFloat)
         {
             if (bubbleInstance == null)
@@ -52,11 +57,15 @@ public class EnemyFloatByDamage : MonoBehaviour
     }
     public void CreateBubbleByDamage()
     {
+        if (enemyController.IsDied)
+            return;
+
         if (canSetInitPosToBubble)
         {
             CreateBubbleByDamageOnInit();
             canSetInitPosToBubble = false;
         }
+
         CreateBubbleByDamageOnUpdate();
     }
 
@@ -66,28 +75,31 @@ public class EnemyFloatByDamage : MonoBehaviour
 
         bubbleInstance = bubbleSetInstance.transform.Find("Bubble");
 
-        bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage=true;
+        bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage = true;
         bubbleInstance.position = bubbleInstanceStartRef.position;
     }
 
     private void CreateBubbleByDamageOnUpdate()
     {
-        Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
-                                Time.fixedDeltaTime * 60;
-
-        Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * factorToFloat;
-        
-        if (bubbleInstance.localScale.x < bubbleMaxSize)
+        if (!canFloat)
         {
-            bubbleInstance.localScale += scaleVelocity;
-            bubbleInstance.GetComponent<Rigidbody>().velocity = upVelocity;
-        }
-        else
-        {
-            bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-            canFloat = true;
-        }
+            Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
+                                    Time.fixedDeltaTime * 60;
 
+            Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * factorToFloat;
+
+            if (bubbleInstance.localScale.x < bubbleMaxSize)
+            {
+                bubbleInstance.localScale += scaleVelocity;
+                bubbleInstance.GetComponent<Rigidbody>().velocity = upVelocity;
+            }
+            else
+            {
+                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+                FloatByContainOnInit();
+                canFloat = true;
+            }
+        }
     }
 
     private void MoveToCenterPos()
@@ -106,7 +118,14 @@ public class EnemyFloatByDamage : MonoBehaviour
             rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
         }
     }
-
+    public void FloatByContainOnInit()
+    {
+        canFloat = true;
+        GetComponent<EnemyController>().IsFloating = true;
+        canChangeVelocityToCenter = true;
+        rb.velocity = Vector3.zero;
+        GetComponent<CharacterController>().enabled = false;
+    }
     private void AddFallForce()
     {
         rb.velocity = Physics.gravity;
@@ -115,5 +134,10 @@ public class EnemyFloatByDamage : MonoBehaviour
     public void Reset()
     {
         //TODO:ここリセットする
+        canFloat = false;
+        rb.velocity = Vector3.zero;
+        GetComponent<EnemyController>().IsFloating = false;
+        if (!GetComponent<CharacterController>().enabled)
+            GetComponent<CharacterController>().enabled = true;
     }
 }
