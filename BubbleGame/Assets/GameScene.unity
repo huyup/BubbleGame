@@ -14891,7 +14891,7 @@ MonoBehaviour:
     type: 2}
   bubbleInstanceStartRef: {fileID: 1262417637}
   bubbleMaxSize: 3.5
-  increaseScaleVelocity: 0.1
+  increaseScaleVelocity: 0.05
   factorToFloat: 0.1
 --- !u!114 &890432356
 MonoBehaviour:
@@ -30316,7 +30316,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cec0b2c714b441240b98d7c904818225, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
