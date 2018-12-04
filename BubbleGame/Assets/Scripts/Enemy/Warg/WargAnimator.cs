@@ -7,14 +7,12 @@ using UnityEngine;
 public class WargAnimator : EnemyAnimator
 {
     WargController controller;
-    WargsStatus status;
     Animator animator;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<WargController>();
-        status = transform.GetComponent<WargsStatus>();
     }
 
 
@@ -32,9 +30,9 @@ public class WargAnimator : EnemyAnimator
         }
         else
         {        //移動パラメータ
-            Vector3 delta_position = transform.position - new Vector3(0, transform.position.y, 0) - prePositionXZ;
+            Vector3 deltaPosition = transform.position - new Vector3(0, transform.position.y, 0) - prePositionXZ;
 
-            animator.SetFloat("Speed", delta_position.magnitude / Time.deltaTime);
+            animator.SetFloat("Speed", deltaPosition.magnitude / Time.deltaTime);
             animator.SetBool("Attacking", (!controller.GetAttackedFlag() && controller.attacking));
         }
         prePositionXZ = transform.position - new Vector3(0, transform.position.y, 0);

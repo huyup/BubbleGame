@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// これは敵の共通状態を管理するスクリプト
+/// </summary>
 public class EnemyStatus : MonoBehaviour
 {
     /// <summary>
@@ -11,11 +14,6 @@ public class EnemyStatus : MonoBehaviour
     public float WalkSpeed
     {
         get { return walkSpeed; }
-        private set
-        {
-            if (walkSpeed > 0 && walkSpeed != 0)
-                walkSpeed = value;
-        }
     }
 
     /// <summary>
@@ -26,10 +24,6 @@ public class EnemyStatus : MonoBehaviour
     public float RotateSpeed
     {
         get { return rotateSpeed; }
-        private set
-        {
-            rotateSpeed = value;
-        }
     }
 
     /// <summary>
@@ -40,11 +34,6 @@ public class EnemyStatus : MonoBehaviour
     public int MaxHp
     {
         get { return maxHp; }
-        private set
-        {
-            if (maxHp > 0 && maxHp != 0)
-                maxHp = value;
-        }
     }
 
     /// <summary>
@@ -55,16 +44,7 @@ public class EnemyStatus : MonoBehaviour
     public float UpFactor
     {
         get { return upFactor; }
-        private set
-        {
-            upFactor = value;
-        }
     }
-    // 最後に攻撃した対象.
-    public GameObject lastAttackTarget = null;
 
-    // プレイヤー名.
-    public string characterName = "Player";
-    
 
 }

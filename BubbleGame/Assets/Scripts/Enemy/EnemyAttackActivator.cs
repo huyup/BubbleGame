@@ -9,7 +9,6 @@ public class EnemyAttackActivator : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        attackObj = transform.GetComponentInChildren<AttackArea>().gameObject;
         attackCollider = attackObj.GetComponent<SphereCollider>();
         attackCollider.enabled = false;
     }

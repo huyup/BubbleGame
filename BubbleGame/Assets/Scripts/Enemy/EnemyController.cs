@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// FIXEME:ここのパブリック変数を修正
+/// これは敵の共用機能を管理するスクリプト
 /// </summary>
 public class EnemyController : MonoBehaviour
 {

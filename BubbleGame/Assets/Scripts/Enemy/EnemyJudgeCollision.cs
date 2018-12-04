@@ -55,12 +55,7 @@ public class EnemyJudgeCollision : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// FIXME:Controllerに置けないか？可変性がない
-    /// </summary>
-    /// <param name="_upForce"></param>
-    /// <param name="_enemy"></param>
-    /// <param name="_boxCollider"></param>
+
     private void SetBoxAndBubbleFloat(GameObject _enemy, GameObject _boxCollider)
     {
         if (_boxCollider == null)
