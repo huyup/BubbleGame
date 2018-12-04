@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBodyCollision : MonoBehaviour
 {
-    private EnemyRef enemyRef;
+    private EnemyFunctionRef enemyFunctionRef;
     [SerializeField]
     private GameObject explosion;
 
@@ -12,14 +12,14 @@ public class EnemyBodyCollision : MonoBehaviour
 
     private void Start()
     {
-        enemyRef = transform.parent.GetComponent<EnemyRef>();
+        enemyFunctionRef = transform.parent.GetComponent<EnemyFunctionRef>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (enemyRef.GetController().IsFloating&&collision.gameObject.layer==9/*Ground*/)
+        if (enemyFunctionRef.GetEnemyStatus().IsFloating && collision.gameObject.layer == 9/*Ground*/)
         {
             Explode();
-            enemyRef.GetController().ResetFloatFunction();
+            enemyFunctionRef.GetEnemyController().ResetFloatFunction();
         }
 
     }
@@ -35,7 +35,7 @@ public class EnemyBodyCollision : MonoBehaviour
     {
         if (canSetExplodeParameter)
         {
-            enemyRef.GetController().IsDied = true;
+            enemyFunctionRef.GetEnemyStatus().SetIsDied(true);
 
             Vector3 explodeStartPos = transform.position;
             explosion.transform.position = explodeStartPos;

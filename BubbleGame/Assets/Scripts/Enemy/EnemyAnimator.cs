@@ -12,6 +12,7 @@ public class EnemyAnimator : MonoBehaviour {
     {
         prePositionXZ = transform.position - new Vector3(0, transform.position.y, 0);
     }
+
     /// <summary>
     /// TODO:今　空になっている
     /// </summary>

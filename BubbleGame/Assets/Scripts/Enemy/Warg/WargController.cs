@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 // ステートの種類.
-
+public enum WargState
+{
+    Searching,    // 探索
+    Chasing,    // 追跡
+    Attacking,  // 攻撃
+    InBubble,   //泡の中にいる
+    Died,       // 死亡
+};
 public class WargController : EnemyController
 {
-    enum WargState
-    {
-        Searching,    // 探索
-        Chasing,    // 追跡
-        Attacking,  // 攻撃
-        Died,       // 死亡
-    };
-
     WargSearch searchController;
-    WargsStatus status;
+    WargsCommonParameter commonParameter;
     WargAnimator animator;
     // 残り待機時間
     float waitTime;
@@ -32,25 +31,20 @@ public class WargController : EnemyController
 
     WargState nowState;
     WargState nextState;
-
-    private EnemyRef enemyRef;
-
+    
     // Use this for initialization
     void Start()
     {
-        enemyRef = GetComponent<EnemyRef>();
-        status = transform.root.GetComponent<WargsStatus>();
+        commonParameter = transform.root.GetComponent<WargsCommonParameter>();
         animator = GetComponent<WargAnimator>();
         searchController = transform.Find("SearchAreaTrigger").GetComponent<WargSearch>();
 
         // 初期位置を保持
         initPosition = transform.position;
+
         // 待機時間
-        waitTime = status.MinWaitTime;
-
-        NowHp = status.MaxHp;
-
-
+        waitTime = commonParameter.MinWaitTime;
+        NowHp = EnemyFunctionRef.GetEnemyStatus().MaxHp;
         nowState = WargState.Searching;
         nextState = WargState.Searching;
     }
@@ -58,20 +52,9 @@ public class WargController : EnemyController
     // Update is called once per frame
     void Update()
     {
-        base.Update();
         animator.SetMoveAnimatorParameter();
-        
-        if (NowHp < 20)
-        {
-            bubbleDamageEff.StopEmitter();
-            FloatByDamage();
-        }
-        else
-        {
-            bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, NowHp);
-        }
 
-        if (IsDied||IsFloating)
+        if (EnemyFunctionRef.GetEnemyStatus().IsDied|| EnemyFunctionRef.GetEnemyStatus().IsFloating)
             return;
 
         switch (nowState)
@@ -137,11 +120,11 @@ public class WargController : EnemyController
             if (waitTime <= 0.0f)
             {
                 // 範囲内の何処か
-                Vector2 randomValue = Random.insideUnitCircle * status.WalkRange;
+                Vector2 randomValue = Random.insideUnitCircle * commonParameter.WalkRange;
                 // 移動先の設定
                 Vector3 destinationPosition = initPosition + new Vector3(randomValue.x, 0.0f, randomValue.y);
                 //　目的地の指定.
-                enemyRef.GetMove().SetDestination(destinationPosition);
+                EnemyFunctionRef.GetEnemyMove().SetDestination(destinationPosition);
             }
         }
         else
@@ -149,10 +132,10 @@ public class WargController : EnemyController
             searchController.SearchByEye();
 
             // 目的地へ到着
-            if (enemyRef.GetMove().CheckIsArrived())
+            if (EnemyFunctionRef.GetEnemyMove().CheckIsArrived())
             {
                 // 待機状態へ
-                waitTime = Random.Range(status.MinWaitTime, status.MaxWaitTime);
+                waitTime = Random.Range(commonParameter.MinWaitTime, commonParameter.MaxWaitTime);
             }
         }
     }
@@ -167,7 +150,7 @@ public class WargController : EnemyController
     void Chasing()
     {
         // 移動先をプレイヤーに設定
-        enemyRef.GetMove().SetDestination(AttackTarget.position);
+        EnemyFunctionRef.GetEnemyMove().SetDestination(AttackTarget.position);
 
         // FIXME:攻撃範囲内に近づいたら攻撃、攻撃範囲の値がマジックナンバーなってる
         if (Vector3.Distance(AttackTarget.position, transform.position) <= 2.8f)
@@ -184,16 +167,16 @@ public class WargController : EnemyController
 
         // 敵の方向に振り向かせる.
         Vector3 targetDirection = (AttackTarget.position - transform.position).normalized;
-        enemyRef.GetMove().SetDirectionXZ(targetDirection);
+        EnemyFunctionRef.GetEnemyMove().SetDirectionXZ(targetDirection);
 
         // 移動を止める.
-        enemyRef.GetMove().StopMove();
+        EnemyFunctionRef.GetEnemyMove().StopMove();
     }
     // 攻撃中
     void Attacking()
     {
         // 移動を止める.
-        enemyRef.GetMove().StopMove();
+        EnemyFunctionRef.GetEnemyMove().StopMove();
         //TODO:ここに攻撃の処理を入れる
         if (AttackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
         {

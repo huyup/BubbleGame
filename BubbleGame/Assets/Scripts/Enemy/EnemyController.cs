@@ -7,18 +7,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     /// <summary>
-    /// 死亡したかどうか
-    /// </summary>
-    [HideInInspector]
-    public bool IsDied { get; set; }
-
-    /// <summary>
-    /// 浮上しているかどうか
-    /// </summary>
-    //[HideInInspector]
-    public bool IsFloating = false;
-
-    /// <summary>
     /// 攻撃目標
     /// </summary>
     protected Transform AttackTarget;
@@ -27,28 +15,32 @@ public class EnemyController : MonoBehaviour
     /// 現在のHp
     /// </summary>
     protected int NowHp;
-
-    [SerializeField]
-    private EnemyFloatByDamage floatByDamage;
-
-    [SerializeField]
-    private EnemyFloatByContain floatByContain;
-
-    [SerializeField] protected BubbleDamageEff bubbleDamageEff;
     
-    protected void Update()
+    [SerializeField]
+    protected EnemyFunctionRef EnemyFunctionRef;
+    
+    public void Update()
     {
-        if (IsDied)
+        CheckStatus();
+    }
+
+    private void CheckStatus()
+    {
+        if (NowHp < EnemyFunctionRef.GetEnemyStatus().FloatHp)
         {
-            Died();
+            EnemyFunctionRef.GetEnemyFloatByDamage().StopEmitter();
+            FloatByDamage();
+        }
+        else
+        {
+            EnemyFunctionRef.GetEnemyFloatByDamage().ChangeEmitterOnUpdate(EnemyFunctionRef.GetEnemyStatus().MaxHp, NowHp);
         }
     }
 
     public void ResetFloatFunction()
     {
-        //TODO:ここに浮上状態のフラグをリセットさせる
-        floatByContain.Reset();
-        floatByDamage.Reset();
+        EnemyFunctionRef.GetEnemyFloatByContain().Reset();
+        EnemyFunctionRef.GetEnemyFloatByDamage().Reset();
     }
 
     // 攻撃対象を設定する
@@ -59,12 +51,12 @@ public class EnemyController : MonoBehaviour
 
     public void FloatByContain(Transform _bubble)
     {
-        floatByContain.FloatByContainOnInit(_bubble);
+        EnemyFunctionRef.GetEnemyFloatByContain().FloatByContainOnInit(_bubble);
     }
 
     public void FloatByDamage()
     {
-        floatByDamage.CreateBubbleByDamage();
+        EnemyFunctionRef.GetEnemyFloatByDamage().CreateBubbleByDamage();
     }
 
     public void Damage(int _power)
@@ -72,9 +64,8 @@ public class EnemyController : MonoBehaviour
         if (NowHp > 0)
             NowHp -= _power;
 
-        GetComponent<EnemyMove>().SetSpeedByHp(NowHp);
+        EnemyFunctionRef.GetEnemyMove().SetSpeedByHp(NowHp, EnemyFunctionRef.GetEnemyStatus().MaxHp);
     }
-
     private void Died()
     {
         GetComponent<BoxCollider>().enabled = false;

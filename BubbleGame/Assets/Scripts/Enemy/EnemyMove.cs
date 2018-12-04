@@ -31,35 +31,69 @@ public class EnemyMove : MonoBehaviour
     // 強制的に向かせたい方向.
     private Vector3 forceRotateDirection;
 
-    //今の状態
-    private EnemyController controller;
-
-    private EnemyStatus enemyStatus;
-
     private float speed;
 
     private float initSpeed;
+
+    [SerializeField]
+    private EnemyFunctionRef enemyFunctionRef;
     // Use this for initialization
     void Start()
     {
-        enemyStatus = transform.root.GetComponent<EnemyStatus>();
-        controller = GetComponent<EnemyController>();
-
         characterController = GetComponent<CharacterController>();
         Destination = transform.position;
         velocity = Vector3.zero;
-        speed = enemyStatus.WalkSpeed;
-        initSpeed = enemyStatus.WalkSpeed;
+        speed = enemyFunctionRef.GetEnemyStatus().WalkSpeed;
+        initSpeed = enemyFunctionRef.GetEnemyStatus().WalkSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!controller.IsFloating && !controller.IsDied)
+        if (!enemyFunctionRef.GetEnemyStatus().IsFloating && !enemyFunctionRef.GetEnemyStatus().IsDied)
         {
             Move();
         }
     }
+
+    public void BanGravity()
+    {
+        isUseGravity = false;
+    }
+
+    // 目的地を設定する.引数は目的地.
+    public void SetDestination(Vector3 _destination)
+    {
+        isArrived = false;
+        Destination = _destination;
+    }
+
+    // 指定した向きを向かせる.
+    public void SetDirectionXZ(Vector3 _direction)
+    {
+        forceRotateDirection = _direction;
+        forceRotateDirection.y = 0;
+        forceRotateDirection.Normalize();
+        forceRotate = true;
+    }
+    public void SetSpeedByHp(int _nowHp, int _maxHp)
+    {
+        decimal rate = (_nowHp * 100 / _maxHp);
+
+        speed = initSpeed * ((float)rate * 0.01f);
+    }
+    // 移動をやめる.
+    public void StopMove()
+    {
+        Destination = transform.position; // 現在地点を目的地にしてしまう.
+    }
+
+    // 目的地に到着したかを調べる. true　到着した/ false 到着していない.
+    public bool CheckIsArrived()
+    {
+        return isArrived;
+    }
+    #region function
     private void Move()
     {
         // 移動速度velocityを更新する
@@ -100,39 +134,6 @@ public class EnemyMove : MonoBehaviour
             isArrived = true;
 
     }
-    public void BanGravity()
-    {
-        isUseGravity = false;
-    }
-
-    // 目的地を設定する.引数は目的地.
-    public void SetDestination(Vector3 _destination)
-    {
-        isArrived = false;
-        Destination = _destination;
-    }
-
-    // 指定した向きを向かせる.
-    public void SetDirectionXZ(Vector3 _direction)
-    {
-        forceRotateDirection = _direction;
-        forceRotateDirection.y = 0;
-        forceRotateDirection.Normalize();
-        forceRotate = true;
-    }
-
-    // 移動をやめる.
-    public void StopMove()
-    {
-        Destination = transform.position; // 現在地点を目的地にしてしまう.
-    }
-
-    // 目的地に到着したかを調べる. true　到着した/ false 到着していない.
-    public bool CheckIsArrived()
-    {
-        return isArrived;
-    }
-
     void CalculateVelocityAndRotation()
     {
         //　水平面での移動を考えるのでXZのみ扱う.
@@ -150,7 +151,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 direction = (destinationXZ - transform.position).normalized;
 
         SetVelocityXZ(direction, speed);
-        SetRotation(direction, enemyStatus.RotateSpeed);
+        SetRotation(direction, enemyFunctionRef.GetEnemyStatus().RotateSpeed);
     }
 
     void CalculateRotationOnly()
@@ -159,7 +160,7 @@ public class EnemyMove : MonoBehaviour
         // 目的地までの距離と方角を求める.
         Vector3 direction = (Destination - transform.position).normalized;
 
-        SetRotation(direction, enemyStatus.RotateSpeed);
+        SetRotation(direction, enemyFunctionRef.GetEnemyStatus().RotateSpeed);
     }
     private void SetVelocityXZ(Vector3 _direction, float _walkSpeed)
     {
@@ -193,13 +194,6 @@ public class EnemyMove : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, characterTargetRotation, _rotateSpeed * Time.deltaTime);
         }
     }
+    #endregion
 
-    public void SetSpeedByHp(int _nowHp)
-    {
-        int maxHp = enemyStatus.MaxHp;
-
-        decimal rate = _nowHp * 100 / maxHp;
-
-        speed = initSpeed * ((float)rate * 0.01f);
-    }
 }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WargSearch : EnemySearch {
-    WargsStatus status;
-
-    WargController wargController;
-
+public class WargSearch : EnemySearch
+{
+    /// <summary>
+    /// ここのstatus、どうする？
+    /// </summary>
+    WargsCommonParameter commonParameter;
+    
     private class Targets
     {
         public GameObject Target;
@@ -14,14 +16,14 @@ public class WargSearch : EnemySearch {
         public bool Visible;
     }
 
-    Targets[] targets = new Targets[GameSetting.MaxPlayerNum];
+    private Targets[] targets = new Targets[GameSetting.MaxPlayerNum];
 
-    bool isSetFinished = false;
+    private bool isSetFinished = false;
 
     // Use this for initialization
-    void Start () {
-        wargController = transform.parent.GetComponent<WargController>();
-        status = transform.root.GetComponent<WargsStatus>();
+    void Start()
+    {
+        commonParameter = transform.root.GetComponent<WargsCommonParameter>();
 
         for (int i = 0; i < targets.Length; i++)
         {
@@ -49,9 +51,9 @@ public class WargSearch : EnemySearch {
             {
                 float angle = 0;
                 angle = CalculateAngleFromEyeToTarget(targets[i].Target.transform);
-                targets[i].Distance = Vector3.Distance(transform.parent.position-new Vector3(0,transform.parent.position.y),
+                targets[i].Distance = Vector3.Distance(transform.parent.position - new Vector3(0, transform.parent.position.y),
     targets[i].Target.transform.position - new Vector3(0, targets[i].Target.transform.position.y));
-                if (angle <= status.MaxViewAngle && targets[i].Distance <= status.EyeDistance)
+                if (angle <= commonParameter.MaxViewAngle && targets[i].Distance <= commonParameter.EyeDistance)
                 {
                     targets[i].Visible = true;
                 }
@@ -71,7 +73,7 @@ public class WargSearch : EnemySearch {
             {
                 if (targets[i].Visible && targets[i].Distance - nearDistance == 0)
                 {
-                    wargController.SetAttackTarget(targets[i].Target.transform);
+                    EnemyFunctionRef.GetEnemyController().SetAttackTarget(targets[i].Target.transform);
                     SetFinished();
                     break;
                 }
@@ -98,7 +100,7 @@ public class WargSearch : EnemySearch {
         // Playerタグをターゲットにする
         if (other.tag == "Player" && !isSetFinished)
         {
-            wargController.SetAttackTarget(other.transform);
+            EnemyFunctionRef.GetEnemyController().SetAttackTarget(other.transform);
             isSetFinished = true;
         }
     }
@@ -108,15 +110,7 @@ public class WargSearch : EnemySearch {
     }
     public void Research()
     {
-        wargController.SetAttackTarget(null);
+        EnemyFunctionRef.GetEnemyController().SetAttackTarget(null);
         isSetFinished = false;
     }
-    #region Debug用
-    /// <summary>
-    /// TODO:ここにデバッグ用のrayを表示する
-    /// </summary>
-    private void DrawRayAsEyeArea()
-    {
-    }
-    #endregion
 }

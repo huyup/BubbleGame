@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WargsStatus : EnemyStatus {
-
+public class WargsCommonParameter : EnemyCommonParameter
+{
     #region 視野探索用
     /// <summary>
     /// 最大視野角
@@ -80,5 +80,5 @@ public class WargsStatus : EnemyStatus {
     }
     #endregion
 
-    
+
 }

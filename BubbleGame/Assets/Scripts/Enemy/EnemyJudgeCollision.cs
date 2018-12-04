@@ -6,7 +6,8 @@ public class EnemyJudgeCollision : MonoBehaviour
 {
     private CalculationRef calculationController;
 
-    private EnemyController controller;
+    [SerializeField]
+    private EnemyFunctionRef enemyFunctionRef;
 
     [SerializeField]
     private bool canBeContained = false;
@@ -16,19 +17,17 @@ public class EnemyJudgeCollision : MonoBehaviour
     {
         calculationController = GameObject.Find("CalculationController").GetComponent<CalculationRef>();
 
-        controller = transform.parent.GetComponent<EnemyController>();
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider _other)
     {
-        Debug.Log("Enter");
-        if (other.gameObject.layer == 13/*JudgeBox*/ )
+        if (_other.gameObject.layer == 13/*JudgeBox*/ )
         {
 
             //当たった時に、大きさを比較
-            if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
+            if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, _other.gameObject))
             {
                 //泡に破裂命令
-                other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                _other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
             }
             else
             {
@@ -68,6 +67,6 @@ public class EnemyJudgeCollision : MonoBehaviour
             bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
 
-        controller.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
+        enemyFunctionRef.GetEnemyController().FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
     }
 }

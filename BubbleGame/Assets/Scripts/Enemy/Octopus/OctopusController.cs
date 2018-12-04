@@ -12,7 +12,7 @@ public class OctopusController : EnemyController
     };
 
     OctopusSearch searchController;
-    OctopusStatus status;
+    OctopusCommonParameter commonParameter;
     OctopusAnimator animator;
     EnemyMove moveController;
 
@@ -35,7 +35,7 @@ public class OctopusController : EnemyController
 
     private void Start()
     {
-        status = transform.root.GetComponent<OctopusStatus>();
+        commonParameter = transform.root.GetComponent<OctopusCommonParameter>();
         animator = GetComponent<OctopusAnimator>();
         moveController = GetComponent<EnemyMove>();
         searchController = transform.Find("SearchAreaTrigger").GetComponent<OctopusSearch>();
@@ -121,7 +121,7 @@ public class OctopusController : EnemyController
     // 攻撃中
     void Attacking()
     {
-        if (AttackTarget == null || IsFloating)
+        if (AttackTarget == null )
         {
             searchController.isSetFinished = false;
             ChangeState(OctopusState.StandBy);
@@ -143,49 +143,49 @@ public class OctopusController : EnemyController
     }
     IEnumerator DiveAndAttackCoroutine()
     {
-        if (attacked||AttackTarget==null||IsFloating)
+        if (attacked||AttackTarget==null||EnemyFunctionRef.GetEnemyStatus().IsFloating)
             yield break;
 
         attacked = true;
-        //status.FloatingTotalTimeカウント分上昇
-        for (int i = 0; i < status.FloatingTotalTime; i++)
+        //commonParameter.FloatingTotalTimeカウント分上昇
+        for (int i = 0; i < commonParameter.FloatingTotalTime; i++)
         {
-            if (IsFloating)
+            if (EnemyFunctionRef.GetEnemyStatus().IsFloating)
                 break;
-            transform.position += new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
+            transform.position += new Vector3(0, commonParameter.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
         }
 
         //弾1を発射させる
         GameObject bulletInstance = Instantiate(bullet) as GameObject;
         SetBullets(bulletInstance);
-        yield return new WaitForSeconds(status.AttackInterval);
+        yield return new WaitForSeconds(commonParameter.AttackInterval);
 
         //弾2を発射させる
         GameObject bulletInstance2 = Instantiate(bullet) as GameObject;
         SetBullets(bulletInstance2);
-        yield return new WaitForSeconds(status.AttackInterval);
+        yield return new WaitForSeconds(commonParameter.AttackInterval);
 
         //弾3を発射させる
         GameObject bulletInstance3 = Instantiate(bullet) as GameObject;
         SetBullets(bulletInstance3);
 
-        yield return new WaitForSeconds(status.AttackBreakTime);
+        yield return new WaitForSeconds(commonParameter.AttackBreakTime);
 
-        ////status.FloatingTotalTimeカウント分落下
-        for (int i = 0; i < status.FloatingTotalTime; i++)
+        ////commonParameter.FloatingTotalTimeカウント分落下
+        for (int i = 0; i < commonParameter.FloatingTotalTime; i++)
         {
-            if (IsFloating)
+            if (EnemyFunctionRef.GetEnemyStatus().IsFloating)
                 break;
-            transform.position -= new Vector3(0, status.FloatingSpeed, 0) * Time.deltaTime;
+            transform.position -= new Vector3(0, commonParameter.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(status.FloatingInterval);
+        yield return new WaitForSeconds(commonParameter.FloatingInterval);
         attacked = false;
     }
     void SetBullets(GameObject bulletInstance)
     {
-        if (AttackTarget == null || IsFloating)
+        if (AttackTarget == null || EnemyFunctionRef.GetEnemyStatus().IsFloating)
         {
             Destroy(bulletInstance);
             return;
@@ -200,7 +200,7 @@ public class OctopusController : EnemyController
 
         Vector3 direction= (AttackTarget.position - transform.position).normalized;
         bullets[bullets.Count - 1].transform.LookAt(direction);
-        bullets[bullets.Count - 1].GetComponent<Rigidbody>().AddForce(direction*status.BulletSpeed,ForceMode.VelocityChange);
+        bullets[bullets.Count - 1].GetComponent<Rigidbody>().AddForce(direction*commonParameter.BulletSpeed,ForceMode.VelocityChange);
         bullets.Remove(bulletInstance);
 
     }

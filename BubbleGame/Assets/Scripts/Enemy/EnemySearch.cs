@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// XXX:controllerが見つかりません
+/// TODO：ここに索敵の共通メソッドを入れる
 /// </summary>
 public class EnemySearch : MonoBehaviour
 {
-    EnemyController controller;
-    
-    // Use this for initialization
-    void Start()
-    {
-        controller = transform.parent.GetComponent<EnemyController>();
-    }
+    [SerializeField]
+    protected EnemyFunctionRef EnemyFunctionRef;
+
 }

@@ -8,7 +8,8 @@ public class WargAnimator : EnemyAnimator
 {
     WargController controller;
     Animator animator;
-
+    [SerializeField]
+    private EnemyFunctionRef enemyFunctionRef;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -23,7 +24,7 @@ public class WargAnimator : EnemyAnimator
             controller.TurnOffAttackedFlag();
         }
 
-        if (controller.IsFloating)
+        if (enemyFunctionRef.GetEnemyStatus().IsFloating)
         {     
             animator.SetFloat("Speed",0);
             animator.SetBool("Attacking", false);

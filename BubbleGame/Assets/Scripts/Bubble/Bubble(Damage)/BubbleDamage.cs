@@ -11,9 +11,9 @@ public class BubbleDamage : MonoBehaviour
     {
         if (_obj.layer == 12 /*Enemy*/)
         {
-            EnemyRef enemyRef;
-            enemyRef = _obj.transform.parent.GetComponent<EnemyRef>();
-            enemyRef.GetController().Damage(power);
+            EnemyFunctionRef enemyFunctionRef;
+            enemyFunctionRef = _obj.transform.parent.GetComponent<EnemyFunctionRef>();
+            enemyFunctionRef.GetEnemyController().Damage(power);
         }
 
         if (_obj.layer == 17/*Environment*/)

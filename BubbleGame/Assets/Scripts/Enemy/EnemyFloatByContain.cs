@@ -17,13 +17,13 @@ public class EnemyFloatByContain : MonoBehaviour
     private Transform bubble;
 
     private Rigidbody rb;
-
-    private EnemyController controller;
     
+
+    [SerializeField]
+    private EnemyFunctionRef enemyFunctionRef;
     private void Start()
     {
         rb = transform.GetComponent<Rigidbody>();
-        controller = GetComponent<EnemyController>();
     }
 
     private void Update()
@@ -44,7 +44,7 @@ public class EnemyFloatByContain : MonoBehaviour
     {
         this.bubble = _bubble;
         canFloat = true;
-        controller.IsFloating = true;
+        enemyFunctionRef.GetEnemyStatus().SetIsFloating(true);
         canChangeVelocityToCenter = true;
         rb.velocity = Vector3.zero;
         GetComponent<CharacterController>().enabled = false;
@@ -74,7 +74,7 @@ public class EnemyFloatByContain : MonoBehaviour
     {
         canFloat = false;
         rb.velocity = Vector3.zero;
-        controller.IsFloating = false;
+        enemyFunctionRef.GetEnemyStatus().SetIsFloating(false);
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
     }

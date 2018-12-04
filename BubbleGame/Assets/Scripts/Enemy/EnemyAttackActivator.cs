@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class EnemyAttackActivator : MonoBehaviour
 {
-    GameObject attackObj;
-    Collider attackCollider;
-    // Use this for initialization
-    void Start()
-    {
-        attackCollider = attackObj.GetComponent<SphereCollider>();
-        attackCollider.enabled = false;
-    }
+    [SerializeField]
+    private Collider attackCollider;
 
     // アニメーションイベントのStartAttackHitを受け取ってコライダを有効にする
     void StartAttackHit()

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// これは敵の共通状態を管理するスクリプト
+/// これは敵の共通パラメータを管理するスクリプト
 /// </summary>
-public class EnemyStatus : MonoBehaviour
+public class EnemyCommonParameter : MonoBehaviour
 {
     /// <summary>
     /// 移動速度
@@ -25,7 +25,6 @@ public class EnemyStatus : MonoBehaviour
     {
         get { return rotateSpeed; }
     }
-
     /// <summary>
     /// 最大Hp
     /// </summary>
@@ -35,16 +34,37 @@ public class EnemyStatus : MonoBehaviour
     {
         get { return maxHp; }
     }
-
     /// <summary>
-    /// 上昇速度の補正
+    /// 死亡したかどうか
+    /// </summary>
+    [HideInInspector]
+    public bool IsDied { get; set; }
+    
+    #region 浮上用
+    /// <summary>
+    /// 浮上するときのHp
     /// </summary>
     [SerializeField]
-    private float upFactor = 1.1f;
-    public float UpFactor
+    private int floatHp = 20;
+    public int FloatHp
     {
-        get { return upFactor; }
+        get { return floatHp; }
+    }
+    /// <summary>
+    /// 浮上しているかどうか
+    /// </summary>
+    //[HideInInspector]
+    public bool IsFloating { get; private set; }
+
+    #endregion
+
+    public void SetIsFloating(bool _isFloating)
+    {
+        IsFloating = _isFloating;
     }
 
-
+    public void SetIsDied(bool _isDied)
+    {
+        IsDied = _isDied;
+    }
 }

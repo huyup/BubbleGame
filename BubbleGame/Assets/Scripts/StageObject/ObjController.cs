@@ -9,16 +9,15 @@ public class ObjController : MonoBehaviour
     [SerializeField]
     private ObjFloatByDamage floatByDamage;
 
-    [SerializeField] private BubbleDamageEff bubbleDamageEff;
-
-
+    [SerializeField]
+    private BubbleDamageEff bubbleDamageEff;
+    
     /// <summary>
     /// 落下中かどうか
     /// </summary>
     [SerializeField]
     public bool IsFalling = false;
-
-
+    
     private int nowHp;
 
 	// Use this for initialization

@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyFloatByDamage : MonoBehaviour
 {
     [SerializeField]
+    private EnemyFunctionRef enemyFunctionRef;
+
+    [SerializeField]
     private Transform bubbleSetInstanceRef;
 
     [SerializeField]
@@ -22,13 +25,16 @@ public class EnemyFloatByDamage : MonoBehaviour
     private float factorToFloat;
 
     private Rigidbody rb;
-
-    private EnemyController enemyController;
-
+    
     private bool canSetInitPosToBubble = true;
 
     private bool canFloat = false;
 
+    [SerializeField]
+    private ParticleSystem bubbleDamageParticleSystem;
+
+    [SerializeField]
+    private float factorToCalEmission = 3;
     /// <summary>
     ///　中心点に移動できるかどうか
     /// </summary>
@@ -37,12 +43,13 @@ public class EnemyFloatByDamage : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        enemyController = GetComponent<EnemyController>();
     }
+
     private void Update()
     {
-        if (enemyController.IsDied)
+        if (enemyFunctionRef.GetEnemyStatus().IsDied)
             return;
+
         if (canFloat)
         {
             if (bubbleInstance == null)
@@ -57,9 +64,6 @@ public class EnemyFloatByDamage : MonoBehaviour
     }
     public void CreateBubbleByDamage()
     {
-        if (enemyController.IsDied)
-            return;
-
         if (canSetInitPosToBubble)
         {
             CreateBubbleByDamageOnInit();
@@ -121,7 +125,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     private void FloatByContainOnInit()
     {
         canFloat = true;
-        GetComponent<EnemyController>().IsFloating = true;
+        enemyFunctionRef.GetEnemyStatus().SetIsFloating(true);
         canChangeVelocityToCenter = true;
         rb.velocity = Vector3.zero;
         GetComponent<CharacterController>().enabled = false;
@@ -136,8 +140,23 @@ public class EnemyFloatByDamage : MonoBehaviour
         //TODO:ここリセットする
         canFloat = false;
         rb.velocity = Vector3.zero;
-        GetComponent<EnemyController>().IsFloating = false;
+        enemyFunctionRef.GetEnemyStatus().SetIsFloating(false);
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
+    }
+
+    public void ChangeEmitterOnUpdate(int _maxHp, int _nowHp)
+    {
+        ParticleSystem.EmissionModule emissionModule = bubbleDamageParticleSystem.emission;
+
+        emissionModule.rateOverTime = (((_maxHp / 10) - (_nowHp / 10))) * factorToCalEmission;
+    }
+
+    public void StopEmitter()
+    {
+        if (bubbleDamageParticleSystem == null)
+            return;
+        bubbleDamageParticleSystem.Clear();
+        bubbleDamageParticleSystem.Stop();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// TODO:タコ専用のパラメータを追加
 /// </summary>
-public class OctopusStatus : EnemyStatus {
+public class OctopusCommonParameter : EnemyCommonParameter {
     #region  浮上用
     /// <summary>
     /// 浮上速度
