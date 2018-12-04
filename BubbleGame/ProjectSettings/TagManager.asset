@@ -25,12 +25,12 @@ TagManager:
   - Ground
   - Bubble
   - Player
-  - Enemy
+  - EnemyHit
   - JudgeBox
   - Sky
-  - EnemyHit
-  - PlayerTrigger
-  - Environment
+  - EnemyAttack
+  - StageObject
+  - 
   - 
   - 
   - 

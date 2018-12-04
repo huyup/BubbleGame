@@ -4,33 +4,41 @@ using UnityEngine;
 
 public class EnemyBodyCollision : MonoBehaviour
 {
-    EnemyController controller;
-    GameObject explosion;
-    Vector3 explosionInitPos;
+    private EnemyRef enemyRef;
+    [SerializeField]
+    private GameObject explosion;
 
     bool canSetExplodeParameter = true;
+
     private void Start()
     {
-        explosion = transform.Find("ExplosionEffect").gameObject;
-        explosionInitPos = explosion.transform.localPosition;
-        controller = GetComponent<EnemyController>();
+        enemyRef = transform.parent.GetComponent<EnemyRef>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (controller.IsFloating&&collision.gameObject.layer==9/*Ground*/)
+        if (enemyRef.GetController().IsFloating&&collision.gameObject.layer==9/*Ground*/)
         {
-            Explode(collision);
-            controller.ResetFloatFunction();
+            Explode();
+            enemyRef.GetController().ResetFloatFunction();
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 17/*Environment*/&& other.gameObject.GetComponent<ObjController>().IsFalling)
+        {
+            Explode();
         }
     }
-    private void Explode(Collision collision)
+
+    private void Explode()
     {
         if (canSetExplodeParameter)
         {
-            Debug.Log("Explode");
-            controller.IsDied = true;
+            enemyRef.GetController().IsDied = true;
 
-            explosion.transform.localPosition = explosionInitPos;
+            Vector3 explodeStartPos = transform.position;
+            explosion.transform.position = explodeStartPos;
 
             ParticleSystem[] particles;
             particles = explosion.GetComponentsInChildren<ParticleSystem>();
@@ -40,7 +48,6 @@ public class EnemyBodyCollision : MonoBehaviour
 
             foreach (ParticleSystem particle in particles)
             {
-                particle.transform.localPosition = Vector3.zero;
                 if (!particle.isPlaying)
                     particle.Play();
             }

@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// TODO:今EnemyControllerの中に入っている機能をこちらへ移行する
-/// </summary>
+
 public class EnemyFloatByContain : MonoBehaviour
 {
     /// <summary>
@@ -21,9 +19,10 @@ public class EnemyFloatByContain : MonoBehaviour
     private Rigidbody rb;
 
     private EnemyController controller;
+    
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = transform.GetComponent<Rigidbody>();
         controller = GetComponent<EnemyController>();
     }
 

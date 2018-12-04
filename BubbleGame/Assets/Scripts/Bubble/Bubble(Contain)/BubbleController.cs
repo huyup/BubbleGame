@@ -19,11 +19,6 @@ public class BubbleController : MonoBehaviour
     [SerializeField]
     private float upForceWhenContain;
     
-    public float UpForceWhenContain
-    {
-        get { return upForceWhenContain; }
-    }
-    
     private bool canAddAutoFloatForce = true;
     // Use this for initialization
     void Start()

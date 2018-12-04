@@ -9,6 +9,14 @@ public class BubbleDamage : MonoBehaviour
 
     void OnParticleCollision(GameObject _obj)
     {
-        _obj.GetComponent<EnemyController>().Damage(power);
+        if (_obj.layer == 12 /*Enemy*/)
+        {
+            EnemyRef enemyRef;
+            enemyRef = _obj.transform.parent.GetComponent<EnemyRef>();
+            enemyRef.GetController().Damage(power);
+        }
+
+        if (_obj.layer == 17/*Environment*/)
+            _obj.GetComponent<ObjController>().Damage(power);
     }
 }

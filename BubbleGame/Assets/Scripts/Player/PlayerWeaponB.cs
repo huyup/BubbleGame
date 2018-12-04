@@ -9,7 +9,8 @@ public class PlayerWeaponB : PlayerWeapon
     /// </summary>
     [SerializeField] private GameObject rapidFireBubble;
 
-    private GameObject bubbleStartObj;
+    [SerializeField] private GameObject weaponBStartRef;
+    
     private Vector3 bubbleStartPos;
 
     private Rigidbody rb;
@@ -22,15 +23,13 @@ public class PlayerWeaponB : PlayerWeapon
         controller = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
-
-        bubbleStartObj = transform.Find("BubbleStartObj2").gameObject;
-
+        
     }
     // Update is called once per frame
     void Update()
     {
         //泡の発射位置を更新させる
-        bubbleStartPos = bubbleStartObj.transform.position;
+        bubbleStartPos = weaponBStartRef.transform.position;
     }
     public override void OnAttackButtonDown()
     {

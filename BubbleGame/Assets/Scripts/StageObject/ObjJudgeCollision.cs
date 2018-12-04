@@ -6,7 +6,7 @@ public class ObjJudgeCollision : MonoBehaviour
 {
     private CalculationRef calculationController;
 
-    ObjController controller;
+    ObjFloatByContain floatByContain;
 
     [SerializeField]
     private bool canBeContained = false;
@@ -16,17 +16,12 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         calculationController = GameObject.Find("CalculationController").GetComponent<CalculationRef>();
 
-        controller = transform.parent.GetComponent<ObjController>();
-    }
-    private void FixedUpdate()
-    {
-        GetComponent<Rigidbody>().MovePosition(transform.parent.position);
+        floatByContain = transform.parent.GetComponent<ObjFloatByContain>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "BubbleCollider")
         {
-
             //当たった時に、大きさを比較
             if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
             {
@@ -70,6 +65,6 @@ public class ObjJudgeCollision : MonoBehaviour
             GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
             bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
-        controller.SetFloatOnInit(_boxCollider.transform.parent.Find("Bubble"));
+        floatByContain.SetFloatOnInit(_boxCollider.transform.parent.Find("Bubble"));
     }
 }

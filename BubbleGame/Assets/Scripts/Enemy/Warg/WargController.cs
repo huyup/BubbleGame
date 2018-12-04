@@ -16,8 +16,6 @@ public class WargController : EnemyController
     WargSearch searchController;
     WargsStatus status;
     WargAnimator animator;
-    EnemyMove moveController;
-
     // 残り待機時間
     float waitTime;
 
@@ -35,12 +33,14 @@ public class WargController : EnemyController
     WargState nowState;
     WargState nextState;
 
+    private EnemyRef enemyRef;
+
     // Use this for initialization
     void Start()
     {
+        enemyRef = GetComponent<EnemyRef>();
         status = transform.root.GetComponent<WargsStatus>();
         animator = GetComponent<WargAnimator>();
-        moveController = GetComponent<EnemyMove>();
         searchController = transform.Find("SearchAreaTrigger").GetComponent<WargSearch>();
 
         // 初期位置を保持
@@ -60,6 +60,16 @@ public class WargController : EnemyController
     {
         base.Update();
         animator.SetMoveAnimatorParameter();
+        
+        if (NowHp < 20)
+        {
+            bubbleDamageEff.StopEmitter();
+            FloatByDamage();
+        }
+        else
+        {
+            bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, NowHp);
+        }
 
         if (IsDied||IsFloating)
             return;
@@ -131,7 +141,7 @@ public class WargController : EnemyController
                 // 移動先の設定
                 Vector3 destinationPosition = initPosition + new Vector3(randomValue.x, 0.0f, randomValue.y);
                 //　目的地の指定.
-                moveController.SetDestination(destinationPosition);
+                enemyRef.GetMove().SetDestination(destinationPosition);
             }
         }
         else
@@ -139,7 +149,7 @@ public class WargController : EnemyController
             searchController.SearchByEye();
 
             // 目的地へ到着
-            if (moveController.CheckIsArrived())
+            if (enemyRef.GetMove().CheckIsArrived())
             {
                 // 待機状態へ
                 waitTime = Random.Range(status.MinWaitTime, status.MaxWaitTime);
@@ -157,7 +167,7 @@ public class WargController : EnemyController
     void Chasing()
     {
         // 移動先をプレイヤーに設定
-        moveController.SetDestination(AttackTarget.position);
+        enemyRef.GetMove().SetDestination(AttackTarget.position);
 
         // FIXME:攻撃範囲内に近づいたら攻撃、攻撃範囲の値がマジックナンバーなってる
         if (Vector3.Distance(AttackTarget.position, transform.position) <= 2.8f)
@@ -174,16 +184,16 @@ public class WargController : EnemyController
 
         // 敵の方向に振り向かせる.
         Vector3 targetDirection = (AttackTarget.position - transform.position).normalized;
-        moveController.SetDirectionXZ(targetDirection);
+        enemyRef.GetMove().SetDirectionXZ(targetDirection);
 
         // 移動を止める.
-        moveController.StopMove();
+        enemyRef.GetMove().StopMove();
     }
     // 攻撃中
     void Attacking()
     {
         // 移動を止める.
-        moveController.StopMove();
+        enemyRef.GetMove().StopMove();
         //TODO:ここに攻撃の処理を入れる
         if (AttackTarget.GetComponent<PlayerStatus>().nowHp <= 0)
         {

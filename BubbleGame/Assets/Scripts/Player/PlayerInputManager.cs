@@ -12,7 +12,6 @@ public class PlayerInputManager : MonoBehaviour
     private float maxControllerTolerance = 0.02f;
 
     private PlayerController playerController;
-    private PlayerAnimator playerAnimator;
     private PlayerStatus property;
 
     private int playerNum;
@@ -35,8 +34,6 @@ public class PlayerInputManager : MonoBehaviour
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
-        playerAnimator = GetComponent<PlayerAnimator>();
-
         property = GetComponent<PlayerStatus>();
         playerNum = property.Num;
         prevPlayerPos = transform.position;
@@ -47,15 +44,13 @@ public class PlayerInputManager : MonoBehaviour
         //左スティック
         leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
         leftYAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;
-
-        //Debug.Log("leftXAxisInput" + leftXAxisInput);
-        //Debug.Log("leftYAxisInput" + leftYAxisInput);
-
+       
         //右スティック
         rightXAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).x;
         //y軸を反転させる
         rightYAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).y;
 
+        //逆走するとき、スピードを低下させる
         if (rightXAxisInput * leftXAxisInput < 0 || rightYAxisInput * leftYAxisInput < 0
             || rightXAxisInput * leftYAxisInput < 0 || rightYAxisInput * leftXAxisInput < 0 )
         {

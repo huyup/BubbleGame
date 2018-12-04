@@ -18,14 +18,12 @@ public class EnemyJudgeCollision : MonoBehaviour
 
         controller = transform.parent.GetComponent<EnemyController>();
     }
-    private void FixedUpdate()
-    {
-        GetComponent<Rigidbody>().MovePosition(transform.parent.position);
-    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "BubbleCollider")
+        Debug.Log("Enter");
+        if (other.gameObject.layer == 13/*JudgeBox*/ )
         {
+
             //当たった時に、大きさを比較
             if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
             {
@@ -41,7 +39,7 @@ public class EnemyJudgeCollision : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "BubbleCollider")
+        if (other.gameObject.layer == 13/*JudgeBox*/ )
         {
             if (calculationController.GetContainFunction().JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
             {

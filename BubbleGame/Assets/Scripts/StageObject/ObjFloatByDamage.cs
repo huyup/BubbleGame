@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFloatByDamage : MonoBehaviour
+public class ObjFloatByDamage : MonoBehaviour
 {
+
     [SerializeField]
     private Transform bubbleSetInstanceRef;
 
@@ -15,6 +16,8 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     private Transform bubbleInstance;
 
+    private ObjController objController;
+
     [SerializeField]
     private float increaseScaleVelocity;
 
@@ -22,8 +25,6 @@ public class EnemyFloatByDamage : MonoBehaviour
     private float factorToFloat;
 
     private Rigidbody rb;
-
-    private EnemyController enemyController;
 
     private bool canSetInitPosToBubble = true;
 
@@ -36,13 +37,11 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     void Start()
     {
+        objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
-        enemyController = GetComponent<EnemyController>();
     }
     private void Update()
     {
-        if (enemyController.IsDied)
-            return;
         if (canFloat)
         {
             if (bubbleInstance == null)
@@ -57,9 +56,6 @@ public class EnemyFloatByDamage : MonoBehaviour
     }
     public void CreateBubbleByDamage()
     {
-        if (enemyController.IsDied)
-            return;
-
         if (canSetInitPosToBubble)
         {
             CreateBubbleByDamageOnInit();
@@ -78,7 +74,6 @@ public class EnemyFloatByDamage : MonoBehaviour
         bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage = true;
         bubbleInstance.position = bubbleInstanceStartRef.position;
     }
-
     private void CreateBubbleByDamageOnUpdate()
     {
         if (!canFloat)
@@ -121,23 +116,20 @@ public class EnemyFloatByDamage : MonoBehaviour
     private void FloatByContainOnInit()
     {
         canFloat = true;
-        GetComponent<EnemyController>().IsFloating = true;
         canChangeVelocityToCenter = true;
         rb.velocity = Vector3.zero;
-        GetComponent<CharacterController>().enabled = false;
     }
     private void AddFallForce()
     {
+        objController.IsFalling = true;
         rb.velocity = Physics.gravity;
     }
 
     public void Reset()
     {
         //TODO:ここリセットする
+        objController.IsFalling = false;
         canFloat = false;
         rb.velocity = Vector3.zero;
-        GetComponent<EnemyController>().IsFloating = false;
-        if (!GetComponent<CharacterController>().enabled)
-            GetComponent<CharacterController>().enabled = true;
     }
 }

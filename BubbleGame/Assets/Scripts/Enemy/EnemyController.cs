@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     //[HideInInspector]
     public bool IsFloating = false;
-    
+
     /// <summary>
     /// 攻撃目標
     /// </summary>
@@ -34,11 +34,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private EnemyFloatByContain floatByContain;
 
+    [SerializeField] protected BubbleDamageEff bubbleDamageEff;
+    
     protected void Update()
     {
-        if (NowHp < 20)
+        if (IsDied)
         {
-            FloatByDamage();
+            Died();
         }
     }
 
@@ -71,5 +73,12 @@ public class EnemyController : MonoBehaviour
             NowHp -= _power;
 
         GetComponent<EnemyMove>().SetSpeedByHp(NowHp);
+    }
+
+    private void Died()
+    {
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<CharacterController>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 }

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ObjController : MonoBehaviour
 {
-    /// <summary>
-    /// 速度を変えられるかどうか
-    /// </summary>
+    private ObjStatus status;
+
     [SerializeField]
-    bool canChangeVelocity = false;
+    private ObjFloatByDamage floatByDamage;
+
+    [SerializeField] private BubbleDamageEff bubbleDamageEff;
+
 
     /// <summary>
     /// 落下中かどうか
@@ -16,70 +18,34 @@ public class ObjController : MonoBehaviour
     [SerializeField]
     public bool IsFalling = false;
 
-    /// <summary>
-    /// 上昇中できるかどうか
-    /// </summary>
-    [SerializeField]
-    private bool canFloat = false;
 
-    private Transform bubble;
+    private int nowHp;
 
-    private float objInitMass;
-
-    private Rigidbody rb;
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        objInitMass = GetComponent<Rigidbody>().mass;
-    }
-
+	// Use this for initialization
+	void Start ()
+	{
+	    status = GetComponent<ObjStatus>();
+	    nowHp = status.MaxHp;
+	}
+	
+	// Update is called once per frame
     void Update()
     {
-        if (canFloat)
-            MoveToCenterPos();
-
-        if (IsFalling)
-            GetComponent<BoxCollider>().isTrigger = true;
-    }
-
-    public void SetFloatOnInit(Transform _bubble)
-    {
-        this.bubble = _bubble;
-        canFloat = true;
-        canChangeVelocity = true;
-        rb.velocity = Vector3.zero;
-    }
-    private void MoveToCenterPos()
-    {
-        if (bubble == null)
+        if (nowHp < 20)
         {
-            rb.velocity = Physics.gravity * 1.2f;
-            rb.mass = 1;
-            IsFalling = true;
-            canFloat = false;
-            return;
+            bubbleDamageEff.StopEmitter();
+            floatByDamage.CreateBubbleByDamage();
         }
-        if (Vector3.Distance(transform.position, bubble.position) > 0.1f)
+        else
         {
-            if (canChangeVelocity)
-            {
-                Vector3 direction = (bubble.position - transform.position).normalized;
-                rb.velocity = (direction * Time.fixedDeltaTime * 200);
-            }
+            bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, nowHp);
         }
-        else if (Vector3.Distance(transform.position, bubble.position) < 0.1f)
-        {
-            canChangeVelocity = false;
-            rb.velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
-        }
-    }
 
-    public void ResetFloatFlag()
-    {
-        rb.velocity = Vector3.zero;
-        rb.mass = objInitMass;
-        GetComponent<BoxCollider>().isTrigger = false;
-        IsFalling = false;
-        canFloat = false;
     }
+    public void Damage(int _power)
+    {
+        if (nowHp > 0)
+            nowHp -= _power;
+    }
+    
 }
