@@ -16,7 +16,7 @@ public class BubbleDamage : MonoBehaviour
             enemyFunctionRef.GetEnemyController().Damage(power);
         }
 
-        if (_obj.layer == 17/*Environment*/)
+        if (_obj.layer == 16/*StageObject*/)
             _obj.GetComponent<ObjController>().Damage(power);
     }
 }

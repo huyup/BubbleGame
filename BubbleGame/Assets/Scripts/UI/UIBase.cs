@@ -13,16 +13,42 @@ public class UIBase : MonoBehaviour
     private Texture2D heartImg;
 
     [SerializeField]
-    private PlayerStatus[] players;
+    private Transform player1;
 
     [SerializeField]
-    private float baseWidth = 854f;
+    private Transform player2;
 
     [SerializeField]
-    private float baseHeight = 480f;
+    private float baseWidth = 1920f;
+
+    [SerializeField]
+    private float baseHeight = 1080f;
+
+    [SerializeField]
+    private Rect heart1Rect;
+
+    [SerializeField]
+    private Rect heart2Rect;
+
+    [SerializeField]
+    private Rect heart3Rect;
+
+    [SerializeField]
+    private Rect heart1Rect2;
+
+    [SerializeField]
+    private Rect heart2Rect2;
+
+    [SerializeField]
+    private Rect heart3Rect2;
+
+    [SerializeField]
+    private Rect player1Rect;
+
+    [SerializeField]
+    private Rect player2Rect;
 
     public bool IsVisible { get; private set; }
-
 
     public void SetUIVisible(bool _isVisible)
     {
@@ -31,68 +57,55 @@ public class UIBase : MonoBehaviour
 
     private void OnGUI()
     {
+        GUI.Label(player1Rect, "Player1:", fontStyle);
+        DrawPlayer1Life(player1.GetComponent<PlayerStatus>().nowHp);
+
+        GUI.Label(player2Rect, "Player2:", fontStyle);
+        DrawPlayer2Life(player2.GetComponent<PlayerStatus>().nowHp);
         if (IsVisible)
         {
-            // 解像度対応.
-            GUI.matrix = Matrix4x4.TRS(
-                Vector3.zero,
-                Quaternion.identity,
-                new Vector3(Screen.width / baseWidth, Screen.height / baseHeight, 1f));
-
-            //GUI.Label(new Rect(10, 450, 100, 100), "Player1:", fontStyle);
-            //DrawPlayer1Life(players[0].GetNowHp());
-
-            //GUI.Label(new Rect(690, 450, 100, 100), "Player2:", fontStyle);
-            //DrawPlayer2Life(players[1].GetNowHp());
-
-            GUI.Label(new Rect(10, 10, 100, 100), "残りの狼:" + GameSetting.Instance.GetWargsNum() + "匹", fontStyle);
+            GUI.Label(new Rect(10, 10, 100, 100), "残りのうり坊:" + GameSetting.Instance.GetWargsNum() + "匹", fontStyle);
             GUI.Label(new Rect(10, 30, 100, 100), "残りのタコ:" + GameSetting.Instance.GetOctopusNum() + "匹", fontStyle);
         }
     }
 
-    void DrawPlayer1Life(int _player1hp)
+    void DrawPlayer1Life(int _player1Hp)
     {
-        float tmp = 27;
-        float tmp2 = 28;
-
-        switch (_player1hp)
+        switch (_player1Hp)
         {
             case 0:
                 break;
             case 1:
-                GUI.Label(new Rect(90, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect, heartImg);
                 break;
             case 2:
-                GUI.Label(new Rect(90, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(90 + tmp, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect, heartImg);
+                GUI.Label(heart2Rect, heartImg);
                 break;
             case 3:
-                GUI.Label(new Rect(90, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(90 + tmp, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(90 + tmp * 2, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect, heartImg);
+                GUI.Label(heart2Rect, heartImg);
+                GUI.Label(heart3Rect, heartImg);
                 break;
         }
     }
-    void DrawPlayer2Life(int _player2hp)
+    void DrawPlayer2Life(int _player2Hp)
     {
-        float tmp = 27;
-        float tmp2 = 28;
-
-        switch (_player2hp)
+        switch (_player2Hp)
         {
             case 0:
                 break;
             case 1:
-                GUI.Label(new Rect(770, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect2, heartImg);
                 break;
             case 2:
-                GUI.Label(new Rect(770, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(770 + tmp, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect2, heartImg);
+                GUI.Label(heart2Rect2, heartImg);
                 break;
             case 3:
-                GUI.Label(new Rect(770, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(770 + tmp, 450, tmp2, tmp2), heartImg);
-                GUI.Label(new Rect(770 + tmp * 2, 450, tmp2, tmp2), heartImg);
+                GUI.Label(heart1Rect2, heartImg);
+                GUI.Label(heart2Rect2, heartImg);
+                GUI.Label(heart3Rect2, heartImg);
                 break;
         }
     }

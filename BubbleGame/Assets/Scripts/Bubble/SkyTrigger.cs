@@ -15,11 +15,13 @@ public class SkyTrigger : MonoBehaviour
 
         }
     }
-
     IEnumerator DelayDestroy(float _waitTime, BubbleSetController _bubbleSetController)
     {
+        if (!_bubbleSetController)
+            yield break;
         yield return new WaitForSeconds(_waitTime);
-        Debug.Log("DelayDe");
+        if (!_bubbleSetController)
+            yield break;
         _bubbleSetController.DestroyBubbleSet();
     }
 }

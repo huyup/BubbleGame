@@ -51,7 +51,7 @@ namespace UnityStandardAssets.Utility
                 Rigidbody.angularVelocity = Vector3.zero;
             }
 
-            SendMessage("Reset");
+            SendMessage("ResetFloatFlag");
         }
     }
 }

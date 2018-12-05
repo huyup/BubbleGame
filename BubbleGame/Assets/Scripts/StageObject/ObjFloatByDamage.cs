@@ -26,13 +26,16 @@ public class ObjFloatByDamage : MonoBehaviour
 
     private Rigidbody rb;
 
+    [SerializeField]
     private bool canSetInitPosToBubble = true;
 
+    [SerializeField]
     private bool canFloat = false;
 
     /// <summary>
     ///　中心点に移動できるかどうか
     /// </summary>
+    [SerializeField]
     private bool canChangeVelocityToCenter = false;
 
     void Start()
@@ -56,6 +59,7 @@ public class ObjFloatByDamage : MonoBehaviour
     }
     public void CreateBubbleByDamage()
     {
+
         if (canSetInitPosToBubble)
         {
             CreateBubbleByDamageOnInit();
@@ -76,6 +80,8 @@ public class ObjFloatByDamage : MonoBehaviour
     }
     private void CreateBubbleByDamageOnUpdate()
     {
+        if (!bubbleInstance)
+            return;
         if (!canFloat)
         {
             Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
@@ -125,11 +131,16 @@ public class ObjFloatByDamage : MonoBehaviour
         rb.velocity = Physics.gravity;
     }
 
-    public void Reset()
+    public void ResetFloatFlag()
     {
         //TODO:ここリセットする
         objController.IsFalling = false;
-        canFloat = false;
+        objController.ResetController();
+
         rb.velocity = Vector3.zero;
+
+        canFloat = false;
+        canSetInitPosToBubble = true;
+        canChangeVelocityToCenter = false;
     }
 }

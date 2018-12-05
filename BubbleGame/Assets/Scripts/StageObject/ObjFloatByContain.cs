@@ -31,11 +31,14 @@ public class ObjFloatByContain : MonoBehaviour
 
     void Update()
     {
+
         if (canFloat)
             MoveToCenterPos();
-
+        if (!objController.IsFalling)
+            return;
         if (objController.IsFalling)
             GetComponent<BoxCollider>().isTrigger = true;
+        
     }
 
     public void SetFloatOnInit(Transform _bubble)

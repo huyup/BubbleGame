@@ -17,7 +17,8 @@ public class ObjController : MonoBehaviour
     /// </summary>
     [SerializeField]
     public bool IsFalling = false;
-    
+
+    [SerializeField]
     private int nowHp;
 
 	// Use this for initialization
@@ -46,5 +47,10 @@ public class ObjController : MonoBehaviour
         if (nowHp > 0)
             nowHp -= _power;
     }
-    
+
+    public void ResetController()
+    {
+        nowHp = status.MaxHp;
+        bubbleDamageEff.ResetEmitter();
+    }
 }

@@ -25,4 +25,17 @@ public class BubbleDamageEff : MonoBehaviour
         bubbleDamageParticleSystem.Clear();
         bubbleDamageParticleSystem.Stop();
     }
+
+    public void ResetEmitter()
+    {
+
+        if (!bubbleDamageParticleSystem.isPlaying)
+        {
+            ParticleSystem.EmissionModule emissionModule = bubbleDamageParticleSystem.emission;
+
+            emissionModule.rateOverTime = 0;
+            bubbleDamageParticleSystem.Clear();
+            bubbleDamageParticleSystem.Play();
+        }
+    }
 }
