@@ -37,20 +37,21 @@ public class EnemyMove : MonoBehaviour
 
     [SerializeField]
     private EnemyFunctionRef enemyFunctionRef;
+
     // Use this for initialization
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         Destination = transform.position;
         velocity = Vector3.zero;
-        speed = enemyFunctionRef.GetEnemyStatus().WalkSpeed;
-        initSpeed = enemyFunctionRef.GetEnemyStatus().WalkSpeed;
+        speed = enemyFunctionRef.GetEnemyParameter().WalkSpeed;
+        initSpeed = enemyFunctionRef.GetEnemyParameter().WalkSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!enemyFunctionRef.GetEnemyStatus().IsFloating && !enemyFunctionRef.GetEnemyStatus().IsDied)
+        if (!enemyFunctionRef.GetEnemyController().IsFloating && !enemyFunctionRef.GetEnemyController().IsDied)
         {
             Move();
         }
@@ -151,7 +152,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 direction = (destinationXZ - transform.position).normalized;
 
         SetVelocityXZ(direction, speed);
-        SetRotation(direction, enemyFunctionRef.GetEnemyStatus().RotateSpeed);
+        SetRotation(direction, enemyFunctionRef.GetEnemyParameter().RotateSpeed);
     }
 
     void CalculateRotationOnly()
@@ -160,7 +161,7 @@ public class EnemyMove : MonoBehaviour
         // 目的地までの距離と方角を求める.
         Vector3 direction = (Destination - transform.position).normalized;
 
-        SetRotation(direction, enemyFunctionRef.GetEnemyStatus().RotateSpeed);
+        SetRotation(direction, enemyFunctionRef.GetEnemyParameter().RotateSpeed);
     }
     private void SetVelocityXZ(Vector3 _direction, float _walkSpeed)
     {

@@ -18,22 +18,42 @@ public class EnemyController : MonoBehaviour
     
     [SerializeField]
     protected EnemyFunctionRef EnemyFunctionRef;
-    
+
+    /// <summary>
+    /// 浮上しているかどうか
+    /// </summary>
+    //[HideInInspector]
+    public bool IsFloating { get; private set; }
+
+    /// <summary>
+    /// 死亡したかどうか
+    /// </summary>
+    [HideInInspector]
+    public bool IsDied { get; set; }
+
     public void Update()
     {
         CheckStatus();
     }
+    public void SetIsDied(bool _isDied)
+    {
+        IsDied = _isDied;
+    }
+    public void SetIsFloating(bool _isFloating)
+    {
+        IsFloating = _isFloating;
+    }
 
     private void CheckStatus()
     {
-        if (NowHp < EnemyFunctionRef.GetEnemyStatus().FloatHp)
+        if (NowHp < EnemyFunctionRef.GetEnemyParameter().FloatHp)
         {
             EnemyFunctionRef.GetEnemyFloatByDamage().StopEmitter();
             FloatByDamage();
         }
         else
         {
-            EnemyFunctionRef.GetEnemyFloatByDamage().ChangeEmitterOnUpdate(EnemyFunctionRef.GetEnemyStatus().MaxHp, NowHp);
+            EnemyFunctionRef.GetEnemyFloatByDamage().ChangeEmitterOnUpdate(EnemyFunctionRef.GetEnemyParameter().MaxHp, NowHp);
         }
     }
 
@@ -64,12 +84,17 @@ public class EnemyController : MonoBehaviour
         if (NowHp > 0)
             NowHp -= _power;
 
-        EnemyFunctionRef.GetEnemyMove().SetSpeedByHp(NowHp, EnemyFunctionRef.GetEnemyStatus().MaxHp);
+        EnemyFunctionRef.GetEnemyMove().SetSpeedByHp(NowHp, EnemyFunctionRef.GetEnemyParameter().MaxHp);
     }
     private void Died()
     {
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<CharacterController>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(100, 100, 100, 100), IsFloating.ToString());
     }
 }

@@ -23,7 +23,7 @@ public class EnemyFunctionRef : MonoBehaviour
     {
         return enemyMove;
     }
-    public EnemyCommonParameter GetEnemyStatus()
+    public EnemyCommonParameter GetEnemyParameter()
     {
         return enemyCommonParameter;
     }

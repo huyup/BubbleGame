@@ -143,14 +143,14 @@ public class OctopusController : EnemyController
     }
     IEnumerator DiveAndAttackCoroutine()
     {
-        if (attacked||AttackTarget==null||EnemyFunctionRef.GetEnemyStatus().IsFloating)
+        if (attacked||AttackTarget==null||EnemyFunctionRef.GetEnemyController().IsFloating)
             yield break;
 
         attacked = true;
         //commonParameter.FloatingTotalTimeカウント分上昇
         for (int i = 0; i < commonParameter.FloatingTotalTime; i++)
         {
-            if (EnemyFunctionRef.GetEnemyStatus().IsFloating)
+            if (EnemyFunctionRef.GetEnemyController().IsFloating)
                 break;
             transform.position += new Vector3(0, commonParameter.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -175,7 +175,7 @@ public class OctopusController : EnemyController
         ////commonParameter.FloatingTotalTimeカウント分落下
         for (int i = 0; i < commonParameter.FloatingTotalTime; i++)
         {
-            if (EnemyFunctionRef.GetEnemyStatus().IsFloating)
+            if (EnemyFunctionRef.GetEnemyController().IsFloating)
                 break;
             transform.position -= new Vector3(0, commonParameter.FloatingSpeed, 0) * Time.deltaTime;
             yield return null;
@@ -185,7 +185,7 @@ public class OctopusController : EnemyController
     }
     void SetBullets(GameObject bulletInstance)
     {
-        if (AttackTarget == null || EnemyFunctionRef.GetEnemyStatus().IsFloating)
+        if (AttackTarget == null || EnemyFunctionRef.GetEnemyController().IsFloating)
         {
             Destroy(bulletInstance);
             return;

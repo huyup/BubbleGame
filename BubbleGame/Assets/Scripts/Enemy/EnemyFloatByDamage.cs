@@ -47,7 +47,7 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     private void Update()
     {
-        if (enemyFunctionRef.GetEnemyStatus().IsDied)
+        if (enemyFunctionRef.GetEnemyController().IsDied)
             return;
 
         if (canFloat)
@@ -125,7 +125,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     private void FloatByContainOnInit()
     {
         canFloat = true;
-        enemyFunctionRef.GetEnemyStatus().SetIsFloating(true);
+        enemyFunctionRef.GetEnemyController().SetIsFloating(true);
         canChangeVelocityToCenter = true;
         rb.velocity = Vector3.zero;
         GetComponent<CharacterController>().enabled = false;
@@ -140,7 +140,7 @@ public class EnemyFloatByDamage : MonoBehaviour
         //TODO:ここリセットする
         canFloat = false;
         rb.velocity = Vector3.zero;
-        enemyFunctionRef.GetEnemyStatus().SetIsFloating(false);
+        enemyFunctionRef.GetEnemyController().SetIsFloating(false);
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
     }

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class EnemyBodyCollision : MonoBehaviour
 {
+    [SerializeField]
     private EnemyFunctionRef enemyFunctionRef;
     [SerializeField]
     private GameObject explosion;
 
     bool canSetExplodeParameter = true;
-
-    private void Start()
+    private void Update()
     {
-        enemyFunctionRef = transform.parent.GetComponent<EnemyFunctionRef>();
+        GetComponent<Rigidbody>().MovePosition(transform.parent.position);
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (enemyFunctionRef.GetEnemyStatus().IsFloating && collision.gameObject.layer == 9/*Ground*/)
+        Debug.Log("OnCollisionEnter"+collision.gameObject.name);
+        if (enemyFunctionRef.GetEnemyController().IsFloating && collision.gameObject.layer == 9/*Ground*/)
         {
             Explode();
             enemyFunctionRef.GetEnemyController().ResetFloatFunction();
@@ -25,7 +26,8 @@ public class EnemyBodyCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 17/*Environment*/&& other.gameObject.GetComponent<ObjController>().IsFalling)
+        Debug.Log("OnTriggerEnter" + other.gameObject.name);
+        if (other.gameObject.layer == 16/*StageObject*/&& other.gameObject.GetComponent<ObjController>().IsFalling)
         {
             Explode();
         }
@@ -35,24 +37,23 @@ public class EnemyBodyCollision : MonoBehaviour
     {
         if (canSetExplodeParameter)
         {
-            enemyFunctionRef.GetEnemyStatus().SetIsDied(true);
-
-            Vector3 explodeStartPos = transform.position;
+            Vector3 explodeStartPos = transform.parent.position;
             explosion.transform.position = explodeStartPos;
 
             ParticleSystem[] particles;
             particles = explosion.GetComponentsInChildren<ParticleSystem>();
-
-            GameObject bodyMesh = transform.Find("RETMESH2").gameObject;
-            bodyMesh.SetActive(false);
-
+            
             foreach (ParticleSystem particle in particles)
             {
-                if (!particle.isPlaying)
+                //if (!particle.isPlaying)
                     particle.Play();
             }
-            StartCoroutine(TurnOnSphereTriggerCoroutine(explosion.transform.Find("ExploisionTrigger")));
-            Destroy(this.gameObject, 1.5f);
+            //StartCoroutine(TurnOnSphereTriggerCoroutine(explosion.transform.Find("ExploisionTrigger")));
+            
+            //GameObject bodyMesh = transform.parent.Find("RETMESH2").gameObject;
+            //bodyMesh.SetActive(false);
+            //enemyFunctionRef.GetEnemyController().SetIsDied(true);
+            //Destroy(transform.parent.gameObject, 1.5f);
             canSetExplodeParameter = false;
         }
     }

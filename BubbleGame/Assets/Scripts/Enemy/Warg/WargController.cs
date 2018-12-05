@@ -7,7 +7,6 @@ public enum WargState
     Searching,    // 探索
     Chasing,    // 追跡
     Attacking,  // 攻撃
-    InBubble,   //泡の中にいる
     Died,       // 死亡
 };
 public class WargController : EnemyController
@@ -27,7 +26,6 @@ public class WargController : EnemyController
     //状態.
     public bool attacking = false;
     bool attacked = false;
-    public bool died = false;
 
     WargState nowState;
     WargState nextState;
@@ -44,7 +42,7 @@ public class WargController : EnemyController
 
         // 待機時間
         waitTime = commonParameter.MinWaitTime;
-        NowHp = EnemyFunctionRef.GetEnemyStatus().MaxHp;
+        NowHp = EnemyFunctionRef.GetEnemyParameter().MaxHp;
         nowState = WargState.Searching;
         nextState = WargState.Searching;
     }
@@ -54,7 +52,7 @@ public class WargController : EnemyController
     {
         animator.SetMoveAnimatorParameter();
 
-        if (EnemyFunctionRef.GetEnemyStatus().IsDied|| EnemyFunctionRef.GetEnemyStatus().IsFloating)
+        if (IsDied||IsFloating)
             return;
 
         switch (nowState)
@@ -194,7 +192,6 @@ public class WargController : EnemyController
 
     void Died()
     {
-        died = true;
         dropItem();
         Destroy(gameObject);
     }
@@ -205,7 +202,6 @@ public class WargController : EnemyController
     void ResetStateFlag()
     {
         attacking = false;
-        died = false;
     }
 
     /// <summary>

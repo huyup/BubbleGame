@@ -24,7 +24,7 @@ public class WargAnimator : EnemyAnimator
             controller.TurnOffAttackedFlag();
         }
 
-        if (enemyFunctionRef.GetEnemyStatus().IsFloating)
+        if (enemyFunctionRef.GetEnemyController().IsFloating)
         {     
             animator.SetFloat("Speed",0);
             animator.SetBool("Attacking", false);

@@ -34,11 +34,7 @@ public class EnemyCommonParameter : MonoBehaviour
     {
         get { return maxHp; }
     }
-    /// <summary>
-    /// 死亡したかどうか
-    /// </summary>
-    [HideInInspector]
-    public bool IsDied { get; set; }
+
     
     #region 浮上用
     /// <summary>
@@ -50,21 +46,11 @@ public class EnemyCommonParameter : MonoBehaviour
     {
         get { return floatHp; }
     }
-    /// <summary>
-    /// 浮上しているかどうか
-    /// </summary>
-    //[HideInInspector]
-    public bool IsFloating { get; private set; }
+
+
+
 
     #endregion
 
-    public void SetIsFloating(bool _isFloating)
-    {
-        IsFloating = _isFloating;
-    }
 
-    public void SetIsDied(bool _isDied)
-    {
-        IsDied = _isDied;
-    }
 }
