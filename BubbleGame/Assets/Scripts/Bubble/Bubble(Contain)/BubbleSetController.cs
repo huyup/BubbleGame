@@ -24,5 +24,7 @@ public class BubbleSetController : MonoBehaviour
         Destroy(bubble);
 
         bubbleExplosionEffController.PlayExplosionEff(bubble.transform.position);
+
+        Destroy(this.gameObject,1.5f);
     }
 }

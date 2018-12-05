@@ -16,7 +16,7 @@ public class EnemyBodyCollision : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("OnCollisionEnter"+collision.gameObject.name);
+
         if (enemyFunctionRef.GetEnemyController().IsFloating && collision.gameObject.layer == 9/*Ground*/)
         {
             Explode();
@@ -26,7 +26,6 @@ public class EnemyBodyCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter" + other.gameObject.name);
         if (other.gameObject.layer == 16/*StageObject*/&& other.gameObject.GetComponent<ObjController>().IsFalling)
         {
             Explode();

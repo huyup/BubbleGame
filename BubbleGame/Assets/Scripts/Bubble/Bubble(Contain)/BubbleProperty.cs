@@ -18,7 +18,7 @@ public class BubbleProperty : MonoBehaviour
     /// 存続時間
     /// </summary>
     [SerializeField]
-    private float lastTime = 3f;
+    private float lastTime = 1f;
     public float LastTime
     {
         get { return lastTime; }
