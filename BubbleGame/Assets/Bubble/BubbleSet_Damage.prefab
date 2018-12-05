@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 15
-  lastTime: 11
+  lastTime: 2
   maxSize: 0.11
   isForceFloating: 0
   isCreatedByDamage: 0

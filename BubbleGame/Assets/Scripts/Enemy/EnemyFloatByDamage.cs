@@ -25,7 +25,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     private float factorToFloat;
 
     private Rigidbody rb;
-    
+
     private bool canSetInitPosToBubble = true;
 
     private bool canFloat = false;
@@ -34,7 +34,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     private ParticleSystem bubbleDamageParticleSystem;
 
     [SerializeField]
-    private float factorToCalEmission = 3;
+    private float factorToCalEmission = 1;
     /// <summary>
     ///　中心点に移動できるかどうか
     /// </summary>
@@ -85,6 +85,8 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     private void CreateBubbleByDamageOnUpdate()
     {
+        if (!bubbleInstance)
+            return;
         if (!canFloat)
         {
             Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
@@ -124,6 +126,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     }
     private void FloatByContainOnInit()
     {
+
         canFloat = true;
         enemyFunctionRef.GetEnemyController().SetIsFloating(true);
         canChangeVelocityToCenter = true;
@@ -139,10 +142,15 @@ public class EnemyFloatByDamage : MonoBehaviour
     {
         //TODO:ここリセットする
         canFloat = false;
+        canSetInitPosToBubble = true;
         rb.velocity = Vector3.zero;
+
         enemyFunctionRef.GetEnemyController().SetIsFloating(false);
+
         if (!GetComponent<CharacterController>().enabled)
             GetComponent<CharacterController>().enabled = true;
+
+        ResetEmitter();
     }
 
     public void ChangeEmitterOnUpdate(int _maxHp, int _nowHp)
@@ -158,5 +166,18 @@ public class EnemyFloatByDamage : MonoBehaviour
             return;
         bubbleDamageParticleSystem.Clear();
         bubbleDamageParticleSystem.Stop();
+    }
+
+    public void ResetEmitter()
+    {
+
+        if (!bubbleDamageParticleSystem.isPlaying)
+        {
+            ParticleSystem.EmissionModule emissionModule = bubbleDamageParticleSystem.emission;
+
+            emissionModule.rateOverTime = 0;
+            bubbleDamageParticleSystem.Clear();
+            bubbleDamageParticleSystem.Play();
+        }
     }
 }

@@ -20,7 +20,7 @@ public class EnemyBodyCollision : MonoBehaviour
         if (enemyFunctionRef.GetEnemyController().IsFloating && collision.gameObject.layer == 9/*Ground*/)
         {
             Explode();
-            enemyFunctionRef.GetEnemyController().ResetFloatFunction();
+            enemyFunctionRef.GetEnemyController().OnReset();
         }
 
     }
@@ -47,6 +47,8 @@ public class EnemyBodyCollision : MonoBehaviour
                 //if (!particle.isPlaying)
                     particle.Play();
             }
+
+
             //StartCoroutine(TurnOnSphereTriggerCoroutine(explosion.transform.Find("ExploisionTrigger")));
             
             //GameObject bodyMesh = transform.parent.Find("RETMESH2").gameObject;

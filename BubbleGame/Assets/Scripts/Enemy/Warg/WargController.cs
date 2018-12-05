@@ -50,6 +50,8 @@ public class WargController : EnemyController
     // Update is called once per frame
     void Update()
     {
+        base.Update();
+
         animator.SetMoveAnimatorParameter();
 
         if (IsDied||IsFloating)

@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     /// <summary>
     /// 現在のHp
     /// </summary>
+    [SerializeField]
     protected int NowHp;
     
     [SerializeField]
@@ -57,10 +58,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void ResetFloatFunction()
+    public void OnReset()
     {
         EnemyFunctionRef.GetEnemyFloatByContain().Reset();
         EnemyFunctionRef.GetEnemyFloatByDamage().Reset();
+        NowHp = EnemyFunctionRef.GetEnemyParameter().MaxHp;
+        EnemyFunctionRef.GetEnemyMove().SetSpeedByHp(NowHp, EnemyFunctionRef.GetEnemyParameter().MaxHp);
+        IsDied = false;
+        IsFloating = false;
     }
 
     // 攻撃対象を設定する
@@ -92,7 +97,6 @@ public class EnemyController : MonoBehaviour
         GetComponent<CharacterController>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
     }
-
     private void OnGUI()
     {
         GUI.Label(new Rect(100, 100, 100, 100), IsFloating.ToString());

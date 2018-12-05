@@ -18063,6 +18063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f43c8e7dcbb7c4994e5f1abae204b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowHp: 0
   EnemyFunctionRef: {fileID: 0}
   dropItemPrefab: []
   bullet: {fileID: 1462067934205794, guid: f0594eee75375a745a5d080b2f84d971, type: 2}
@@ -23922,7 +23923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &890432345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24010,6 +24011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3493214b6424db94c8db64715cd97799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowHp: 0
   EnemyFunctionRef: {fileID: 890432345}
   dropItemPrefab: []
   attacking: 0
@@ -24074,7 +24076,7 @@ MonoBehaviour:
   increaseScaleVelocity: 0.05
   factorToFloat: 0.1
   bubbleDamageParticleSystem: {fileID: 1257753546}
-  factorToCalEmission: 3
+  factorToCalEmission: 1
 --- !u!114 &890432357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30313,6 +30315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f43c8e7dcbb7c4994e5f1abae204b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowHp: 0
   EnemyFunctionRef: {fileID: 0}
   dropItemPrefab: []
   bullet: {fileID: 1462067934205794, guid: f0594eee75375a745a5d080b2f84d971, type: 2}
@@ -31279,7 +31282,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1257753544}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   looping: 1
@@ -31351,7 +31354,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -31895,7 +31898,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 5
     enabled: 1
-    type: 5
+    type: 0
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -31926,7 +31929,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.8397192
+      value: 0.50678545
       mode: 0
       spread: 0
       speed:
@@ -32045,7 +32048,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -35812,8 +35815,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1257753544}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -0, y: 0.61100006, z: 0.04799946}
-  m_LocalScale: {x: 1.87568, y: 1.2125226, z: 1.1440015}
+  m_LocalPosition: {x: 0.042, y: 0.733, z: 0.163}
+  m_LocalScale: {x: 1.7659901, y: 1.2125226, z: 1.1440015}
   m_Children:
   - {fileID: 959885816}
   m_Father: {fileID: 955815318}
@@ -35888,7 +35891,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1262417636}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -0.018207844, z: -0.00076704886}
+  m_LocalPosition: {x: -0.168, y: 0.355, z: -0.001}
   m_LocalScale: {x: 0.0769231, y: 0.07692308, z: 0.0769231}
   m_Children: []
   m_Father: {fileID: 955815318}
@@ -36323,6 +36326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f43c8e7dcbb7c4994e5f1abae204b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowHp: 0
   EnemyFunctionRef: {fileID: 0}
   dropItemPrefab: []
   bullet: {fileID: 1462067934205794, guid: f0594eee75375a745a5d080b2f84d971, type: 2}
@@ -52241,6 +52245,7 @@ MonoBehaviour:
   floatByDamage: {fileID: 1594847552}
   bubbleDamageEff: {fileID: 1428047568}
   IsFalling: 0
+  nowHp: 0
 --- !u!114 &1594847551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52270,6 +52275,9 @@ MonoBehaviour:
   bubbleMaxSize: 4
   increaseScaleVelocity: 0.05
   factorToFloat: 1
+  canSetInitPosToBubble: 1
+  canFloat: 0
+  canChangeVelocityToCenter: 0
 --- !u!114 &1594847554 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114934385707784918, guid: 608327f0ddcbdd545943a7c79ba7d69a,
