@@ -20,7 +20,7 @@ public class PlayerWeapon : MonoBehaviour
 
     }
 
-    public virtual void Reset()
+    public virtual void OnReset()
     {
 
     }

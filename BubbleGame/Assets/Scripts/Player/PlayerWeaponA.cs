@@ -114,11 +114,12 @@ public class PlayerWeaponA : PlayerWeapon
         bubbles[bubbles.Count - 1].GetComponent<BubbleCollision>().SetDestroyEnable();
     }
 
-    public override void Reset()
+    public override void OnReset()
     {
-        base.Reset();
+        base.OnReset();
         controller.ResetJump();
         controller.ResetMove();
+        controller.ResetAttack();
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
         if (!isPushed)
         {

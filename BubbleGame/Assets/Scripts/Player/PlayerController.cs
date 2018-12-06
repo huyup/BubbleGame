@@ -8,6 +8,7 @@ public enum WeaponType
 {
     WeaponA = 1,
     WeaponB,
+    WeaponC,
     Max,
 }
 public class PlayerController : MonoBehaviour
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerWeaponB weaponB;
 
+    [SerializeField]
+    private PlayerWeaponC weaponC;
     /// <summary>
     /// アタッチするコンポーネント
     /// </summary>
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     //TODO:いつ攻撃を禁止するか？
     private bool canAttack = false;
+    private bool canJumpAttack = false;
     #region 初期化
     void Start()
     {
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
         groundDetector.UpdateDetection();
         CheckDied();
         ChangeGravity();
+        CheckCanJumpAttack();
     }
     #endregion
 
@@ -144,7 +149,8 @@ public class PlayerController : MonoBehaviour
     {
         if (nowWeapon == null)
             return;
-
+        if (GetWeapon())
+            GetWeapon().OnReset();
         int nextWeaponTypeNum = (int)nowWeaponType;
 
         nextWeaponTypeNum++;
@@ -155,10 +161,50 @@ public class PlayerController : MonoBehaviour
         WeaponType nextWeaponType = (WeaponType)Enum.ToObject(typeof(WeaponType), nextWeaponTypeNum);
 
         nowWeaponType = nextWeaponType;
+
     }
 
+    private void CheckCanJumpAttack()
+    {
+        switch (nowWeaponType)
+        {
+            case WeaponType.WeaponA:
+                canJumpAttack = false;
+                break;
+            case WeaponType.WeaponB:
+                canJumpAttack = false;
+                break;
+            case WeaponType.WeaponC:
+                canJumpAttack = true;
+                break;
+            default:
+                canJumpAttack = false;
+                break;
+        }
+
+        if (!canJumpAttack)
+        {
+            if(groundDetector.IsHit)
+                ResetAttack();
+            else
+            {
+                BanAttack();
+            }
+        }
+        else
+        {
+            ResetAttack();
+        }
+    }
+    public WeaponType GetNowWeaponType()
+    {
+        return nowWeaponType;
+    }
     public PlayerWeapon GetWeapon()
     {
+        if (!canAttack)
+            return null;
+
         switch (nowWeaponType)
         {
             case WeaponType.WeaponA:
@@ -166,6 +212,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 nowWeapon = weaponB;
+                break;
+            case WeaponType.WeaponC:
+                nowWeapon = weaponC;
                 break;
             default:
                 nowWeapon = weaponB;
@@ -184,7 +233,10 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         if (!groundDetector.IsHit || !canJump)
+        {
             return;
+        }
+
         rb.velocity = Vector3.zero;
         Vector3 velocity = transform.up * status.JumpPower * Time.fixedDeltaTime * 60;
         rb.velocity = velocity;

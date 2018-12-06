@@ -12429,7 +12429,7 @@ GameObject:
   - component: {fileID: 459999652}
   - component: {fileID: 459999651}
   m_Layer: 5
-  m_Name: Player1Mp (1)
+  m_Name: Player2Mp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12448,9 +12448,9 @@ RectTransform:
   m_Father: {fileID: 141022014}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1416, y: 57.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -22, y: 57.5}
   m_SizeDelta: {x: 100, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459999651
@@ -30282,131 +30282,23 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1031786647}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 088f715d61c0a784ea6769018601a7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontStyle:
-    m_Name: 
-    m_Normal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
-    m_Hover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Active:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Focused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnNormal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnHover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnActive:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnFocused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Margin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Overflow:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Font: {fileID: 12800000, guid: fae067962e5934395be31c8aba4a3455, type: 3}
-    m_FontSize: 40
-    m_FontStyle: 1
-    m_Alignment: 0
-    m_WordWrap: 0
-    m_RichText: 1
-    m_TextClipping: 0
-    m_ImagePosition: 0
-    m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 0
-    m_FixedHeight: 0
-    m_StretchWidth: 1
-    m_StretchHeight: 0
-  heartImg: {fileID: 2800000, guid: 73727289250a0064da67b66ba246873b, type: 3}
   player1: {fileID: 84273617}
   player2: {fileID: 1370842985}
-  baseWidth: 854
-  baseHeight: 480
-  heart1Rect:
-    serializedVersion: 2
-    x: 140
-    y: 830
-    width: 100
-    height: 50
-  heart2Rect:
-    serializedVersion: 2
-    x: 190
-    y: 830
-    width: 100
-    height: 50
-  heart3Rect:
-    serializedVersion: 2
-    x: 240
-    y: 830
-    width: 100
-    height: 50
-  heart1Rect2:
-    serializedVersion: 2
-    x: 1100
-    y: 830
-    width: 100
-    height: 50
-  heart2Rect2:
-    serializedVersion: 2
-    x: 1150
-    y: 830
-    width: 100
-    height: 50
-  heart3Rect2:
-    serializedVersion: 2
-    x: 1200
-    y: 830
-    width: 100
-    height: 50
-  player1Rect:
-    serializedVersion: 2
-    x: 0
-    y: 830
-    width: 1980
-    height: 1080
-  player2Rect:
-    serializedVersion: 2
-    x: 963
-    y: 830
-    width: 1980
-    height: 1080
+  player1NameText: {fileID: 612436928}
+  player2NameText: {fileID: 1575403111}
+  player1WeaponText: {fileID: 1316855484}
+  player2WeaponText: {fileID: 1181937008}
+  player1Heart1: {fileID: 1286193562}
+  player1Heart2: {fileID: 661471373}
+  player1Heart3: {fileID: 770720392}
+  player2Heart1: {fileID: 1311189901}
+  player2Heart2: {fileID: 479734659}
+  player2Heart3: {fileID: 2125930401}
 --- !u!4 &1031786649
 Transform:
   m_ObjectHideFlags: 0
@@ -31550,7 +31442,7 @@ GameObject:
   - component: {fileID: 1181937009}
   - component: {fileID: 1181937008}
   m_Layer: 5
-  m_Name: Player1Weapon (1)
+  m_Name: Player2Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31569,10 +31461,10 @@ RectTransform:
   m_Father: {fileID: 141022014}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1317, y: 51.100006}
-  m_SizeDelta: {x: 347.97, y: 50}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -121, y: 51.100006}
+  m_SizeDelta: {x: 347.96997, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1181937008
 MonoBehaviour:
@@ -53058,7 +52950,7 @@ GameObject:
   - component: {fileID: 1575403112}
   - component: {fileID: 1575403111}
   m_Layer: 5
-  m_Name: Player1Hp (1)
+  m_Name: Player2Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53080,9 +52972,9 @@ RectTransform:
   m_Father: {fileID: 141022014}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1242.47, y: 16}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -195.53003, y: 16}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1575403111

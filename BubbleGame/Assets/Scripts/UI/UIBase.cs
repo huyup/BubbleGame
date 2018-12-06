@@ -1,52 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 /// <summary>
 /// TODO:UIの配置に関する修正
 /// </summary>
 public class UIBase : MonoBehaviour
 {
     [SerializeField]
-    private GUIStyle fontStyle;
-
-    [SerializeField]
-    private Texture2D heartImg;
-
-    [SerializeField]
     private Transform player1;
 
     [SerializeField]
     private Transform player2;
 
-    [SerializeField]
-    private float baseWidth = 1920f;
+    [SerializeField] private Text player1NameText;
+    [SerializeField] private Text player2NameText;
 
-    [SerializeField]
-    private float baseHeight = 1080f;
+    [SerializeField] private Text player1WeaponText;
+    [SerializeField] private Text player2WeaponText;
 
-    [SerializeField]
-    private Rect heart1Rect;
+    [SerializeField] private Image player1Heart1;
+    [SerializeField] private Image player1Heart2;
+    [SerializeField] private Image player1Heart3;
 
-    [SerializeField]
-    private Rect heart2Rect;
-
-    [SerializeField]
-    private Rect heart3Rect;
-
-    [SerializeField]
-    private Rect heart1Rect2;
-
-    [SerializeField]
-    private Rect heart2Rect2;
-
-    [SerializeField]
-    private Rect heart3Rect2;
-
-    [SerializeField]
-    private Rect player1Rect;
-
-    [SerializeField]
-    private Rect player2Rect;
+    [SerializeField] private Image player2Heart1;
+    [SerializeField] private Image player2Heart2;
+    [SerializeField] private Image player2Heart3;
 
     public bool IsVisible { get; private set; }
 
@@ -55,17 +35,31 @@ public class UIBase : MonoBehaviour
         IsVisible = _isVisible;
     }
 
-    private void OnGUI()
+    private void Update()
     {
-        GUI.Label(player1Rect, "Player1:", fontStyle);
         DrawPlayer1Life(player1.GetComponent<PlayerStatus>().nowHp);
-
-        GUI.Label(player2Rect, "Player2:", fontStyle);
         DrawPlayer2Life(player2.GetComponent<PlayerStatus>().nowHp);
-        if (IsVisible)
+
+        DrawPlayerWeapon(player1.GetComponent<PlayerController>().GetNowWeaponType(), player1WeaponText);
+        DrawPlayerWeapon(player2.GetComponent<PlayerController>().GetNowWeaponType(), player2WeaponText);
+    }
+
+    private void DrawPlayerWeapon(WeaponType _weaponType,Text _weaponText)
+    {
+        switch (_weaponType)
         {
-            GUI.Label(new Rect(10, 10, 100, 100), "残りのうり坊:" + GameSetting.Instance.GetWargsNum() + "匹", fontStyle);
-            GUI.Label(new Rect(10, 30, 100, 100), "残りのタコ:" + GameSetting.Instance.GetOctopusNum() + "匹", fontStyle);
+            case WeaponType.WeaponA:
+                _weaponText.text = "装備中:大きいストロー";
+                break;
+            case WeaponType.WeaponB:
+                _weaponText.text = "装備中:小さいストロー";
+                break;
+            case WeaponType.WeaponC:
+                _weaponText.text = "装備中:空気砲";
+                break;
+            default:
+                _weaponText.text = "None";
+                break;
         }
     }
 
@@ -74,18 +68,24 @@ public class UIBase : MonoBehaviour
         switch (_player1Hp)
         {
             case 0:
+                player1Heart1.enabled = false;
+                player1Heart2.enabled = false;
+                player1Heart3.enabled = false;
                 break;
             case 1:
-                GUI.Label(heart1Rect, heartImg);
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = false;
+                player1Heart3.enabled = false;
                 break;
             case 2:
-                GUI.Label(heart1Rect, heartImg);
-                GUI.Label(heart2Rect, heartImg);
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = true;
+                player1Heart3.enabled = false;
                 break;
             case 3:
-                GUI.Label(heart1Rect, heartImg);
-                GUI.Label(heart2Rect, heartImg);
-                GUI.Label(heart3Rect, heartImg);
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = true;
+                player1Heart3.enabled = true;
                 break;
         }
     }
@@ -96,16 +96,19 @@ public class UIBase : MonoBehaviour
             case 0:
                 break;
             case 1:
-                GUI.Label(heart1Rect2, heartImg);
+                player2Heart1.enabled = true;
+                player2Heart2.enabled = false;
+                player2Heart3.enabled = false;
                 break;
             case 2:
-                GUI.Label(heart1Rect2, heartImg);
-                GUI.Label(heart2Rect2, heartImg);
+                player2Heart1.enabled = true;
+                player2Heart2.enabled = true;
+                player2Heart3.enabled = false;
                 break;
             case 3:
-                GUI.Label(heart1Rect2, heartImg);
-                GUI.Label(heart2Rect2, heartImg);
-                GUI.Label(heart3Rect2, heartImg);
+                player2Heart1.enabled = true;
+                player2Heart2.enabled = true;
+                player2Heart3.enabled = true;
                 break;
         }
     }

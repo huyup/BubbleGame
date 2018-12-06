@@ -44,7 +44,7 @@ public class PlayerInputManager : MonoBehaviour
         //左スティック
         leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
         leftYAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;
-       
+
         //右スティック
         rightXAxisInput = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)playerNum).x;
         //y軸を反転させる
@@ -52,7 +52,7 @@ public class PlayerInputManager : MonoBehaviour
 
         //逆走するとき、スピードを低下させる
         if (rightXAxisInput * leftXAxisInput < 0 || rightYAxisInput * leftYAxisInput < 0
-            || rightXAxisInput * leftYAxisInput < 0 || rightYAxisInput * leftXAxisInput < 0 )
+            || rightXAxisInput * leftYAxisInput < 0 || rightYAxisInput * leftXAxisInput < 0)
         {
             playerController.Slow();
         }
@@ -72,15 +72,18 @@ public class PlayerInputManager : MonoBehaviour
         //攻撃ボタン
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonDown();
+            if (playerController.GetWeapon())
+                playerController.GetWeapon().OnAttackButtonDown();
         }
         if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonStay(); ;
+            if (playerController.GetWeapon())
+                playerController.GetWeapon().OnAttackButtonStay(); ;
         }
         if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            playerController.GetWeapon().OnAttackButtonUp();
+            if (playerController.GetWeapon())
+                playerController.GetWeapon().OnAttackButtonUp();
         }
 
 
