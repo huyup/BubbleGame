@@ -10,6 +10,7 @@ public enum WeaponType
     WeaponB,
     WeaponC,
     Max,
+    Max2,
 }
 public class PlayerController : MonoBehaviour
 {
@@ -149,8 +150,12 @@ public class PlayerController : MonoBehaviour
     {
         if (nowWeapon == null)
             return;
+
         if (GetWeapon())
+        {
             GetWeapon().OnReset();
+        }
+
         int nextWeaponTypeNum = (int)nowWeaponType;
 
         nextWeaponTypeNum++;
@@ -184,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
         if (!canJumpAttack)
         {
-            if(groundDetector.IsHit)
+            if (groundDetector.IsHit)
                 ResetAttack();
             else
             {
@@ -217,7 +222,7 @@ public class PlayerController : MonoBehaviour
                 nowWeapon = weaponC;
                 break;
             default:
-                nowWeapon = weaponB;
+                nowWeapon = null;
                 break;
         }
 

@@ -101,7 +101,10 @@ public class PlayerWeaponA : PlayerWeapon
     }
     private void PushTheBubbleOnceTime()
     {
-        if (bubbles[bubbles.Count - 1] == null || isPushed)
+        if (bubbles.Count == 0)
+            return;
+
+        if (bubbles[bubbles.Count - 1] == null || isPushed )
             return;
 
         if (!bubbles[bubbles.Count - 1].GetComponent<BubbleProperty>().IsForceFloating)
