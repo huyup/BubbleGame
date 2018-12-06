@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private bool isSlow = false;
     private bool canJump = false;
     private bool canMove = false;
-
+    private bool canRotate = false;
     //TODO:いつ攻撃を禁止するか？
     private bool canAttack = false;
     private bool canJumpAttack = false;
@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
         nowWeaponType = WeaponType.WeaponA;
         isSlow = false;
         canJump = true;
+        canRotate = true;
         canAttack = true;
         canMove = true;
     }
@@ -75,6 +76,8 @@ public class PlayerController : MonoBehaviour
     #region 回転用メソッド
     public void Rotate(float _inputH2, float _inputV2, float _maxControllerLerance, Vector3 _prevInputPlayerPos)
     {
+        if (!canRotate)
+            return;
         //最新の位置-入力前の位置=方向
         Vector3 direction = transform.position - _prevInputPlayerPos;
         //最新の位置-入力前の位置=方向
@@ -232,6 +235,12 @@ public class PlayerController : MonoBehaviour
         }
         return nowWeapon;
     }
+
+    public void PullBack()
+    {
+        Vector3 backVelocity = transform.forward * -1;
+        rb.velocity = backVelocity * Time.fixedDeltaTime * 60*status.PullBackSpeed;
+    }
     #endregion
 
     #region ジャンプ用メソッド
@@ -291,6 +300,16 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region 禁止機能・スピード低下機能
+
+    public void BanRotate()
+    {
+        canRotate = false;
+    }
+
+    public void ResetRotate()
+    {
+        canRotate = true;
+    }
 
     public void Slow()
     {

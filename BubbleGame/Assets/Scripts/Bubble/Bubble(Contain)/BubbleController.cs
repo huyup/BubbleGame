@@ -14,11 +14,11 @@ public class BubbleController : MonoBehaviour
     private float countToFloat = 2;
 
     [SerializeField]
-    private float upForceToFloat=1.5f;
+    private float upForceToFloat = 1.5f;
 
     [SerializeField]
     private float upForceWhenContain;
-    
+
     private bool canAddAutoFloatForce = true;
     // Use this for initialization
     void Start()
@@ -30,7 +30,7 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
-        if (!bubbleProperty.IsForceFloating&&!bubbleProperty.IsCreatedByDamage)
+        if (!bubbleProperty.IsForceFloating && !bubbleProperty.IsCreatedByDamage)
         {
             Invoke("FloatByTime", countToFloat);
         }
@@ -40,16 +40,19 @@ public class BubbleController : MonoBehaviour
         }
     }
 
+    public void AddForce(Vector3 _direction)
+    {
+        rb.velocity += _direction;
+    }
     private void FloatByTime()
     {
-        if (!bubbleProperty.IsForceFloating&&canAddAutoFloatForce)
+        if (!bubbleProperty.IsForceFloating && canAddAutoFloatForce)
         {
-            Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60*upForceToFloat;
+            Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * upForceToFloat;
             rb.velocity += upVelocity;
             canAddAutoFloatForce = false;
         }
     }
-
     public void SetFloatVelocityToBubble()
     {
         if (canSetVelocity)

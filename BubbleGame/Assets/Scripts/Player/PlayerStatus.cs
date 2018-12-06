@@ -79,6 +79,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     #endregion
+
     #region 攻撃用
     /// <summary>
     /// 泡を前に押す力
@@ -124,6 +125,26 @@ public class PlayerStatus : MonoBehaviour
             if (spaceKeySpeed > 0 && spaceKeySpeed != 0)
                 spaceKeySpeed = value;
         }
+    }
+
+    /// <summary>
+    /// 反動の強さ
+    /// </summary>
+    [SerializeField]
+    float pullBackSpeed = 3f;
+    public float PullBackSpeed
+    {
+        get { return pullBackSpeed; }
+    }
+
+    /// <summary>
+    /// 反動の時間
+    /// </summary>
+    [SerializeField]
+    float pullBackTime = 0.5f;
+    public float PullBackTime
+    {
+        get { return pullBackTime; }
     }
     #endregion
 
