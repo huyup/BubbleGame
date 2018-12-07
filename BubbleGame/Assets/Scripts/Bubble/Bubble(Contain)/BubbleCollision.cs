@@ -6,6 +6,8 @@ public class BubbleCollision : MonoBehaviour
 {
     private BubbleSetController setController;
 
+    private BubbleController bubbleController;
+
     [SerializeField]
     private bool canBeDestroy;
 

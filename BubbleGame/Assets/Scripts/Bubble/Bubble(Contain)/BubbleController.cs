@@ -20,6 +20,10 @@ public class BubbleController : MonoBehaviour
     private float upForceWhenContain;
 
     private bool canAddAutoFloatForce = true;
+
+    public bool CanAddForceToInsideObj { get; private set; }
+
+    public Vector3 AddForceToInsideObjDirection { get; private set; }
     // Use this for initialization
     void Start()
     {
@@ -43,6 +47,8 @@ public class BubbleController : MonoBehaviour
     public void AddForce(Vector3 _direction)
     {
         rb.velocity += _direction;
+        CanAddForceToInsideObj = true;
+        AddForceToInsideObjDirection = _direction;
     }
     private void FloatByTime()
     {
