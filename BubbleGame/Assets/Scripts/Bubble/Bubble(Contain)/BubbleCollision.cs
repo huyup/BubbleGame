@@ -23,6 +23,12 @@ public class BubbleCollision : MonoBehaviour
             setController.DestroyBubbleSet();
         }
     }
+
+    private void OnTriggerStay(Collider _other)
+    {
+        Debug.Log("Name"+_other.name);
+    }
+
     public void SetDestroyEnable()
     {
         canBeDestroy = true;

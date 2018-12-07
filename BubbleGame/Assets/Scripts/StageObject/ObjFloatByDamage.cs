@@ -89,6 +89,7 @@ public class ObjFloatByDamage : MonoBehaviour
 
             Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * factorToFloat;
 
+            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
             if (bubbleInstance.localScale.x < bubbleMaxSize)
             {
                 bubbleInstance.localScale += scaleVelocity;
