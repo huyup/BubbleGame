@@ -44,7 +44,6 @@ public class EnemyController : MonoBehaviour
     {
         IsFloating = _isFloating;
     }
-
     private void CheckStatus()
     {
         if (NowHp < EnemyFunctionRef.GetEnemyParameter().FloatHp)
@@ -96,9 +95,5 @@ public class EnemyController : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<CharacterController>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
-    }
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(100, 100, 100, 100), IsFloating.ToString());
     }
 }

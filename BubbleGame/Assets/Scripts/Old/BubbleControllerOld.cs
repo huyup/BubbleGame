@@ -38,7 +38,7 @@
 //        //    }
 //        //    bubbleRotation.enabled = false;
 
-//        //    rb.AddForce(Vector3.up * upForceToTheBubble * Time.deltaTime, ForceMode.VelocityChange);
+//        //    rb.AddForceByPush(Vector3.up * upForceToTheBubble * Time.deltaTime, ForceMode.VelocityChange);
 //        //}
 //        //else
 //        //{

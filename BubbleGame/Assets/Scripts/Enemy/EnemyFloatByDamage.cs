@@ -35,16 +35,19 @@ public class EnemyFloatByDamage : MonoBehaviour
 
     [SerializeField]
     private float factorToCalEmission = 1;
+
     /// <summary>
     ///　中心点に移動できるかどうか
     /// </summary>
+    [SerializeField]
     private bool canChangeVelocityToCenter = false;
 
+    [SerializeField]
+    private bool isPushing = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-
     private void Update()
     {
         if (enemyFunctionRef.GetEnemyController().IsDied)
@@ -58,7 +61,8 @@ public class EnemyFloatByDamage : MonoBehaviour
             }
             else
             {
-                MoveToCenterPos();
+                if (!isPushing)
+                    MoveToCenterPos();
             }
         }
     }
@@ -72,7 +76,11 @@ public class EnemyFloatByDamage : MonoBehaviour
 
         CreateBubbleByDamageOnUpdate();
     }
-
+    public void AddForceByPush(Vector3 _direction)
+    {
+        isPushing = true;
+        GetComponent<Rigidbody>().velocity = _direction;
+    }
     private void CreateBubbleByDamageOnInit()
     {
         Transform bubbleSetInstance = Instantiate(bubbleSetInstanceRef) as Transform;
@@ -141,6 +149,7 @@ public class EnemyFloatByDamage : MonoBehaviour
     public void Reset()
     {
         //TODO:ここリセットする
+        isPushing = false;
         canFloat = false;
         canSetInitPosToBubble = true;
         rb.velocity = Vector3.zero;

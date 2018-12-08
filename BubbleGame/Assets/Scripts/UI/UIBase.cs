@@ -20,6 +20,9 @@ public class UIBase : MonoBehaviour
     [SerializeField] private Text player1WeaponText;
     [SerializeField] private Text player2WeaponText;
 
+    [SerializeField] private RawImage player1AmmoImage;
+    [SerializeField] private RawImage player2AmmoImage;
+
     [SerializeField] private Image player1Heart1;
     [SerializeField] private Image player1Heart2;
     [SerializeField] private Image player1Heart3;
@@ -30,6 +33,9 @@ public class UIBase : MonoBehaviour
 
     public bool IsVisible { get; private set; }
 
+    [SerializeField]
+    private Rect scaleRect;
+    
     public void SetUIVisible(bool _isVisible)
     {
         IsVisible = _isVisible;
@@ -37,6 +43,9 @@ public class UIBase : MonoBehaviour
 
     private void Update()
     {
+        DrawPlayerAmmo(player1.GetComponent<PlayerController>().GetWeapon(), player1AmmoImage);
+        DrawPlayerAmmo(player2.GetComponent<PlayerController>().GetWeapon(), player2AmmoImage);
+
         DrawPlayer1Life(player1.GetComponent<PlayerStatus>().nowHp);
         DrawPlayer2Life(player2.GetComponent<PlayerStatus>().nowHp);
 
@@ -44,7 +53,21 @@ public class UIBase : MonoBehaviour
         DrawPlayerWeapon(player2.GetComponent<PlayerController>().GetNowWeaponType(), player2WeaponText);
     }
 
-    private void DrawPlayerWeapon(WeaponType _weaponType,Text _weaponText)
+    private void DrawPlayerAmmo(PlayerWeapon _weapon, RawImage _playerAmmoImage)
+    {
+        if (!_weapon)
+        {
+            return;
+        }
+        else
+        {
+            //y=0 ammo=Max, y=1 ammo=0
+            int ammoCount = _weapon.GetNowAmmo();
+            Debug.Log("ammoCount" + (100 - ammoCount) * 0.01f);
+            _playerAmmoImage.uvRect = new Rect(0, (100 - ammoCount) * 0.01f, 1, 1);
+        }
+    }
+    private void DrawPlayerWeapon(WeaponType _weaponType, Text _weaponText)
     {
         switch (_weaponType)
         {

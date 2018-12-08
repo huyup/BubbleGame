@@ -210,8 +210,6 @@ public class PlayerController : MonoBehaviour
     }
     public PlayerWeapon GetWeapon()
     {
-        if (!canAttack)
-            return null;
 
         switch (nowWeaponType)
         {
@@ -333,7 +331,7 @@ public class PlayerController : MonoBehaviour
 
     public void BanAttack()
     {
-        canAttack = false;
+        GetWeapon().BanAttack();
     }
 
     public void ResetMove()
@@ -348,7 +346,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetAttack()
     {
-        canAttack = true;
+        GetWeapon().ResetAttack();
     }
     #endregion
 }

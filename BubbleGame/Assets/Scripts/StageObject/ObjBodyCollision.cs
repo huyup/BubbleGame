@@ -11,6 +11,7 @@ public class ObjBodyCollision : MonoBehaviour
 
     [SerializeField]
     private ObjFloatByDamage floatByDamage;
+
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.gameObject.layer == 9 /*Ground*/)

@@ -38,6 +38,8 @@ public class ObjFloatByDamage : MonoBehaviour
     [SerializeField]
     private bool canChangeVelocityToCenter = false;
 
+    [SerializeField]
+    private bool isPushing = false;
     void Start()
     {
         objController = GetComponent<ObjController>();
@@ -53,7 +55,8 @@ public class ObjFloatByDamage : MonoBehaviour
             }
             else
             {
-                MoveToCenterPos();
+                if (!isPushing)
+                    MoveToCenterPos();
             }
         }
     }
@@ -68,7 +71,11 @@ public class ObjFloatByDamage : MonoBehaviour
 
         CreateBubbleByDamageOnUpdate();
     }
-
+    public void AddForceByPush(Vector3 _direction)
+    {
+        isPushing = true;
+        GetComponent<Rigidbody>().velocity = _direction;
+    }
     private void CreateBubbleByDamageOnInit()
     {
         Transform bubbleSetInstance = Instantiate(bubbleSetInstanceRef) as Transform;
@@ -139,7 +146,7 @@ public class ObjFloatByDamage : MonoBehaviour
         objController.ResetController();
 
         rb.velocity = Vector3.zero;
-
+        isPushing = false;
         canFloat = false;
         canSetInitPosToBubble = true;
         canChangeVelocityToCenter = false;

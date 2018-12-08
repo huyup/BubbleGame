@@ -72,17 +72,17 @@ public class PlayerInputManager : MonoBehaviour
         //攻撃ボタン
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            if (playerController.GetWeapon())
+            if (playerController.GetWeapon().CanAttack)
                 playerController.GetWeapon().OnAttackButtonDown();
         }
         if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            if (playerController.GetWeapon())
+            if (playerController.GetWeapon().CanAttack)
                 playerController.GetWeapon().OnAttackButtonStay(); ;
         }
         if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
-            if (playerController.GetWeapon())
+            if (playerController.GetWeapon().CanAttack)
                 playerController.GetWeapon().OnAttackButtonUp();
         }
 

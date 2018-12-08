@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerWeaponA : PlayerWeapon
 {
@@ -10,7 +11,8 @@ public class PlayerWeaponA : PlayerWeapon
     [SerializeField]
     private GameObject bubbleSet;
 
-    [SerializeField] private GameObject weaponAStartRef;
+    [SerializeField]
+    private GameObject weaponAStartRef;
 
     private List<GameObject> bubbles = new List<GameObject>();
 
@@ -25,9 +27,29 @@ public class PlayerWeaponA : PlayerWeapon
 
     private float spaceKeyStorage = 0.0f;
     private bool isPushed = false;
+
+    [SerializeField]
+    private int minShootCost = 10;
+
+    [SerializeField]
+    private float buttonStayCost = 0.3f;
+
+    [FormerlySerializedAs("maxShootCost")]
+    [SerializeField]
+    private int maxAmmoCost = 30;
+
+    private float tmpAmmoCost;
+
+    private float nowAmmoLeft;
+    private float prevAmmoLeft;
+
+    private bool isAttacking = false;
     // Use this for initialization
     void Start()
     {
+        prevAmmoLeft = MaxAmmo;
+        nowAmmoLeft = MaxAmmo;
+
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
         controller = GetComponent<PlayerController>();
@@ -36,11 +58,31 @@ public class PlayerWeaponA : PlayerWeapon
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("tmpAmmoCost" + tmpAmmoCost);
+        Debug.Log("nowAmmoLeft" + nowAmmoLeft);
+
+        if (nowAmmoLeft < MaxAmmo && !isAttacking)
+        {
+            prevAmmoLeft += ReloadSpeed;
+            nowAmmoLeft += ReloadSpeed;
+        }
+
+        if (nowAmmoLeft < 0)
+            nowAmmoLeft = 0;
+
         //泡の発射位置を更新させる
         bubbleStartPos = weaponAStartRef.transform.position;
     }
+    public override int GetNowAmmo()
+    {
+        return (int)nowAmmoLeft;
+    }
     public override void OnAttackButtonDown()
     {
+        isAttacking = true;
+        tmpAmmoCost = minShootCost;
+        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonDown();
         controller.BanMove();
         controller.BanJump();
@@ -63,12 +105,19 @@ public class PlayerWeaponA : PlayerWeapon
     {
         if (bubbles.Count == 0)
             return;
+        isAttacking = true;
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonStay();
 
         if (bubbles[bubbles.Count - 1])
         {
             if (spaceKeyStorage < bubbleProperty.MaxSize)
             {
+                nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+                if (tmpAmmoCost < maxAmmoCost)
+                {
+                    tmpAmmoCost += buttonStayCost * Time.fixedDeltaTime * 60;
+                }
+
                 spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
                 bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
                 //少しずつ前に移動させる
@@ -90,6 +139,7 @@ public class PlayerWeaponA : PlayerWeapon
 
     public override void OnAttackButtonUp()
     {
+        isAttacking = false;
         controller.ResetJump();
         controller.ResetMove();
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
@@ -98,13 +148,15 @@ public class PlayerWeaponA : PlayerWeapon
             PushTheBubbleOnceTime();
             isPushed = true;
         }
+
+        prevAmmoLeft = nowAmmoLeft;
     }
     private void PushTheBubbleOnceTime()
     {
         if (bubbles.Count == 0)
             return;
 
-        if (bubbles[bubbles.Count - 1] == null || isPushed )
+        if (bubbles[bubbles.Count - 1] == null || isPushed)
             return;
 
         if (!bubbles[bubbles.Count - 1].GetComponent<BubbleProperty>().IsForceFloating)

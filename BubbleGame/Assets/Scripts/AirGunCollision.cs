@@ -10,7 +10,7 @@ public class AirGunCollision : MonoBehaviour
         if (_obj.layer == 10 /*Bubble*/)
         {
             Vector3 particleDirection = this.transform.forward;
-            _obj.GetComponent<BubbleController>().AddForce(particleDirection*3);
+            _obj.GetComponent<BubbleController>().AddForceByPush(particleDirection*3);
         }
     }
 }

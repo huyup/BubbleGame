@@ -25,6 +25,16 @@ public class BubbleProperty : MonoBehaviour
     }
 
     /// <summary>
+    /// 空気砲に撃たれたときの存続時間
+    /// </summary>
+    [SerializeField]
+    private float lastTimeByAirGun = 1f;
+    public float LastTimeByAirGun
+    {
+        get { return lastTimeByAirGun; }
+    }
+
+    /// <summary>
     /// 最大サイズ
     /// </summary>
     [SerializeField]

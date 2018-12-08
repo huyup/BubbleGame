@@ -21,9 +21,8 @@ public class BubbleController : MonoBehaviour
 
     private bool canAddAutoFloatForce = true;
 
-    public bool CanAddForceToInsideObj { get; private set; }
+    private bool canAddForceByPush = true;
 
-    public Vector3 AddForceToInsideObjDirection { get; private set; }
     // Use this for initialization
     void Start()
     {
@@ -44,11 +43,25 @@ public class BubbleController : MonoBehaviour
         }
     }
 
-    public void AddForce(Vector3 _direction)
+    public void AddForceByPush(Vector3 _direction)
     {
-        rb.velocity += _direction;
-        CanAddForceToInsideObj = true;
-        AddForceToInsideObjDirection = _direction;
+        if (canAddForceByPush)
+        {
+            rb.velocity += _direction;
+            bubbleCollision.AddForceToInsideObj(_direction);
+            canAddForceByPush = false;
+            StartCoroutine(EarlyDestroyByAirGun());
+        }
+    }
+
+    IEnumerator EarlyDestroyByAirGun()
+    {
+        if (!transform.parent)
+            yield break;
+        yield return new WaitForSeconds(bubbleProperty.LastTimeByAirGun);
+        if (!transform.parent)
+            yield break;
+        transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
     }
     private void FloatByTime()
     {

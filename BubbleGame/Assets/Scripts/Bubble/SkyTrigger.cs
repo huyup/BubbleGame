@@ -12,7 +12,6 @@ public class SkyTrigger : MonoBehaviour
             BubbleProperty bubbleProperty = _other.GetComponent<BubbleProperty>();
             BubbleSetController bubbleSetController = _other.transform.parent.GetComponent<BubbleSetController>();
             StartCoroutine(DelayDestroy(bubbleProperty.LastTime, bubbleSetController));
-
         }
     }
     IEnumerator DelayDestroy(float _waitTime, BubbleSetController _bubbleSetController)
