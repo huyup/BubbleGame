@@ -296,6 +296,11 @@ Prefab:
       propertyPath: floatByContain
       value: 
       objectReference: {fileID: 1594847554}
+    - target: {fileID: 114358329530607974, guid: 608327f0ddcbdd545943a7c79ba7d69a,
+        type: 2}
+      propertyPath: status
+      value: 
+      objectReference: {fileID: 1594847551}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 608327f0ddcbdd545943a7c79ba7d69a, type: 2}
   m_IsPrefabAsset: 0
@@ -38804,6 +38809,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 10755096}
   m_Script: {fileID: 11500000, guid: 92fad5fa9b4918847bfde3679c1c9b1c, type: 3}
+--- !u!114 &1594847551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114668460415135874, guid: 608327f0ddcbdd545943a7c79ba7d69a,
+    type: 2}
+  m_PrefabInternal: {fileID: 10755096}
+  m_Script: {fileID: 11500000, guid: a0214f86d3ca9b54e884a3cf0f037f9b, type: 3}
 --- !u!114 &1594847554 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114934385707784918, guid: 608327f0ddcbdd545943a7c79ba7d69a,

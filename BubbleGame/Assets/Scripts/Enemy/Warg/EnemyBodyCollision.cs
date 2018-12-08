@@ -26,7 +26,8 @@ public class EnemyBodyCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 16/*StageObject*/&& other.gameObject.GetComponent<ObjController>().IsFalling)
+        if (other.gameObject.layer == 16/*StageObject*/&&
+            other.gameObject.GetComponent<ObjController>().ObjState == ObjState.Falling)
         {
             Explode();
         }
@@ -41,16 +42,16 @@ public class EnemyBodyCollision : MonoBehaviour
 
             ParticleSystem[] particles;
             particles = explosion.GetComponentsInChildren<ParticleSystem>();
-            
+
             foreach (ParticleSystem particle in particles)
             {
                 //if (!particle.isPlaying)
-                    particle.Play();
+                particle.Play();
             }
 
 
             //StartCoroutine(TurnOnSphereTriggerCoroutine(explosion.transform.Find("ExploisionTrigger")));
-            
+
             //GameObject bodyMesh = transform.parent.Find("RETMESH2").gameObject;
             //bodyMesh.SetActive(false);
             //enemyFunctionRef.GetEnemyController().SetIsDied(true);

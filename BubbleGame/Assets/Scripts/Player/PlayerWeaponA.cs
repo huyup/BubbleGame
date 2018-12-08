@@ -33,8 +33,7 @@ public class PlayerWeaponA : PlayerWeapon
 
     [SerializeField]
     private float buttonStayCost = 0.3f;
-
-    [FormerlySerializedAs("maxShootCost")]
+    
     [SerializeField]
     private int maxAmmoCost = 30;
 
@@ -76,6 +75,9 @@ public class PlayerWeaponA : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
+        if (nowAmmoLeft < minShootCost)
+            return;
+
         isAttacking = true;
         tmpAmmoCost = minShootCost;
         nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
@@ -102,6 +104,18 @@ public class PlayerWeaponA : PlayerWeapon
     {
         if (bubbles.Count == 0)
             return;
+
+        if (nowAmmoLeft <= 0)
+        {           
+            //残量が足りなかったら、自動的に前へ出す
+            if (!isPushed)
+            {
+                PushTheBubbleOnceTime();
+                isPushed = true;
+            }
+            return;
+        }
+
         isAttacking = true;
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonStay();
 

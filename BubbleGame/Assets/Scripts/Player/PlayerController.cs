@@ -10,7 +10,6 @@ public enum WeaponType
     WeaponB,
     WeaponC,
     Max,
-    Max2,
 }
 public class PlayerController : MonoBehaviour
 {
@@ -224,11 +223,6 @@ public class PlayerController : MonoBehaviour
             default:
                 nowWeapon = null;
                 break;
-        }
-
-        if (nowWeapon == null)
-        {
-            Debug.Log("ErrorToSetWeapon");
         }
         return nowWeapon;
     }

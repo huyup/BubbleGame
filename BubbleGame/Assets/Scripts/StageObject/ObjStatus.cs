@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ObjStatus : MonoBehaviour
 {
-
     /// <summary>
     /// 最大Hp
     /// </summary>
@@ -13,10 +12,15 @@ public class ObjStatus : MonoBehaviour
     public int MaxHp
     {
         get { return maxHp; }
-        private set
-        {
-            if (maxHp > 0 && maxHp != 0)
-                maxHp = value;
-        }
+    }
+
+    /// <summary>
+    /// 浮上するときのHp
+    /// </summary>
+    [SerializeField]
+    private int hpToFloat = 100;
+    public int HpToFloat
+    {
+        get { return hpToFloat; }
     }
 }

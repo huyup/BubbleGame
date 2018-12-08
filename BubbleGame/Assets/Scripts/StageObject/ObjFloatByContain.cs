@@ -7,76 +7,82 @@ public class ObjFloatByContain : MonoBehaviour
 {
     [SerializeField]
     private bool canMoveToCenter = false;
-    
+
     [SerializeField]
     private bool canStartFloating = false;
 
-    private Transform bubble;
+    [SerializeField]
+    private float moveToCenterSpeed = 4;
+
+    private Transform bubbleInstance;
 
     private ObjController objController;
 
-    private float objInitMass;
-
     private Rigidbody rb;
-    
+
     private void Start()
     {
         objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
-        objInitMass = GetComponent<Rigidbody>().mass;
     }
 
     void Update()
     {
         if (canStartFloating)
         {
-            if (bubble == null)
+            if (bubbleInstance == null)
             {
-                rb.velocity = Physics.gravity * 1.2f;
-                rb.mass = 1;
-                objController.IsFalling = true;
-                canStartFloating = false;
-                return;
+                Fallen();
             }
             else
             {
-                if (!objController.IsPushingByAirGun)
-                    MoveToCenterPos();
+                if (objController.ObjState == ObjState.Floating)
+                    FloatByContainOnUpdate();
             }
         }
     }
-
-    public void SetFloatOnInit(Transform _bubble)
+    public void FloatByContain(Transform _bubble)
     {
-        this.bubble = _bubble;
+        this.bubbleInstance = _bubble;
         canStartFloating = true;
         canMoveToCenter = true;
         rb.velocity = Vector3.zero;
+        objController.SetObjState(ObjState.Floating);
     }
-    private void MoveToCenterPos()
-    {
 
-        if (Vector3.Distance(transform.position, bubble.position) > 0.1f)
+    private void Fallen()
+    {
+        rb.velocity = Physics.gravity;
+        objController.SetObjState(ObjState.Falling);
+        canStartFloating = false;
+    }
+    private void FloatByContainOnUpdate()
+    {
+        if (Vector3.Distance(transform.position, bubbleInstance.position) > 0.1f)
         {
             if (canMoveToCenter)
-            {
-                Vector3 direction = (bubble.position - transform.position).normalized;
-                rb.velocity = (direction * Time.fixedDeltaTime * 200);
-            }
+                MoveToCenter();
         }
-        else if (Vector3.Distance(transform.position, bubble.position) < 0.1f)
+        else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
         {
             canMoveToCenter = false;
-            rb.velocity = new Vector3(0, bubble.GetComponent<Rigidbody>().velocity.y, 0);
+            FloatByBubbleVelocity();
         }
     }
 
+    private void MoveToCenter()
+    {
+        Vector3 direction = (bubbleInstance.position - transform.position).normalized;
+        rb.velocity = (direction * Time.fixedDeltaTime * 60 * moveToCenterSpeed);
+    }
+
+    private void FloatByBubbleVelocity()
+    {
+        rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
+    }
     public void ResetFloatFlag()
     {
         rb.velocity = Vector3.zero;
-        rb.mass = objInitMass;
-        GetComponent<BoxCollider>().isTrigger = false;
-        objController.IsFalling = false;
         canStartFloating = false;
     }
 }

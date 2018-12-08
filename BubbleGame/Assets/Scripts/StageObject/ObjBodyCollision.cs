@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// FIXME:要らないかもしれない
-/// </summary>
 public class ObjBodyCollision : MonoBehaviour
 {
     [SerializeField]
@@ -11,7 +8,7 @@ public class ObjBodyCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.gameObject.layer == 9 /*Ground*/)
+        if (_other.gameObject.layer == 9 /*Ground*/&&controller.ObjState==ObjState.Falling)
         {
             controller.OnReset();
         }

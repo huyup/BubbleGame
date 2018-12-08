@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObjState
+{
+    Idle,
+    Floating,
+    MovingByAirGun,
+    Falling,
+}
 public class ObjController : MonoBehaviour
 {
+    public ObjState ObjState { get; private set; }
+
+    [SerializeField]
     private ObjStatus status;
 
     [SerializeField]
@@ -15,61 +25,63 @@ public class ObjController : MonoBehaviour
     [SerializeField]
     private BubbleDamageEff bubbleDamageEff;
     
-    /// <summary>
-    /// 落下中かどうか
-    /// </summary>
-    [SerializeField]
-    public bool IsFalling = false;
-
-    /// <summary>
-    /// 落下中かどうか
-    /// </summary>
-    [SerializeField]
-    public bool IsPushingByAirGun { get; private set; }
-
     [SerializeField]
     private int nowHp;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    status = GetComponent<ObjStatus>();
-	    nowHp = status.MaxHp;
-	}
-	
-	// Update is called once per frame
+    [SerializeField]
+    private GUIStyle fontStyle;
+    // Use this for initialization
+    void Start()
+    {
+        nowHp = status.MaxHp;
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        if (nowHp < 20)
+        if (ObjState==ObjState.Idle)
         {
-            bubbleDamageEff.StopEmitter();
-            floatByDamage.CreateBubbleByDamage();
+            if (nowHp < status.HpToFloat)
+            {
+                bubbleDamageEff.StopEmitter();
+                floatByDamage.CreateBubbleByDamage();
+            }
+            else
+            {
+                bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, nowHp);
+            }
         }
         else
-        {
-            bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, nowHp);
-        }
-
-        if (IsFalling)
             GetComponent<BoxCollider>().isTrigger = true;
+    }
+
+    public void SetObjState(ObjState _state)
+    {
+        ObjState = _state;
     }
     public void Damage(int _power)
     {
         if (nowHp > 0)
             nowHp -= _power;
     }
-
     public void OnReset()
     {
-        IsPushingByAirGun = false;
+        ObjState = ObjState.Idle;
         nowHp = status.MaxHp;
+        GetComponent<BoxCollider>().isTrigger = false;
         floatByContain.ResetFloatFlag();
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
     }
     public void AddForceByPush(Vector3 _direction)
     {
-        IsPushingByAirGun = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        ObjState = ObjState.MovingByAirGun;
         GetComponent<Rigidbody>().velocity = _direction;
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 200, 200), "ObjState:"+ObjState, fontStyle);
     }
 }

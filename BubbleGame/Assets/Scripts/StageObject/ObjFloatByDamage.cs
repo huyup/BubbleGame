@@ -4,72 +4,52 @@ using UnityEngine;
 
 public class ObjFloatByDamage : MonoBehaviour
 {
-
     [SerializeField]
     private Transform bubbleSetInstanceRef;
 
     [SerializeField]
     private Transform bubbleInstanceStartRef;
-
+    
     [SerializeField]
-    private float bubbleMaxSize;
-
-    private Transform bubbleInstance;
-
-    private ObjController objController;
+    private ObjFloatByContain objFloatByContain;
 
     [SerializeField]
     private float increaseScaleVelocity;
 
     [SerializeField]
-    private float factorToFloat;
+    private float factorToFloatInCreating;
 
+    [SerializeField]
+    private bool canCreateBubbleInstanceByDamage = true;
+
+    private Transform bubbleInstance;
+    
     private Rigidbody rb;
 
-    [SerializeField]
-    private bool canSetInitPosToBubble = true;
-
-    [SerializeField]
-    private bool canFloat = false;
-
-    /// <summary>
-    ///　中心点に移動できるかどうか
-    /// </summary>
-    [SerializeField]
-    private bool canChangeVelocityToCenter = false;
-
-    [SerializeField]
-    private bool isPushing = false;
     void Start()
     {
-        objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
-    }
-    private void Update()
-    {
-        if (canFloat)
-        {
-            if (bubbleInstance == null)
-            {
-                AddFallForce();
-            }
-            else
-            {
-                if (!objController.IsPushingByAirGun)
-                    MoveToCenterPos();
-            }
-        }
     }
     public void CreateBubbleByDamage()
     {
-
-        if (canSetInitPosToBubble)
+        if (canCreateBubbleInstanceByDamage)
         {
             CreateBubbleByDamageOnInit();
-            canSetInitPosToBubble = false;
+            canCreateBubbleInstanceByDamage = false;
         }
 
-        CreateBubbleByDamageOnUpdate();
+        if (!bubbleInstance)
+            return;
+        //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
+        if (bubbleInstance.localScale.x < bubbleInstance.GetComponent<BubbleProperty>().MaxSizeCreatedByDamage)
+        {
+            SetBubbleToFloatPos();
+        }
+        else
+        {
+            bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+            objFloatByContain.FloatByContain(bubbleInstance);
+        }
     }
 
     private void CreateBubbleByDamageOnInit()
@@ -79,70 +59,25 @@ public class ObjFloatByDamage : MonoBehaviour
         bubbleInstance = bubbleSetInstance.transform.Find("Bubble");
 
         bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage = true;
+
         bubbleInstance.position = bubbleInstanceStartRef.position;
     }
-    private void CreateBubbleByDamageOnUpdate()
+    private void SetBubbleToFloatPos()
     {
         if (!bubbleInstance)
             return;
-        if (!canFloat)
-        {
-            Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
-                                    Time.fixedDeltaTime * 60;
 
-            Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * factorToFloat;
+        Vector3 scaleVelocity = new Vector3(increaseScaleVelocity, increaseScaleVelocity, increaseScaleVelocity) *
+                                Time.fixedDeltaTime * 60;
 
-            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
-            if (bubbleInstance.localScale.x < bubbleMaxSize)
-            {
-                bubbleInstance.localScale += scaleVelocity;
-                bubbleInstance.GetComponent<Rigidbody>().velocity = upVelocity;
-            }
-            else
-            {
-                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-                FloatByContainOnInit();
-                canFloat = true;
-            }
-        }
-    }
+        Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * factorToFloatInCreating;
 
-    private void MoveToCenterPos()
-    {
-        if (Vector3.Distance(transform.position, bubbleInstance.position) > 0.1f)
-        {
-            if (canChangeVelocityToCenter)
-            {
-                Vector3 direction = (bubbleInstance.position - transform.position).normalized;
-                rb.velocity = (direction * Time.fixedDeltaTime * 200);
-            }
-        }
-        else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
-        {
-            canChangeVelocityToCenter = false;
-            rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
-        }
+        bubbleInstance.localScale += scaleVelocity;
+        bubbleInstance.GetComponent<Rigidbody>().velocity = upVelocity;
     }
-    private void FloatByContainOnInit()
-    {
-        canFloat = true;
-        canChangeVelocityToCenter = true;
-        rb.velocity = Vector3.zero;
-    }
-    private void AddFallForce()
-    {
-        objController.IsFalling = true;
-        rb.velocity = Physics.gravity;
-    }
-
     public void ResetFloatFlag()
     {
-        //TODO:ここリセットする
-        objController.IsFalling = false;
         rb.velocity = Vector3.zero;
-        isPushing = false;
-        canFloat = false;
-        canSetInitPosToBubble = true;
-        canChangeVelocityToCenter = false;
+        canCreateBubbleInstanceByDamage = true;
     }
 }

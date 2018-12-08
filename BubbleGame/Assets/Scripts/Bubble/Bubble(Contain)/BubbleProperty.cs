@@ -45,6 +45,16 @@ public class BubbleProperty : MonoBehaviour
     }
 
     /// <summary>
+    /// ダメージで作られたときの最大サイズ
+    /// </summary>
+    [SerializeField]
+    private float maxSizeCreatedByDamage = 4;
+    public float MaxSizeCreatedByDamage
+    {
+        get { return maxSizeCreatedByDamage; }
+    }
+
+    /// <summary>
     ///敵を連れて上昇しているかどうか
     /// </summary>
     [SerializeField]

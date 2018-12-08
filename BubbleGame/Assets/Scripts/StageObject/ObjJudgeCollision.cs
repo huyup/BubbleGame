@@ -65,6 +65,6 @@ public class ObjJudgeCollision : MonoBehaviour
             GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
             bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
-        floatByContain.SetFloatOnInit(_boxCollider.transform.parent.Find("Bubble"));
+        floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
     }
 }
