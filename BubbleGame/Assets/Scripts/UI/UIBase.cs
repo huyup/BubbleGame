@@ -63,7 +63,6 @@ public class UIBase : MonoBehaviour
         {
             //y=0 ammo=Max, y=1 ammo=0
             int ammoCount = _weapon.GetNowAmmo();
-            Debug.Log("ammoCount" + (100 - ammoCount) * 0.01f);
             _playerAmmoImage.uvRect = new Rect(0, (100 - ammoCount) * 0.01f, 1, 1);
         }
     }

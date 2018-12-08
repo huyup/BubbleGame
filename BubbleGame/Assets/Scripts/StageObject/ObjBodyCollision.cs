@@ -7,17 +7,13 @@ using UnityEngine;
 public class ObjBodyCollision : MonoBehaviour
 {
     [SerializeField]
-    private ObjFloatByContain floatByContain;
-
-    [SerializeField]
-    private ObjFloatByDamage floatByDamage;
+    private ObjController controller;
 
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.gameObject.layer == 9 /*Ground*/)
         {
-            floatByContain.ResetFloatFlag();
-            floatByDamage.ResetFloatFlag();
+            controller.OnReset();
         }
     }
 }

@@ -7,6 +7,9 @@ public class ObjController : MonoBehaviour
     private ObjStatus status;
 
     [SerializeField]
+    private ObjFloatByContain floatByContain;
+
+    [SerializeField]
     private ObjFloatByDamage floatByDamage;
 
     [SerializeField]
@@ -17,6 +20,12 @@ public class ObjController : MonoBehaviour
     /// </summary>
     [SerializeField]
     public bool IsFalling = false;
+
+    /// <summary>
+    /// 落下中かどうか
+    /// </summary>
+    [SerializeField]
+    public bool IsPushingByAirGun { get; private set; }
 
     [SerializeField]
     private int nowHp;
@@ -41,6 +50,8 @@ public class ObjController : MonoBehaviour
             bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, nowHp);
         }
 
+        if (IsFalling)
+            GetComponent<BoxCollider>().isTrigger = true;
     }
     public void Damage(int _power)
     {
@@ -48,9 +59,17 @@ public class ObjController : MonoBehaviour
             nowHp -= _power;
     }
 
-    public void ResetController()
+    public void OnReset()
     {
+        IsPushingByAirGun = false;
         nowHp = status.MaxHp;
+        floatByContain.ResetFloatFlag();
+        floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
+    }
+    public void AddForceByPush(Vector3 _direction)
+    {
+        IsPushingByAirGun = true;
+        GetComponent<Rigidbody>().velocity = _direction;
     }
 }

@@ -58,9 +58,6 @@ public class PlayerWeaponA : PlayerWeapon
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("tmpAmmoCost" + tmpAmmoCost);
-        Debug.Log("nowAmmoLeft" + nowAmmoLeft);
-
         if (nowAmmoLeft < MaxAmmo && !isAttacking)
         {
             prevAmmoLeft += ReloadSpeed;

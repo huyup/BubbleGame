@@ -35,12 +35,12 @@ public class PlayerController : MonoBehaviour
     //無敵かどうか
     private bool isVincible = false;
     private bool isSlow = false;
+
     private bool canJump = false;
     private bool canMove = false;
     private bool canRotate = false;
-    //TODO:いつ攻撃を禁止するか？
-    private bool canAttack = false;
     private bool canJumpAttack = false;
+    
     #region 初期化
     void Start()
     {
@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
         isSlow = false;
         canJump = true;
         canRotate = true;
-        canAttack = true;
         canMove = true;
     }
     #endregion

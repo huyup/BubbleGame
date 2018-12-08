@@ -55,7 +55,7 @@ public class ObjFloatByDamage : MonoBehaviour
             }
             else
             {
-                if (!isPushing)
+                if (!objController.IsPushingByAirGun)
                     MoveToCenterPos();
             }
         }
@@ -71,11 +71,7 @@ public class ObjFloatByDamage : MonoBehaviour
 
         CreateBubbleByDamageOnUpdate();
     }
-    public void AddForceByPush(Vector3 _direction)
-    {
-        isPushing = true;
-        GetComponent<Rigidbody>().velocity = _direction;
-    }
+
     private void CreateBubbleByDamageOnInit()
     {
         Transform bubbleSetInstance = Instantiate(bubbleSetInstanceRef) as Transform;
@@ -143,8 +139,6 @@ public class ObjFloatByDamage : MonoBehaviour
     {
         //TODO:ここリセットする
         objController.IsFalling = false;
-        objController.ResetController();
-
         rb.velocity = Vector3.zero;
         isPushing = false;
         canFloat = false;
