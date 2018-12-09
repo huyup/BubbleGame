@@ -57,17 +57,22 @@ public class PlayerWeaponA : PlayerWeapon
     // Update is called once per frame
     void Update()
     {
-        if (nowAmmoLeft < MaxAmmo && !isAttacking)
-        {
-            prevAmmoLeft += ReloadSpeed;
-            nowAmmoLeft += ReloadSpeed;
-        }
+        Reload();
 
         if (nowAmmoLeft < 0)
             nowAmmoLeft = 0;
 
         //泡の発射位置を更新させる
         bubbleStartPos = weaponAStartRef.transform.position;
+    }
+
+    private void Reload()
+    {
+        if (nowAmmoLeft < MaxAmmo && !isAttacking)
+        {
+            prevAmmoLeft += ReloadSpeed;
+            nowAmmoLeft += ReloadSpeed;
+        }
     }
     public override int GetNowAmmo()
     {
@@ -123,12 +128,12 @@ public class PlayerWeaponA : PlayerWeapon
         {
             if (spaceKeyStorage < bubbleProperty.MaxSize)
             {
-                nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+
                 if (tmpAmmoCost < maxAmmoCost)
                 {
                     tmpAmmoCost += buttonStayCost * Time.fixedDeltaTime * 60;
                 }
-
+                nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
                 spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
                 bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
                 //少しずつ前に移動させる
@@ -150,7 +155,7 @@ public class PlayerWeaponA : PlayerWeapon
 
     public override void OnAttackButtonUp()
     {
-        isAttacking = false;
+
         controller.ResetJump();
         controller.ResetMove();
         GetComponent<PlayerAnimator>().SetAttackAnimationOnButtonUp();
@@ -160,6 +165,7 @@ public class PlayerWeaponA : PlayerWeapon
             isPushed = true;
         }
 
+        isAttacking = false;
         prevAmmoLeft = nowAmmoLeft;
     }
     private void PushTheBubbleOnceTime()

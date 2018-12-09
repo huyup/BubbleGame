@@ -922,9 +922,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxAmmo: 100
-  ReloadSpeed: 0
+  ReloadSpeed: 0.2
   rapidFireBubble: {fileID: 1742907140}
   weaponBStartRef: {fileID: 10731029}
+  minShootCost: 2
+  buttonStayCost: 0.1
 --- !u!114 &84273620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,9 +1037,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxAmmo: 100
-  ReloadSpeed: 0
+  ReloadSpeed: 0.1
   airGun: {fileID: 1931173018}
   weaponCStartRef: {fileID: 2061600083}
+  minShootCost: 30
 --- !u!1001 &90733100
 Prefab:
   m_ObjectHideFlags: 0
@@ -40399,6 +40402,7 @@ MonoBehaviour:
   ReloadSpeed: 0
   airGun: {fileID: 1931173018}
   weaponCStartRef: {fileID: 1950289402}
+  minShootCost: 10
 --- !u!114 &1853966822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40414,6 +40418,8 @@ MonoBehaviour:
   ReloadSpeed: 0
   rapidFireBubble: {fileID: 552507885}
   weaponBStartRef: {fileID: 402319160}
+  minShootCost: 10
+  buttonStayCost: 0.3
 --- !u!114 &1853966823
 MonoBehaviour:
   m_ObjectHideFlags: 0
