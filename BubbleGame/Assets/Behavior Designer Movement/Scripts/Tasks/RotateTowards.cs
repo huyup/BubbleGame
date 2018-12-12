@@ -21,7 +21,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedGameObject target;
         [Tooltip("If target is null then use the target rotation")]
         public SharedVector3 targetRotation;
-
+        public SharedFloat RotateSpeed;
         public override TaskStatus OnUpdate()
         {
             var rotation = Target();

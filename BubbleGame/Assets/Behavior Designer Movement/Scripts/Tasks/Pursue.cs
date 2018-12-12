@@ -14,7 +14,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedFloat targetDistPredictionMult = 20;
         [Tooltip("The GameObject that the agent is pursuing")]
         public SharedGameObject target;
-
+        
         // The position of the target at the last frame
         private Vector3 targetPosition;
 
@@ -35,8 +35,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             // Target will return the predicated position
-            SetDestination(Target());
-
+            //SetDestination(Target());
             return TaskStatus.Running;
         }
 
