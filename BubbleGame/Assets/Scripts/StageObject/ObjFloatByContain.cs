@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Movement;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public class ObjFloatByContain : MonoBehaviour
@@ -13,6 +15,9 @@ public class ObjFloatByContain : MonoBehaviour
 
     [SerializeField]
     private float moveToCenterSpeed = 4;
+    
+    [SerializeField]
+    private NavMeshAgent agent;
 
     private Transform bubbleInstance;
 
@@ -44,6 +49,13 @@ public class ObjFloatByContain : MonoBehaviour
     public void FloatByContain(Transform _bubble)
     {
         this.bubbleInstance = _bubble;
+        if (agent)
+        {
+            agent.Stop(true);
+            agent.enabled = false;
+
+        }
+
         canStartFloating = true;
         canMoveToCenter = true;
         rb.velocity = Vector3.zero;
