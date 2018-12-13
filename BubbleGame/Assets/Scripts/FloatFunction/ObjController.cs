@@ -52,7 +52,7 @@ public class ObjController : MonoBehaviour
     {
         nowHp = status.MaxHp;
 
-        if (status.Type == ObjType.Enemy)
+        if (status.Type == ObjType.Uribou)
         {
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
             initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
@@ -78,7 +78,7 @@ public class ObjController : MonoBehaviour
         else
             GetComponent<BoxCollider>().isTrigger = true;
 
-        if (status.Type == ObjType.Enemy)
+        if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(nowHp, status.MaxHp);
     }
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
@@ -111,7 +111,7 @@ public class ObjController : MonoBehaviour
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
 
-        if (status.Type == ObjType.Enemy)
+        if (status.Type == ObjType.Uribou)
         {
             uribouAnimator.SetDownAnimation();
         }

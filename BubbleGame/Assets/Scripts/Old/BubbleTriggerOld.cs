@@ -33,7 +33,7 @@
 
 //    private void OnTriggerEnter(Collider other)
 //    {
-//        if (other.gameObject.tag == "Enemy")
+//        if (other.gameObject.tag == "Uribou")
 //        {
 //            Debug.Log("hitEnemy");
 //            other.GetComponent<Rigidbody>().useGravity=false;

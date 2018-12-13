@@ -9,7 +9,7 @@ public class BubbleDamage : MonoBehaviour
 
     void OnParticleCollision(GameObject _obj)
     {
-        if (_obj.layer == 12 /*Enemy*/)
+        if (_obj.layer == 12 /*Uribou*/)
         {
             EnemyFunctionRef enemyFunctionRef;
             enemyFunctionRef = _obj.transform.parent.GetComponent<EnemyFunctionRef>();

@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ObjType
 {
     Obj,
-    Enemy,
+    Uribou,
 }
 public class ObjStatus : MonoBehaviour
 {

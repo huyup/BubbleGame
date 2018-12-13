@@ -1,0 +1,166 @@
+fileFormatVersion: 2
+guid: e952640cb7348984b8ec1dab41b922c3
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Head
+    100004: Head2
+    100006: Hips
+    100008: Hips2
+    100010: Hips3
+    100012: Hips4
+    100014: Hips5
+    100016: Hips6
+    100018: Hips7
+    100020: inoshishi
+    100022: LeftArm
+    100024: LeftEar
+    100026: LeftEar2
+    100028: LeftEar3
+    100030: LeftFoot
+    100032: LeftForeArm
+    100034: LeftForeArm 1
+    100036: LeftHand
+    100038: LeftUpLeg
+    100040: Neck
+    100042: reference
+    100044: RightArm
+    100046: RightEar
+    100048: RightEar2
+    100050: RightEar3
+    100052: RightFoot
+    100054: RightForeArm
+    100056: RightForeArm 1
+    100058: RightHand
+    100060: RightUpLeg
+    100062: Spin2
+    100064: Spine
+    400000: //RootNode
+    400002: Head
+    400004: Head2
+    400006: Hips
+    400008: Hips2
+    400010: Hips3
+    400012: Hips4
+    400014: Hips5
+    400016: Hips6
+    400018: Hips7
+    400020: inoshishi
+    400022: LeftArm
+    400024: LeftEar
+    400026: LeftEar2
+    400028: LeftEar3
+    400030: LeftFoot
+    400032: LeftForeArm
+    400034: LeftForeArm 1
+    400036: LeftHand
+    400038: LeftUpLeg
+    400040: Neck
+    400042: reference
+    400044: RightArm
+    400046: RightEar
+    400048: RightEar2
+    400050: RightEar3
+    400052: RightFoot
+    400054: RightForeArm
+    400056: RightForeArm 1
+    400058: RightHand
+    400060: RightUpLeg
+    400062: Spin2
+    400064: Spine
+    2100000: lambert4
+    4300000: inoshishi
+    7400000: Inoshishi_taiki
+    7400002: Inoshishi_turn
+    7400004: Inoshishi_yobidousa
+    7400006: Inoshishi_tossin
+    7400008: Inoshishi_teishi
+    7400010: Inoshishi_stanping
+    7400012: Inoshishi_huminarashi
+    7400014: Inoshishi_haritobashi
+    7400016: Inoshishi_taoreru
+    9500000: //RootNode
+    13700000: inoshishi
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

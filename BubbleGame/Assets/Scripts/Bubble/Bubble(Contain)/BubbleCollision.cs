@@ -27,7 +27,7 @@ public class BubbleCollision : MonoBehaviour
         {
             setController.DestroyBubbleSet();
         }
-        if (_other.gameObject.layer == 12 /*Enemy*/ || _other.gameObject.layer == 16 /*StageObj*/)
+        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Add(_other);
         }
@@ -35,14 +35,14 @@ public class BubbleCollision : MonoBehaviour
 
     private void OnTriggerStay(Collider _other)
     {
-        if (_other.gameObject.layer == 12 /*Enemy*/ || _other.gameObject.layer == 16 /*StageObj*/)
+        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             canAddForceToInsideObj = true;
         }
     }
     private void OnTriggerExit(Collider _other)
     {
-        if (_other.gameObject.layer == 12 /*Enemy*/ || _other.gameObject.layer == 16 /*StageObj*/)
+        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Remove(_other);
         }
@@ -56,7 +56,7 @@ public class BubbleCollision : MonoBehaviour
         {
             if (insideCollider.gameObject.layer == 16/*StageObj*/)
                 insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
-            else if (insideCollider.gameObject.layer == 12/*Enemy*/)
+            else if (insideCollider.gameObject.layer == 12/*Uribou*/)
                 insideCollider.transform.parent.GetComponent<EnemyFloatByDamage>().AddForceByPush(_direction);
         }
     }

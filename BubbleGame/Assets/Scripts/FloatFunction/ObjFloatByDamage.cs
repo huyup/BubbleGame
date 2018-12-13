@@ -69,7 +69,7 @@ public class ObjFloatByDamage : MonoBehaviour
 
         bubbleInstance.position = bubbleInstanceStartRef.position;
 
-        if (status.Type == ObjType.Enemy)
+        if (status.Type == ObjType.Uribou)
         {
             agent.enabled = false;
 
