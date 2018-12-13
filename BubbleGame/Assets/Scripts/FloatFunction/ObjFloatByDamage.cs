@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ObjFloatByDamage : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class ObjFloatByDamage : MonoBehaviour
     [SerializeField]
     private bool canCreateBubbleInstanceByDamage = true;
 
+    [SerializeField]
+    private NavMeshAgent agent;
+
+    [SerializeField]
+    private ObjStatus status;
     private Transform bubbleInstance;
     
     private Rigidbody rb;
@@ -34,6 +40,7 @@ public class ObjFloatByDamage : MonoBehaviour
     {
         if (canCreateBubbleInstanceByDamage)
         {
+
             CreateBubbleByDamageOnInit();
             canCreateBubbleInstanceByDamage = false;
         }
@@ -61,6 +68,12 @@ public class ObjFloatByDamage : MonoBehaviour
         bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage = true;
 
         bubbleInstance.position = bubbleInstanceStartRef.position;
+
+        if (status.Type == ObjType.Enemy)
+        {
+            agent.enabled = false;
+
+        }
     }
     private void SetBubbleToFloatPos()
     {

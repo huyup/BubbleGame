@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObjType
+{
+    Obj,
+    Enemy,
+}
 public class ObjStatus : MonoBehaviour
 {
     /// <summary>
@@ -23,4 +28,9 @@ public class ObjStatus : MonoBehaviour
     {
         get { return hpToFloat; }
     }
+
+    /// <summary>
+    /// タイプ
+    /// </summary>
+    [SerializeField] public ObjType Type;
 }

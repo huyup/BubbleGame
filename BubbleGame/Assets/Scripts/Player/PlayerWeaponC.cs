@@ -41,6 +41,7 @@ public class PlayerWeaponC : PlayerWeapon
 
         if (nowAmmoLeft < 0)
             nowAmmoLeft = 0;
+
         //泡の発射位置を更新させる
         bubbleStartPos = weaponCStartRef.transform.position;
     }
@@ -73,7 +74,6 @@ public class PlayerWeaponC : PlayerWeapon
             {
                 particleSystem.Play();
             }
-            //airGun.GetComponent<ParticleSystem>().Play();
             playerController.PullBack();
             StartCoroutine(PullBack());
         }

@@ -15,9 +15,12 @@ public class ObjFloatByContain : MonoBehaviour
 
     [SerializeField]
     private float moveToCenterSpeed = 4;
-    
+
     [SerializeField]
     private NavMeshAgent agent;
+
+    [SerializeField]
+    private ObjStatus status;
 
     private Transform bubbleInstance;
 
@@ -49,9 +52,8 @@ public class ObjFloatByContain : MonoBehaviour
     public void FloatByContain(Transform _bubble)
     {
         this.bubbleInstance = _bubble;
-        if (agent)
+        if (status.Type == ObjType.Enemy)
         {
-            agent.Stop(true);
             agent.enabled = false;
 
         }

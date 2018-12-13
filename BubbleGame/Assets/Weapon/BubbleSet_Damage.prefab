@@ -355,7 +355,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 15
   lastTime: 4
+  lastTimeByAirGun: 1.5
   maxSize: 0.11
+  maxSizeCreatedByDamage: 4
   isForceFloating: 0
   isCreatedByDamage: 0
 --- !u!114 &114571180035814808
@@ -370,6 +372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeDestroy: 0
+  canAddForceToInsideObj: 0
+  insideColliderList: []
 --- !u!114 &114818905798350856
 MonoBehaviour:
   m_ObjectHideFlags: 1

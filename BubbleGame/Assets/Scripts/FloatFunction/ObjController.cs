@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using UnityEngine;
 
 public enum ObjState
@@ -24,9 +25,12 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private BubbleDamageEff bubbleDamageEff;
-    
+
     [SerializeField]
     private int nowHp;
+
+    [SerializeField]
+    private BehaviorTree wander;
 
     [SerializeField]
     private GUIStyle fontStyle;
@@ -39,7 +43,7 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ObjState==ObjState.Idle)
+        if (ObjState == ObjState.Idle)
         {
             if (nowHp < status.HpToFloat)
             {
@@ -53,8 +57,15 @@ public class ObjController : MonoBehaviour
         }
         else
             GetComponent<BoxCollider>().isTrigger = true;
+
+        if (status.Type == ObjType.Enemy)
+            SetSpeedByDamage();
     }
 
+    private void SetSpeedByDamage()
+    {
+        wander.SetVariableValue("WalkSpeed", 1);
+    }
     public void SetObjState(ObjState _state)
     {
         ObjState = _state;
@@ -82,6 +93,6 @@ public class ObjController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 200, 200), "ObjState:"+ObjState, fontStyle);
+        GUI.Label(new Rect(10, 10, 200, 200), "ObjState:" + ObjState, fontStyle);
     }
 }
