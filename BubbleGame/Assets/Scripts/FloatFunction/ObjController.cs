@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum ObjState
 {
-    Idle,
+    OnGround,
     Floating,
     MovingByAirGun,
     Falling,
@@ -33,17 +34,36 @@ public class ObjController : MonoBehaviour
     private BehaviorTree wander;
 
     [SerializeField]
+    private BehaviorTree attack;
+
+    [SerializeField]
     private GUIStyle fontStyle;
+
+    [SerializeField]
+    private NavMeshAgent agent;
+
+    private float initWanderSpeed;
+    private float initAttackSpeed;
+
+    [SerializeField]
+    private UribouAnimatorCtr uribouAnimator;
     // Use this for initialization
     void Start()
     {
         nowHp = status.MaxHp;
+
+        if (status.Type == ObjType.Enemy)
+        {
+            initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
+            initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
+            agent.speed = initWanderSpeed;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ObjState == ObjState.Idle)
+        if (ObjState == ObjState.OnGround)
         {
             if (nowHp < status.HpToFloat)
             {
@@ -59,12 +79,19 @@ public class ObjController : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = true;
 
         if (status.Type == ObjType.Enemy)
-            SetSpeedByDamage();
+            SetSpeedByDamage(nowHp, status.MaxHp);
     }
-
-    private void SetSpeedByDamage()
+    private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
-        wander.SetVariableValue("WalkSpeed", 1);
+        var rate = (_nowHp * 100 / _maxHp);
+
+        if ((bool)wander.GetVariable("IsWandering").GetValue())
+            agent.speed = initWanderSpeed * (rate * 0.01f);
+
+        if ((bool)attack.GetVariable("IsAttacking").GetValue())
+            agent.speed = initAttackSpeed * (rate * 0.01f);
+
+
     }
     public void SetObjState(ObjState _state)
     {
@@ -77,12 +104,17 @@ public class ObjController : MonoBehaviour
     }
     public void OnReset()
     {
-        ObjState = ObjState.Idle;
+        ObjState = ObjState.OnGround;
         nowHp = status.MaxHp;
         GetComponent<BoxCollider>().isTrigger = false;
         floatByContain.ResetFloatFlag();
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
+
+        if (status.Type == ObjType.Enemy)
+        {
+            uribouAnimator.SetDownAnimation();
+        }
     }
     public void AddForceByPush(Vector3 _direction)
     {
