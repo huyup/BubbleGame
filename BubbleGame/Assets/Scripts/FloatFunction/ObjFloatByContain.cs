@@ -55,7 +55,8 @@ public class ObjFloatByContain : MonoBehaviour
         if (status.Type == ObjType.Uribou)
         {
             agent.enabled = false;
-
+            rb.isKinematic = false;
+            GetComponent<Animator>().applyRootMotion = false;
         }
 
         canStartFloating = true;

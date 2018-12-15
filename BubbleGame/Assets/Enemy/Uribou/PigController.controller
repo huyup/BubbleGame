@@ -345,7 +345,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: uribou_yobidousa
+  m_Name: Prepare
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -373,7 +373,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: uribou_taiki
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -400,7 +400,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: uribou_dush1
+  m_Name: Dush
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -429,7 +429,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: uribou_bureki
+  m_Name: Break
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -455,7 +455,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: uribou_kiba
+  m_Name: Attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
