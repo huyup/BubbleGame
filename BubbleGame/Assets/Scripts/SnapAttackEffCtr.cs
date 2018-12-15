@@ -8,7 +8,7 @@ public class SnapAttackEffCtr : MonoBehaviour
     private ParticleSystem[] particleSystems;
 
     [SerializeField]
-    private float waveSpeed = 0.2f;
+    private float waveSpeed = 1f;
 
     [SerializeField]
     private BehaviorTree waveAttack;

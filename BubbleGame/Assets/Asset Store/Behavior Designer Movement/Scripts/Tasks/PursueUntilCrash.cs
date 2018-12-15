@@ -37,7 +37,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             ResetDestination();
             if (hasArrived)
             {
-
+                hasArrived = false;
                 return TaskStatus.Success;
             }
             return TaskStatus.Running;
