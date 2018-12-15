@@ -7,11 +7,13 @@ public class HarinezumiAnimatorCtr : MonoBehaviour
 {
     private Animator animator;
     private NavMeshAgent agent;
-    
+
+    private ObjController controller;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        controller = GetComponent<ObjController>();
     }
 
     private void Update()
@@ -26,18 +28,15 @@ public class HarinezumiAnimatorCtr : MonoBehaviour
             animator.SetBool("Moving", false);
         }
 
-        //if (controller.ObjState != ObjState.OnGround)
-        //{
-        //    animator.SetBool("Moving", false);
-        //    animator.SetBool("Attacking", false);
-        //    animator.SetBool("Preparing", false);
-        //    animator.SetBool("Stopping", false);
-        //}
+        if (controller.ObjState != ObjState.OnGround)
+        {
+            animator.SetBool("Moving", false);
+            animator.SetBool("Attacking", false);
+        }
     }
 
     public void SetDownAnimation()
     {
         Debug.Log("Down");
-        animator.SetBool("Down", true);
     }
 }

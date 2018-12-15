@@ -6,6 +6,7 @@ public enum ObjType
 {
     Obj,
     Uribou,
+    Harinezemi,
 }
 public class ObjStatus : MonoBehaviour
 {

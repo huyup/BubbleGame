@@ -52,7 +52,7 @@ public class ObjFloatByContain : MonoBehaviour
     public void FloatByContain(Transform _bubble)
     {
         this.bubbleInstance = _bubble;
-        if (status.Type == ObjType.Uribou)
+        if (status.Type == ObjType.Uribou||status.Type==ObjType.Harinezemi)
         {
             agent.enabled = false;
             rb.isKinematic = false;

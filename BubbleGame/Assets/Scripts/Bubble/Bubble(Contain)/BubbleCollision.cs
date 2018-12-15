@@ -54,10 +54,10 @@ public class BubbleCollision : MonoBehaviour
 
         foreach (Collider insideCollider in insideColliderList)
         {
-            if (insideCollider.gameObject.layer == 16/*StageObj*/)
+            if (insideCollider.gameObject.layer == 16/*StageObj*/|| insideCollider.gameObject.layer == 12/*EnemyHit*/)
                 insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
-            else if (insideCollider.gameObject.layer == 12/*Uribou*/)
-                insideCollider.transform.parent.GetComponent<EnemyFloatByDamage>().AddForceByPush(_direction);
+            //else if (insideCollider.gameObject.layer == 12/*Uribou*/)
+            //    insideCollider.transform.parent.GetComponent<EnemyFloatByDamage>().AddForceByPush(_direction);
         }
     }
 

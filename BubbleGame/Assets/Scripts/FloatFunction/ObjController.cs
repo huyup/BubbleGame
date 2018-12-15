@@ -47,12 +47,15 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private UribouAnimatorCtr uribouAnimator;
+
+    [SerializeField]
+    private HarinezumiAnimatorCtr mouseAnimator;
     // Use this for initialization
     void Start()
     {
         nowHp = status.MaxHp;
 
-        if (status.Type == ObjType.Uribou)
+        if (status.Type == ObjType.Uribou||status.Type==ObjType.Harinezemi)
         {
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
             initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
@@ -78,7 +81,7 @@ public class ObjController : MonoBehaviour
         else
             GetComponent<BoxCollider>().isTrigger = true;
 
-        if (status.Type == ObjType.Uribou)
+        if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
             SetSpeedByDamage(nowHp, status.MaxHp);
     }
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
@@ -114,6 +117,10 @@ public class ObjController : MonoBehaviour
         if (status.Type == ObjType.Uribou)
         {
             uribouAnimator.SetDownAnimation();
+        }
+        if (status.Type == ObjType.Harinezemi)
+        {
+            mouseAnimator.SetDownAnimation();
         }
     }
     public void AddForceByPush(Vector3 _direction)
