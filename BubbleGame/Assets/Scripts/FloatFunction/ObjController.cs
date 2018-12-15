@@ -54,6 +54,7 @@ public class ObjController : MonoBehaviour
 
         if (status.Type == ObjType.Uribou)
         {
+            nowHp = status.MaxHp;
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
             initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
             agent.speed = initWanderSpeed;
@@ -99,8 +100,8 @@ public class ObjController : MonoBehaviour
     }
     public void Damage(int _power)
     {
-        if (nowHp > 0)
-            nowHp -= _power;
+        //if (nowHp > 0)
+        //    nowHp -= _power;
     }
     public void OnReset()
     {

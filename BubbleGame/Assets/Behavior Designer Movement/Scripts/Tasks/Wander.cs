@@ -9,8 +9,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
     public class Wander : NavMeshMovement
     {
         [Tooltip("Minimum distance ahead of the current position to look ahead for a destination")]
-        public SharedFloat wanderRange = 5;
-
+        public SharedFloat minWanderDistance = 20;
+        [Tooltip("Maximum distance ahead of the current position to look ahead for a destination")]
+        public SharedFloat maxWanderDistance = 20;
         [Tooltip("The amount that the agent rotates direction")]
         public SharedFloat wanderRate = 2;
         [Tooltip("The minimum length of time that the agent should pause at each destination")]
@@ -24,13 +25,16 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         private float destinationReachTime;
         private Vector3 initPos;
 
-        public override void OnStart()
-        {
-            initPos = transform.position;
-        }
+        private bool canSetInitPos=true;
         // There is no success or fail state with wander - the agent will just keep wandering
         public override TaskStatus OnUpdate()
         {
+            if (canSetInitPos)
+            {
+                initPos = transform.position;
+                canSetInitPos = false;
+            }
+
             if (HasArrived())
             {
                 // The agent should pause at the destination only if the max pause duration is greater than 0
@@ -67,7 +71,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             while (!validDestination && attempts > 0)
             {
                 direction = direction + Random.insideUnitSphere * wanderRate.Value;
-                destination = initPos + direction.normalized * wanderRange.Value;
+                destination = initPos + direction.normalized * Random.Range(minWanderDistance.Value, maxWanderDistance.Value);
                 validDestination = SamplePosition(destination);
                 attempts--;
             }
@@ -81,7 +85,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Reset the public variables
         public override void OnReset()
         {
-            wanderRange = 5;
+            canSetInitPos = true;
+            minWanderDistance = 20;
+            maxWanderDistance = 20;
             wanderRate = 2;
             minPauseDuration = 0;
             maxPauseDuration = 0;

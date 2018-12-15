@@ -1707,12 +1707,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3493214b6424db94c8db64715cd97799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFloating: 0
-  floatByDamage: {fileID: 114745002172279506}
-  floatByContain: {fileID: 114790646610716054}
+  NowHp: 0
+  EnemyFunctionRef: {fileID: 0}
   dropItemPrefab: []
   attacking: 0
-  died: 0
 --- !u!114 &114533794214746378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1724,6 +1722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263825b6face9b04fbfc4e6174b2c40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
 --- !u!114 &114538056733171090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1736,6 +1735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: {x: 0, y: 0, z: 0}
+  enemyFunctionRef: {fileID: 0}
 --- !u!114 &114558526464926512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1747,6 +1747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64c8a9561971b34bb50899fd6fe9898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
 --- !u!114 &114639121233785066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1758,6 +1759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4828586ed85db548b8941c7a2ca2bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
+  explosion: {fileID: 0}
 --- !u!114 &114674055621925150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1769,6 +1772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6088a26ac6005a54d8889cbe209d4804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCollider: {fileID: 0}
 --- !u!114 &114745002172279506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1780,12 +1784,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866db02f6fb98ce4099b79145be6ff14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
   bubbleSetInstanceRef: {fileID: 4104882626856780, guid: 1f4956e688253ce4790d2017b0607066,
     type: 2}
   bubbleInstanceStartRef: {fileID: 4857634552960256}
   bubbleMaxSize: 3.5
   increaseScaleVelocity: 0.05
   factorToFloat: 0.1
+  bubbleDamageParticleSystem: {fileID: 0}
+  factorToCalEmission: 1
+  canChangeVelocityToCenter: 0
+  isPushing: 0
 --- !u!114 &114790646610716054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1797,6 +1806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263825b6face9b04fbfc4e6174b2c40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
 --- !u!114 &114875246765599996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1819,6 +1829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29972867469adb0459ae6c92cf8c6c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFunctionRef: {fileID: 0}
   canBeContained: 0
 --- !u!114 &114952168124625790
 MonoBehaviour:
@@ -1831,6 +1842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f5795e9e4a75a49962e173444c233f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyFunctionRef: {fileID: 0}
 --- !u!135 &135060609444665280
 SphereCollider:
   m_ObjectHideFlags: 1
