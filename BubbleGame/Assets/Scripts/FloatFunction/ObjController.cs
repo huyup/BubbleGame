@@ -37,6 +37,9 @@ public class ObjController : MonoBehaviour
     private BehaviorTree attack;
 
     [SerializeField]
+    private BehaviorTree summon;
+
+    [SerializeField]
     private NavMeshAgent agent;
 
     private float initWanderSpeed;
@@ -63,6 +66,9 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (status.Type == ObjType.Inoshishi)
+            summon.SetVariableValue("Hp", nowHp);
+
         if (ObjState == ObjState.OnGround)
         {
             if (nowHp < status.HpToFloat)

@@ -19,7 +19,6 @@ public class SendVariableToBehaviorTreeCtr : MonoBehaviour
 
     public void SetTarget(GameObject _target)
     {
-        Debug.Log("Set");
         nowTarget = _target;
         canSetTarget = true;
     }

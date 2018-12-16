@@ -6,7 +6,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
     {
         public override TaskStatus OnUpdate()
         {
-            return TaskStatus.Success;
+            if (StageManager.Instance.GetAllEnemyCount() < 2)
+                return TaskStatus.Success;
+            else
+                return TaskStatus.Failure;
         }
     }
 }
