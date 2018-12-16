@@ -45,12 +45,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         private int[] originalColliderLayer;
         private Collider[] overlapColliders;
         private Collider2D[] overlap2DColliders;
-        private AiTargetCtr TargetCtr;
+        private SendVariableToBehaviorTreeCtr TargetCtr;
         private int ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
         public override void OnAwake()
         {
             base.OnAwake();
-            TargetCtr = GetComponent<AiTargetCtr>();
+            TargetCtr = GetComponent<SendVariableToBehaviorTreeCtr>();
         }
         // Returns success if an object was found otherwise failure
         public override TaskStatus OnUpdate()
@@ -126,7 +126,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             if (returnedObject.Value != null)
             {
                 if (!TargetCtr)
-                    TargetCtr = GetComponent<AiTargetCtr>();
+                    TargetCtr = GetComponent<SendVariableToBehaviorTreeCtr>();
                 TargetCtr.SetTarget(returnedObject.Value);
                 // Return success if an object was found
                 return TaskStatus.Success;

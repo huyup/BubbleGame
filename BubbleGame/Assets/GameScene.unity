@@ -17229,9 +17229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f2f1a975c689d44af864465719529c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviors:
-  - {fileID: 793851250}
-  nowTarget: {fileID: 0}
+  behaviorsToSetTarget: []
+  behaviorToSetStartPos: {fileID: 0}
 --- !u!114 &793851250
 MonoBehaviour:
   m_ObjectHideFlags: 0

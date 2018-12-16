@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
-public class AiTargetCtr : MonoBehaviour
+public class SendVariableToBehaviorTreeCtr : MonoBehaviour
 {
     [SerializeField]
-    private List<BehaviorTree> behaviors = new List<BehaviorTree>();
-
-
+    private List<BehaviorTree> behaviorsToSetTarget = new List<BehaviorTree>();
+    
     [SerializeField]
     private GameObject nowTarget;
 
+    private GameObject startTarget;
+
     private bool canSetTarget;
+
+    [SerializeField]
+    private BehaviorTree behaviorToSetStartPos;
 
     public void SetTarget(GameObject _target)
     {
@@ -19,12 +23,18 @@ public class AiTargetCtr : MonoBehaviour
         nowTarget = _target;
         canSetTarget = true;
     }
+
+    public void SetStartPos(GameObject _startPos)
+    {
+        startTarget = _startPos;
+
+        behaviorToSetStartPos.SetVariableValue("StartTarget", startTarget);
+    }
     private void Update()
     {
         if (canSetTarget)
         {
-            Debug.Log("behaviourSet");
-            foreach (var behaviour in behaviors)
+            foreach (var behaviour in behaviorsToSetTarget)
             {
                 behaviour.SetVariableValue("Target", nowTarget);
             }
