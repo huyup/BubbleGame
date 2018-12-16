@@ -125,7 +125,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             if (returnedObject.Value != null)
             {
-                Debug.Log("Return:" + returnedObject.Value.name);
                 if (!TargetCtr)
                     TargetCtr = GetComponent<AiTargetCtr>();
                 TargetCtr.SetTarget(returnedObject.Value);
