@@ -52,7 +52,7 @@ public class ObjFloatByContain : MonoBehaviour
     public void FloatByContain(Transform _bubble)
     {
         this.bubbleInstance = _bubble;
-        if (status.Type == ObjType.Uribou||status.Type==ObjType.Harinezemi)
+        if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi || status.Type == ObjType.Inoshishi)
         {
             agent.enabled = false;
             rb.isKinematic = false;
@@ -73,16 +73,24 @@ public class ObjFloatByContain : MonoBehaviour
     }
     private void FloatByContainOnUpdate()
     {
-        if (Vector3.Distance(transform.position, bubbleInstance.position) > 0.1f)
+        if (status.Type != ObjType.Inoshishi)
         {
-            if (canMoveToCenter)
-                MoveToCenter();
+            if (Vector3.Distance(transform.position, bubbleInstance.position) > 0.1f)
+            {
+                if (canMoveToCenter)
+                    MoveToCenter();
+            }
+            else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
+            {
+                canMoveToCenter = false;
+                FloatByBubbleVelocity();
+            }
         }
-        else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
+        else
         {
-            canMoveToCenter = false;
             FloatByBubbleVelocity();
         }
+
     }
 
     private void MoveToCenter()

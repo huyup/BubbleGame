@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 15
-  lastTime: 4
+  lastTime: 6
   lastTimeByAirGun: 1.5
   maxSize: 0.11
   maxSizeCreatedByDamage: 4

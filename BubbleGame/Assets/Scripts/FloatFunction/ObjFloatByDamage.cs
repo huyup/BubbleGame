@@ -10,7 +10,7 @@ public class ObjFloatByDamage : MonoBehaviour
 
     [SerializeField]
     private Transform bubbleInstanceStartRef;
-    
+
     [SerializeField]
     private ObjFloatByContain objFloatByContain;
 
@@ -29,7 +29,7 @@ public class ObjFloatByDamage : MonoBehaviour
     [SerializeField]
     private ObjStatus status;
     private Transform bubbleInstance;
-    
+
     private Rigidbody rb;
 
     void Start()
@@ -47,15 +47,33 @@ public class ObjFloatByDamage : MonoBehaviour
 
         if (!bubbleInstance)
             return;
-        //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
-        if (bubbleInstance.localScale.x < bubbleInstance.GetComponent<BubbleProperty>().MaxSizeCreatedByDamage)
+
+        if (status.Type != ObjType.Inoshishi)
         {
-            SetBubbleToFloatPos();
+            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
+            if (bubbleInstance.localScale.x < bubbleInstance.GetComponent<BubbleProperty>().MaxSizeCreatedByDamage)
+            {
+                SetBubbleToFloatPos();
+            }
+            else
+            {
+                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+                objFloatByContain.FloatByContain(bubbleInstance);
+            }
         }
         else
         {
-            bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-            objFloatByContain.FloatByContain(bubbleInstance);
+            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
+            if (bubbleInstance.localScale.x < 14)
+            {
+                SetBubbleToFloatPos();
+            }
+            else
+            {
+                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+                objFloatByContain.FloatByContain(bubbleInstance);
+            }
+
         }
     }
 
@@ -72,7 +90,6 @@ public class ObjFloatByDamage : MonoBehaviour
         if (status.Type == ObjType.Uribou)
         {
             agent.enabled = false;
-
         }
     }
     private void SetBubbleToFloatPos()

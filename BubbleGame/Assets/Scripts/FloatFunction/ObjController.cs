@@ -76,7 +76,10 @@ public class ObjController : MonoBehaviour
             }
         }
         else
-            GetComponent<BoxCollider>().isTrigger = true;
+        {
+            if (GetComponent<BoxCollider>())
+                GetComponent<BoxCollider>().isTrigger = true;
+        }
 
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
             SetSpeedByDamage(nowHp, status.MaxHp);

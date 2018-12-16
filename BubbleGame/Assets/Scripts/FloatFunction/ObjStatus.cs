@@ -7,6 +7,7 @@ public enum ObjType
     Obj,
     Uribou,
     Harinezemi,
+    Inoshishi
 }
 public class ObjStatus : MonoBehaviour
 {

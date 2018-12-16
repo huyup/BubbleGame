@@ -16,7 +16,16 @@ public class BubbleDamage : MonoBehaviour
         //    enemyFunctionRef.GetEnemyController().Damage(power);
         //}
 
-        if (_obj.layer == 16/*StageObject*/|| _obj.layer == 12/*EnemyHit*/)
-            _obj.GetComponent<ObjController>().Damage(power);
+        if (_obj.layer == 16 /*StageObject*/ || _obj.layer == 12 /*EnemyHit*/)
+        {
+            if (_obj.GetComponent<ObjController>())
+            {
+                _obj.GetComponent<ObjController>().Damage(power);
+            }
+            else
+            {
+                _obj.transform.root.GetComponent<ObjController>().Damage(power);
+            }
+        }
     }
 }
