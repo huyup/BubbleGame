@@ -8,7 +8,7 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override TaskStatus OnUpdate()
         {
-            if (Vector3.Distance(Target.Value.transform.position, transform.position) < 3f)
+            if (Vector3.Distance(Target.Value.transform.position, transform.position) < 1f)
             {
                 return TaskStatus.Success;
             }
