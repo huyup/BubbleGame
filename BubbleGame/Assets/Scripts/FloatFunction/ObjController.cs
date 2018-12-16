@@ -37,9 +37,6 @@ public class ObjController : MonoBehaviour
     private BehaviorTree attack;
 
     [SerializeField]
-    private GUIStyle fontStyle;
-
-    [SerializeField]
     private NavMeshAgent agent;
 
     private float initWanderSpeed;
@@ -55,7 +52,7 @@ public class ObjController : MonoBehaviour
     {
         nowHp = status.MaxHp;
 
-        if (status.Type == ObjType.Uribou||status.Type==ObjType.Harinezemi)
+        if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
         {
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
             initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
@@ -128,10 +125,5 @@ public class ObjController : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         ObjState = ObjState.MovingByAirGun;
         GetComponent<Rigidbody>().velocity = _direction;
-    }
-
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(10, 10, 200, 200), "ObjState:" + ObjState, fontStyle);
     }
 }
