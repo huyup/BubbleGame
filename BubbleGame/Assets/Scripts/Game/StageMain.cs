@@ -18,7 +18,6 @@ public class StageMain : MainBase
 
     protected override void OnUpdate()
     {
-        Debug.Log("Num" + StageManager.Instance.GetAllEnemyCount());
     }
 
     protected override void OnLateUpdate()

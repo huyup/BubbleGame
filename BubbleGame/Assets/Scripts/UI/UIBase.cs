@@ -14,6 +14,12 @@ public class UIBase : MonoBehaviour
     [SerializeField]
     private Transform player2;
 
+    [SerializeField]
+    private Transform boss;
+
+    [SerializeField] private Text bossNameText;
+    [SerializeField] private RawImage bossHpImage;
+
     [SerializeField] private Text player1NameText;
     [SerializeField] private Text player2NameText;
 
@@ -35,7 +41,7 @@ public class UIBase : MonoBehaviour
 
     [SerializeField]
     private Rect scaleRect;
-    
+
     public void SetUIVisible(bool _isVisible)
     {
         IsVisible = _isVisible;
@@ -43,6 +49,8 @@ public class UIBase : MonoBehaviour
 
     private void Update()
     {
+        DrawBossHp(bossHpImage);
+
         DrawPlayerAmmo(player1.GetComponent<PlayerController>().GetWeapon(), player1AmmoImage);
         DrawPlayerAmmo(player2.GetComponent<PlayerController>().GetWeapon(), player2AmmoImage);
 
@@ -53,6 +61,11 @@ public class UIBase : MonoBehaviour
         DrawPlayerWeapon(player2.GetComponent<PlayerController>().GetNowWeaponType(), player2WeaponText);
     }
 
+    private void DrawBossHp(RawImage _bossHp)
+    {
+        _bossHp.uvRect = new Rect(0, 0.5f, 1, 1);
+
+    }
     private void DrawPlayerAmmo(PlayerWeapon _weapon, RawImage _playerAmmoImage)
     {
         if (!_weapon)

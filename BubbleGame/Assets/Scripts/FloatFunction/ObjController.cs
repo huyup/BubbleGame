@@ -108,8 +108,17 @@ public class ObjController : MonoBehaviour
     }
     public void Damage(int _power)
     {
-        if (nowHp > 0)
-            nowHp -= _power;
+        if (status.Type == ObjType.Inoshishi)
+        {
+            if (nowHp > 0)
+                nowHp -= _power / 5;
+        }
+        else
+        {
+            if (nowHp > 0)
+                nowHp -= _power;
+        }
+
     }
     public void OnReset()
     {

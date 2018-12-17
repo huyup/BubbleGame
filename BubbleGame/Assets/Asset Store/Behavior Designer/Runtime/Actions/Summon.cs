@@ -13,14 +13,19 @@ namespace BehaviorDesigner.Runtime.Tasks
         public override TaskStatus OnUpdate()
         {
             if (!summonCtr)
-                summonCtr=GetComponent<SummonCtr>();
+                summonCtr = GetComponent<SummonCtr>();
 
             for (int i = 0; i < EnemyTypes.Count; i++)
             {
                 summonCtr.Summon(EnemyTypes[i], StartPosList[i]);
             }
+            if (StageManager.Instance.GetAllEnemyCount() != 0)
+                return TaskStatus.Success;
+            else
+            {
+                return TaskStatus.Running;
+            }
 
-            return TaskStatus.Success;
         }
     }
 }
