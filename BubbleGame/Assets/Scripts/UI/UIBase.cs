@@ -49,7 +49,7 @@ public class UIBase : MonoBehaviour
 
     private void Update()
     {
-        DrawBossHp(bossHpImage);
+        DrawBossHp(boss.GetComponent<ObjController>(), bossHpImage);
 
         DrawPlayerAmmo(player1.GetComponent<PlayerController>().GetWeapon(), player1AmmoImage);
         DrawPlayerAmmo(player2.GetComponent<PlayerController>().GetWeapon(), player2AmmoImage);
@@ -61,9 +61,14 @@ public class UIBase : MonoBehaviour
         DrawPlayerWeapon(player2.GetComponent<PlayerController>().GetNowWeaponType(), player2WeaponText);
     }
 
-    private void DrawBossHp(RawImage _bossHp)
+    private void DrawBossHp(ObjController _objController, RawImage _bossHp)
     {
-        _bossHp.uvRect = new Rect(0, 0.5f, 1, 1);
+        //200->1 100->0.5 0->0
+        //200-100=100 
+        int maxHp = 200;
+        int nowHp = _objController.NowHp;
+        float newRate = 1 * (nowHp * 100 / maxHp) * 0.01f;
+        _bossHp.uvRect = new Rect(0, newRate, 1, 1);
 
     }
     private void DrawPlayerAmmo(PlayerWeapon _weapon, RawImage _playerAmmoImage)

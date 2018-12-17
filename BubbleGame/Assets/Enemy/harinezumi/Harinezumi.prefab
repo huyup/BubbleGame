@@ -1511,7 +1511,6 @@ MonoBehaviour:
   floatByContain: {fileID: 114028523381758584}
   floatByDamage: {fileID: 114823426170312914}
   bubbleDamageEff: {fileID: 114115954223403638}
-  nowHp: 0
   wander: {fileID: 114238208523809916}
   attack: {fileID: 114430937818152178}
   summon: {fileID: 0}

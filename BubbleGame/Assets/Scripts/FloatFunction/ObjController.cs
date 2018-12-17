@@ -9,6 +9,7 @@ public enum ObjState
     OnGround,
     Floating,
     MovingByAirGun,
+    Dizziness,
     Falling,
 }
 public class ObjController : MonoBehaviour
@@ -28,7 +29,7 @@ public class ObjController : MonoBehaviour
     private BubbleDamageEff bubbleDamageEff;
 
     [SerializeField]
-    private int nowHp;
+    public int NowHp { get; private set; }
 
     [SerializeField]
     private BehaviorTree wander;
@@ -50,10 +51,12 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private HarinezumiAnimatorCtr mouseAnimator;
+
+    [SerializeField] private GameObject collisionEff;
     // Use this for initialization
     void Start()
     {
-        nowHp = status.MaxHp;
+        NowHp = status.MaxHp;
 
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
         {
@@ -66,19 +69,20 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (status.Type == ObjType.Inoshishi)
-            summon.SetVariableValue("Hp", nowHp);
+            summon.SetVariableValue("Hp", NowHp);
 
         if (ObjState == ObjState.OnGround)
         {
-            if (nowHp < status.HpToFloat)
+            if (NowHp < status.HpToFloat)
             {
                 bubbleDamageEff.StopEmitter();
                 floatByDamage.CreateBubbleByDamage();
             }
             else
             {
-                bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, nowHp);
+                bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, NowHp);
             }
         }
         else
@@ -88,7 +92,8 @@ public class ObjController : MonoBehaviour
         }
 
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
-            SetSpeedByDamage(nowHp, status.MaxHp);
+            SetSpeedByDamage(NowHp, status.MaxHp);
+
     }
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
@@ -110,20 +115,34 @@ public class ObjController : MonoBehaviour
     {
         if (status.Type == ObjType.Inoshishi)
         {
-            if (nowHp > 0)
-                nowHp -= _power / 5;
+            if (NowHp > 0&&ObjState==ObjState.Dizziness)
+                NowHp -= _power / 5;
         }
         else
         {
-            if (nowHp > 0)
-                nowHp -= _power;
+            if (NowHp > 0)
+                NowHp -= _power;
         }
 
     }
+
+    public void Collision(Vector3 _initPos)
+    {
+        GameObject collisionInstance = Instantiate(collisionEff);
+        collisionInstance.transform.position = _initPos;
+        collisionInstance.GetComponent<ParticleSystem>().Play();
+    }
+
+    public void Dead()
+    {
+        StageManager.Instance.RemoveEnemyCount(status.Type);
+        Destroy(this.gameObject, 0.3f);
+    }
+
     public void OnReset()
     {
         ObjState = ObjState.OnGround;
-        nowHp = status.MaxHp;
+        NowHp = status.MaxHp;
         GetComponent<BoxCollider>().isTrigger = false;
         floatByContain.ResetFloatFlag();
         floatByDamage.ResetFloatFlag();

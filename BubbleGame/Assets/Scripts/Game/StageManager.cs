@@ -9,7 +9,7 @@ public class StageManager : Singleton<StageManager>
 {
     private StageClearEvent stageClearEvent = new StageClearEvent();
 
-    public int UribouCount{ get; private set; }
+    public int UribouCount { get; private set; }
     public int HarinezumiCount { get; private set; }
 
     public void AddUribouCount()
@@ -20,6 +20,15 @@ public class StageManager : Singleton<StageManager>
     public void AddHarinezumiCount()
     {
         HarinezumiCount++;
+    }
+
+    public void RemoveEnemyCount(ObjType _type)
+    {
+        if (_type == ObjType.Harinezemi)
+            HarinezumiCount--;
+        else if (_type == ObjType.Uribou)
+            UribouCount--;
+
     }
 
     public int GetAllEnemyCount()
