@@ -52,7 +52,14 @@ public class ObjController : MonoBehaviour
     [SerializeField]
     private HarinezumiAnimatorCtr mouseAnimator;
 
-    [SerializeField] private GameObject collisionEff;
+    [SerializeField]
+    private GameObject collisionEff;
+
+    [SerializeField]
+    private BossBehaviorCtr behaviorCtr;
+
+    [SerializeField]
+    private UIBase uiCtr;
     // Use this for initialization
     void Start()
     {
@@ -73,10 +80,16 @@ public class ObjController : MonoBehaviour
         if (status.Type == ObjType.Inoshishi)
             summon.SetVariableValue("Hp", NowHp);
 
-        if (ObjState == ObjState.OnGround)
+        if (ObjState == ObjState.OnGround|| ObjState == ObjState.Dizziness)
         {
             if (NowHp < status.HpToFloat)
             {
+                if (status.Type == ObjType.Inoshishi)
+                {
+                    StartCoroutine(DebugSetClear());
+                    behaviorCtr.DisableBehaviors();
+                }
+
                 bubbleDamageEff.StopEmitter();
                 floatByDamage.CreateBubbleByDamage();
             }
@@ -95,6 +108,13 @@ public class ObjController : MonoBehaviour
             SetSpeedByDamage(NowHp, status.MaxHp);
 
     }
+
+    IEnumerator DebugSetClear()
+    {
+        yield return new WaitForSeconds(10);
+        uiCtr.DrawClearText();
+    }
+
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
         var rate = (_nowHp * 100 / _maxHp);
@@ -115,7 +135,7 @@ public class ObjController : MonoBehaviour
     {
         if (status.Type == ObjType.Inoshishi)
         {
-            if (NowHp > 0&&ObjState==ObjState.Dizziness)
+            if (NowHp > 0 && ObjState == ObjState.Dizziness)
                 NowHp -= _power / 5;
         }
         else
@@ -135,8 +155,15 @@ public class ObjController : MonoBehaviour
 
     public void Dead()
     {
-        StageManager.Instance.RemoveEnemyCount(status.Type);
-        Destroy(this.gameObject, 0.3f);
+        if (status.Type == ObjType.Inoshishi)
+        {
+            uiCtr.DrawClearText();
+        }
+        else
+        {
+            StageManager.Instance.RemoveEnemyCount(status.Type);
+            Destroy(this.gameObject, 0.3f);
+        }
     }
 
     public void OnReset()

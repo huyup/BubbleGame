@@ -15,14 +15,17 @@ public class BossBehaviorCtr : MonoBehaviour
     private GameObject dizzinessEff;
 
     [SerializeField] private ObjController controller;
+
+    public void DisableBehaviors()
+    {
+        foreach (var behavior in behaviors)
+        {
+            behavior.DisableBehavior();
+        }
+    }
     public void Dizziness()
     {
         dizzinessEff.GetComponent<ParticleSystem>().Play();
-        //foreach (var behavior in behaviors)
-        //{
-        //    behavior.DisableBehavior();
-        //}
-
         StartCoroutine(DelayResumeBehavior());
     }
     IEnumerator DelayResumeBehavior()
@@ -30,9 +33,5 @@ public class BossBehaviorCtr : MonoBehaviour
         yield return new WaitForSeconds(dizzinessTime);
         dizzinessEff.GetComponent<ParticleSystem>().Stop();
         controller.SetObjState(ObjState.OnGround);
-        //foreach (var behavior in behaviors)
-        //{
-        //    behavior.EnableBehavior();
-        //}
     }
 }

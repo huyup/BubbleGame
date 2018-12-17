@@ -37,6 +37,7 @@ public class UIBase : MonoBehaviour
     [SerializeField] private Image player2Heart2;
     [SerializeField] private Image player2Heart3;
 
+    [SerializeField] private Text clearText;
     public bool IsVisible { get; private set; }
 
     [SerializeField]
@@ -61,6 +62,10 @@ public class UIBase : MonoBehaviour
         DrawPlayerWeapon(player2.GetComponent<PlayerController>().GetNowWeaponType(), player2WeaponText);
     }
 
+    public void DrawClearText()
+    {
+        clearText.enabled = true;
+    }
     private void DrawBossHp(ObjController _objController, RawImage _bossHp)
     {
         //200->1 100->0.5 0->0
