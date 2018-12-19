@@ -259,8 +259,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isVincible || status.nowHp <= 0)
             return;
-        if (status.nowHp > 0)
-            status.nowHp--;
+        //if (status.nowHp > 0)
+        //    status.nowHp--;
 
         StartCoroutine(Blink());
     }
