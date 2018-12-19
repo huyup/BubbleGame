@@ -32,6 +32,14 @@ public class InoshishiAnimatorCtr : MonoBehaviour
         //}
     }
 
+    public void ResetToDefaultState()
+    {
+        animator.SetBool("IsPreparing",false);
+        animator.SetBool("IsDushing", false);
+        animator.SetBool("IsTuring", false);
+        animator.SetBool("IsSnapping", false);
+        animator.SetBool("IsShouting", false);
+    }
     public void SetDownAnimation()
     {
         Debug.Log("Down");

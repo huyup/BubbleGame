@@ -986,7 +986,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734193950535132}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -56.02, y: -5.81, z: -68.87315}
+  m_LocalPosition: {x: -44.496624, y: 1.8106438, z: -83.96158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4026389696798388}
@@ -1517,6 +1517,10 @@ MonoBehaviour:
   agent: {fileID: 195232984354451254}
   uribouAnimator: {fileID: 0}
   mouseAnimator: {fileID: 114294043590643826}
+  collisionEff: {fileID: 1614943042425664, guid: 577a873a79b6a3944b98f5cce0120e9e,
+    type: 2}
+  behaviorCtr: {fileID: 0}
+  uiCtr: {fileID: 0}
 --- !u!114 &114430937818152178
 MonoBehaviour:
   m_ObjectHideFlags: 1

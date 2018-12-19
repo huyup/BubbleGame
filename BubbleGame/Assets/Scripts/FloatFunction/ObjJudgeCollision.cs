@@ -8,12 +8,15 @@ public class ObjJudgeCollision : MonoBehaviour
 
     ObjFloatByContain floatByContain;
 
+    private ObjController controller;
+
     [SerializeField]
     private bool canBeContained = false;
 
     // Use this for initialization
     void Start()
     {
+        controller = transform.parent.GetComponent<ObjController>();
         calculationController = GameObject.Find("CalculationController").GetComponent<CalculationRef>();
 
         floatByContain = transform.parent.GetComponent<ObjFloatByContain>();
@@ -65,6 +68,8 @@ public class ObjJudgeCollision : MonoBehaviour
             GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
             bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
-        floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
+
+        if (controller.ObjState == ObjState.OnGround)
+            floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
     }
 }

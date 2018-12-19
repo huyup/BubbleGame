@@ -16,7 +16,8 @@ public class ObjBodyCollision : MonoBehaviour
 
         }
 
-        if (_other.gameObject.layer == 12 /*EnemyHit*/)
+        if (_other.gameObject.layer == 12 /*EnemyHit*/
+            && controller.ObjState == ObjState.MovingByAirGun)
         {
             if (canHitBoss)
             {

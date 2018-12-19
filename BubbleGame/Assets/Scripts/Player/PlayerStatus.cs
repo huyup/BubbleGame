@@ -180,8 +180,8 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// 最大hp
     /// </summary>
-    [HideInInspector]
-    const int MaxHp = 3;
+    [SerializeField]
+    private int MaxHp = 5;
 
     [HideInInspector]
     public int nowHp;
