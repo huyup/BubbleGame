@@ -17,7 +17,7 @@ public class PlayerAnimator : MonoBehaviour
         //最新の位置-入力前の位置=方向
         Vector3 direction = transform.position - _preInputPlayerPos;
 
-        if (direction.magnitude > 0)
+        if (direction.magnitude > 0.01f)
         {
             animator.SetBool("Moving", true);
         }

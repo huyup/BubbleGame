@@ -11,7 +11,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField]
     private float maxControllerTolerance = 0.02f;
 
-    [SerializeField] private PlayerWeaponC airWeapon;
+    [SerializeField]
+    private PlayerWeaponC airWeapon;
 
     private PlayerController playerController;
     private PlayerStatus property;
@@ -66,11 +67,13 @@ public class PlayerInputManager : MonoBehaviour
         playerController.MoveByRigidBody(leftXAxisInput, leftYAxisInput, maxControllerTolerance, prevPlayerPos);
 
         playerController.Rotate(rightXAxisInput, rightYAxisInput, maxControllerTolerance, prevPlayerPos);
+
         //武器の切り替えボタン
         if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, (GamePad.Index)playerNum))
         {
             playerController.ChangeWeapon();
         }
+
         //攻撃ボタン
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)playerNum))
         {
@@ -87,22 +90,6 @@ public class PlayerInputManager : MonoBehaviour
             if (playerController.GetWeapon().CanAttack)
                 playerController.GetWeapon().OnAttackButtonUp();
         }
-
-
-        //攻撃ボタン
-        if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
-        {
-            airWeapon.OnAttackButtonDown();
-        }
-        if (GamePad.GetButton(GamePad.Button.B, (GamePad.Index)playerNum))
-        {
-            airWeapon.OnAttackButtonStay();
-        }
-        if (GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index)playerNum))
-        {
-            airWeapon.OnAttackButtonUp();
-        }
-
 
         //ジャンプボタン
         if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)playerNum))

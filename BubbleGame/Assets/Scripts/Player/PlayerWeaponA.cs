@@ -33,9 +33,15 @@ public class PlayerWeaponA : PlayerWeapon
 
     [SerializeField]
     private float buttonStayCost = 0.3f;
-    
+
     [SerializeField]
     private int maxAmmoCost = 30;
+
+    [SerializeField]
+    private float factorToCalUp = 0.8f;
+
+    [SerializeField]
+    private float factorToCalForward = 1.2f;
 
     private float tmpAmmoCost;
 
@@ -111,7 +117,7 @@ public class PlayerWeaponA : PlayerWeapon
             return;
 
         if (nowAmmoLeft <= 0)
-        {           
+        {
             //残量が足りなかったら、自動的に前へ出す
             if (!isPushed)
             {
@@ -137,9 +143,9 @@ public class PlayerWeaponA : PlayerWeapon
                 spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
                 bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
                 //少しずつ前に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.forward * Time.fixedDeltaTime * 1.2f;
+                bubbles[bubbles.Count - 1].transform.position += transform.forward * Time.fixedDeltaTime * factorToCalForward;
                 //少しずつ上に移動させる
-                bubbles[bubbles.Count - 1].transform.position += transform.up * Time.fixedDeltaTime * 0.8f;
+                bubbles[bubbles.Count - 1].transform.position += transform.up * Time.fixedDeltaTime * factorToCalUp;
             }
             else
             {

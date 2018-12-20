@@ -99,9 +99,6 @@ public class UIBase : MonoBehaviour
             case WeaponType.WeaponB:
                 _weaponText.text = "装備中:小さいストロー";
                 break;
-            case WeaponType.WeaponC:
-                _weaponText.text = "装備中:空気砲";
-                break;
             default:
                 _weaponText.text = "None";
                 break;

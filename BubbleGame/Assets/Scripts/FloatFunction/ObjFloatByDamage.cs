@@ -23,12 +23,10 @@ public class ObjFloatByDamage : MonoBehaviour
     [SerializeField]
     private bool canCreateBubbleInstanceByDamage = true;
 
-    [SerializeField]
-    private NavMeshAgent agent;
+    private Transform bubbleInstance;
 
     [SerializeField]
-    private ObjStatus status;
-    private Transform bubbleInstance;
+    private float maxSize = 14;
 
     private Rigidbody rb;
 
@@ -48,34 +46,16 @@ public class ObjFloatByDamage : MonoBehaviour
         if (!bubbleInstance)
             return;
 
-        if (status.Type != ObjType.Inoshishi)
+        //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
+        if (bubbleInstance.localScale.x < maxSize)
         {
-            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
-            if (bubbleInstance.localScale.x < bubbleInstance.GetComponent<BubbleProperty>().MaxSizeCreatedByDamage)
-            {
-                SetBubbleToFloatPos();
-            }
-            else
-            {
-                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-                if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
-                    objFloatByContain.FloatByContain(bubbleInstance);
-            }
+            SetBubbleToFloatPos();
         }
         else
         {
-            //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
-            if (bubbleInstance.localScale.x < 14)
-            {
-                SetBubbleToFloatPos();
-            }
-            else
-            {
-                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-                if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
-                    objFloatByContain.FloatByContain(bubbleInstance);
-            }
-
+            bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+            if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
+                objFloatByContain.FloatByContain(bubbleInstance);
         }
     }
 
@@ -89,10 +69,6 @@ public class ObjFloatByDamage : MonoBehaviour
 
         bubbleInstance.position = bubbleInstanceStartRef.position;
 
-        if (status.Type == ObjType.Uribou)
-        {
-            agent.enabled = false;
-        }
     }
     private void SetBubbleToFloatPos()
     {

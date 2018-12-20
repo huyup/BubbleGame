@@ -8,7 +8,6 @@ public enum WeaponType
 {
     WeaponA = 1,
     WeaponB,
-    WeaponC,
     Max,
 }
 public class PlayerController : MonoBehaviour
@@ -180,9 +179,6 @@ public class PlayerController : MonoBehaviour
             case WeaponType.WeaponB:
                 canJumpAttack = false;
                 break;
-            case WeaponType.WeaponC:
-                canJumpAttack = true;
-                break;
             default:
                 canJumpAttack = false;
                 break;
@@ -216,9 +212,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 nowWeapon = weaponB;
-                break;
-            case WeaponType.WeaponC:
-                nowWeapon = weaponC;
                 break;
             default:
                 nowWeapon = null;
@@ -259,8 +252,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isVincible || status.nowHp <= 0)
             return;
-        //if (status.nowHp > 0)
-        //    status.nowHp--;
+        if (status.nowHp > 0)
+            status.nowHp--;
 
         StartCoroutine(Blink());
     }

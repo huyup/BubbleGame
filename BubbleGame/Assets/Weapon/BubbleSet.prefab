@@ -392,7 +392,7 @@ MonoBehaviour:
   rotateSpeed: 15
   lastTime: 8
   lastTimeByAirGun: 1.5
-  maxSize: 0.11
+  maxSize: 0.14
   maxSizeCreatedByDamage: 4
   isForceFloating: 0
   isCreatedByDamage: 0
