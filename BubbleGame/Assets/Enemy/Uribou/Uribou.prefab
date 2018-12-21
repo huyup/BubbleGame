@@ -1153,8 +1153,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472144079773110}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -42.20357, y: 1.8106438, z: -87.22545}
-  m_LocalScale: {x: 0.8, y: 1, z: 1}
+  m_LocalPosition: {x: -32.607437, y: 2.8106437, z: -78.28592}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4126859428558910}
   - {fileID: 4756446253887762}
@@ -1689,8 +1689,7 @@ MonoBehaviour:
   increaseScaleVelocity: 0.05
   factorToFloatInCreating: 0
   canCreateBubbleInstanceByDamage: 1
-  agent: {fileID: 195135651464547440}
-  status: {fileID: 114624587606652284}
+  maxSize: 14
 --- !u!114 &114801517140509506
 MonoBehaviour:
   m_ObjectHideFlags: 1
