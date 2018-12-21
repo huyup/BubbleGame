@@ -10,7 +10,6 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private ObjController controller;
 
-    [SerializeField]
     private bool canBeContained = false;
 
     // Use this for initialization
@@ -61,14 +60,6 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (_boxCollider == null)
             return;
-
-        //FIXME:ずっと探すではなく、一回だけにする
-        if (_boxCollider.transform.parent.Find("Bubble"))
-        {
-            GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
-            bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-        }
-
         if (controller.ObjState == ObjState.OnGround)
             floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
     }

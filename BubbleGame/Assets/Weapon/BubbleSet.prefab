@@ -170,7 +170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1124367558409386}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.94, y: -4.35, z: -78.23}
+  m_LocalPosition: {x: -30.208351, y: 3.0606437, z: -86.35925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4395931554500238}
@@ -255,9 +255,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: df4f628cfb10bda4795efd729c8f4026, type: 2}
+  - {fileID: 2100000, guid: 19b5bca5559a13242828f6b2931ab456, type: 2}
   - {fileID: 2100000, guid: cec0b2c714b441240b98d7c904818225, type: 2}
-  - {fileID: 2100000, guid: 45ef1c220d547b848854241c81d513f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,8 +364,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.6067505, y: 1.433362, z: 1.456665}
+  m_Center: {x: 0.07875061, y: 0.018711567, z: 0.0056915283}
 --- !u!114 &114055304606412994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -378,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b561f34a19e1b744386ce24ebf4bc9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSpeed: 10
 --- !u!114 &114168339394942704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,13 +389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceac9cb1a0e5094798471654c09a0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 15
   lastTime: 8
-  lastTimeByAirGun: 1.5
   maxSize: 0.14
-  maxSizeCreatedByDamage: 4
-  isForceFloating: 0
-  isCreatedByDamage: 0
+  maxSizeInDamageCreated: 4
 --- !u!114 &114178811544416230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -438,8 +434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155c8c49eec5e34b9c1d8f450c43937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 0
-  canAddForceToInsideObj: 0
   insideColliderList: []
 --- !u!114 &114771216524920832
 MonoBehaviour:
@@ -478,9 +472,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cf598e1da353b41926f8e9a2507e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countToFloat: 2
-  upForceToFloat: 1.5
   upForceWhenContain: 2
+  lastTimeByAirGun: 1
 --- !u!135 &135083579305979332
 SphereCollider:
   m_ObjectHideFlags: 1

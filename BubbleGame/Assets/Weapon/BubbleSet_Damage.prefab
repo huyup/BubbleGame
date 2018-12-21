@@ -110,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587569636955896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.131935, y: -1.1, z: -60.29}
+  m_LocalPosition: {x: -27.697708, y: 3.3106437, z: -85.211395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4520341589476302}
@@ -187,7 +187,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: df4f628cfb10bda4795efd729c8f4026, type: 2}
   - {fileID: 2100000, guid: cec0b2c714b441240b98d7c904818225, type: 2}
   - {fileID: 2100000, guid: 45ef1c220d547b848854241c81d513f0, type: 2}
   m_StaticBatchInfo:
@@ -328,9 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cf598e1da353b41926f8e9a2507e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countToFloat: 2
-  upForceToFloat: 1.5
   upForceWhenContain: 2
+  lastTimeByAirGun: 1
 --- !u!114 &114091552915899794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -353,13 +351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceac9cb1a0e5094798471654c09a0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 15
   lastTime: 8
-  lastTimeByAirGun: 1.5
   maxSize: 0.11
-  maxSizeCreatedByDamage: 4
-  isForceFloating: 0
-  isCreatedByDamage: 0
+  maxSizeInDamageCreated: 4
 --- !u!114 &114571180035814808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -371,8 +365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155c8c49eec5e34b9c1d8f450c43937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeDestroy: 0
-  canAddForceToInsideObj: 0
   insideColliderList: []
 --- !u!114 &114818905798350856
 MonoBehaviour:
@@ -400,6 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b561f34a19e1b744386ce24ebf4bc9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSpeed: 10
 --- !u!135 &135880723371786248
 SphereCollider:
   m_ObjectHideFlags: 1

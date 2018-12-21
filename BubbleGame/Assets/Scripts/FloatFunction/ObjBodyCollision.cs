@@ -14,7 +14,6 @@ public class ObjBodyCollision : MonoBehaviour
             controller.OnReset();
             if (GetComponent<ObjStatus>().Type != ObjType.Obj)
                 controller.Dead();
-
         }
 
         if (_other.gameObject.layer == 12 /*EnemyHit*/

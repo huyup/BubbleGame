@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Rigidbody rb;
     private PlayerStatus status;
-    private PlayerAnimator animatorCtr;
+    private PlayerAnimatorCtr animatorCtr;
     private GroundDetector groundDetector;
 
     //無敵かどうか
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         nowWeapon = weaponA;
-        animatorCtr = GetComponent<PlayerAnimator>();
+        animatorCtr = GetComponent<PlayerAnimatorCtr>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
 

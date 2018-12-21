@@ -76,6 +76,7 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("NowHp"+NowHp);
 
         if (status.Type == ObjType.Inoshishi)
             summon.SetVariableValue("Hp", NowHp);

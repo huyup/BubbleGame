@@ -54,6 +54,7 @@ public class ObjFloatByDamage : MonoBehaviour
         else
         {
             bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+
             if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
                 objFloatByContain.FloatByContain(bubbleInstance);
         }
@@ -64,9 +65,7 @@ public class ObjFloatByDamage : MonoBehaviour
         Transform bubbleSetInstance = Instantiate(bubbleSetInstanceRef) as Transform;
 
         bubbleInstance = bubbleSetInstance.transform.Find("Bubble");
-
-        bubbleInstance.GetComponent<BubbleProperty>().IsCreatedByDamage = true;
-
+        
         bubbleInstance.position = bubbleInstanceStartRef.position;
 
     }

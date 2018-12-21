@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BehaviorDesigner.Runtime.Tasks.Movement;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class ObjFloatByContain : MonoBehaviour
 {
@@ -84,6 +80,7 @@ public class ObjFloatByContain : MonoBehaviour
             else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
             {
                 canMoveToCenter = false;
+                //rb.velocity=Vector3.zero;
                 FloatByBubbleVelocity();
             }
         }

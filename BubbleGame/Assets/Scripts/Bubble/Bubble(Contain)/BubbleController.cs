@@ -2,46 +2,43 @@
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
-
+public enum BubbleState
+{
+    Creating,
+    StandBy,
+    Floating,
+    BePressed,
+}
 public class BubbleController : MonoBehaviour
 {
-    private BubbleProperty bubbleProperty;
+    private BubbleState nowBubbleState;
+
     private BubbleCollision bubbleCollision;
     private Rigidbody rb;
 
-    private bool canSetVelocity = true;
+    [SerializeField]
+    private float upForceWhenContain = 2;
 
     [SerializeField]
-    private float countToFloat = 2;
-
-    [SerializeField]
-    private float upForceToFloat = 1.5f;
-
-    [SerializeField]
-    private float upForceWhenContain;
-
-    private bool canAddAutoFloatForce = true;
+    private float lastTimeByAirGun = 1f;
 
     private bool canAddForceByPush = true;
+
+    private bool canAddForceToBubble = true;
 
     // Use this for initialization
     void Start()
     {
-        bubbleProperty = GetComponent<BubbleProperty>();
         bubbleCollision = GetComponent<BubbleCollision>();
         rb = GetComponent<Rigidbody>();
     }
-
-    private void Update()
+    public BubbleState GetBubbleState()
     {
-        if (!bubbleProperty.IsForceFloating && !bubbleProperty.IsCreatedByDamage)
-        {
-            Invoke("FloatByTime", countToFloat);
-        }
-        else
-        {
-            CancelInvoke("FloatByTime");
-        }
+        return nowBubbleState;
+    }
+    public void SetBubbleState(BubbleState _nextBubbleState)
+    {
+        nowBubbleState = _nextBubbleState;
     }
 
     public void AddForceByPush(Vector3 _direction)
@@ -51,37 +48,27 @@ public class BubbleController : MonoBehaviour
             rb.velocity += _direction;
             bubbleCollision.AddForceToInsideObj(_direction);
             canAddForceByPush = false;
-            StartCoroutine(EarlyDestroyByAirGun());
+            StartCoroutine(ResetDestroyTimeByAirGun());
         }
     }
 
-    IEnumerator EarlyDestroyByAirGun()
+    IEnumerator ResetDestroyTimeByAirGun()
     {
         if (!transform.parent)
             yield break;
-        yield return new WaitForSeconds(bubbleProperty.LastTimeByAirGun);
+        yield return new WaitForSeconds(lastTimeByAirGun);
         if (!transform.parent)
             yield break;
         transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
     }
-    private void FloatByTime()
-    {
-        if (!bubbleProperty.IsForceFloating && canAddAutoFloatForce)
-        {
-            Vector3 upVelocity = Vector3.up * Time.fixedDeltaTime * 60 * upForceToFloat;
-            rb.velocity += upVelocity;
-            canAddAutoFloatForce = false;
-        }
-    }
     public void SetFloatVelocityToBubble()
     {
-        if (canSetVelocity)
+        if (canAddForceToBubble)
         {
-            bubbleProperty.IsForceFloating = true;
-            bubbleCollision.SetDestroyEnable();
+            nowBubbleState = BubbleState.Floating;
             rb.velocity = Vector3.zero;
             rb.velocity = Vector3.up * upForceWhenContain;
-            canSetVelocity = false;
+            canAddForceToBubble = false;
         }
     }
 }

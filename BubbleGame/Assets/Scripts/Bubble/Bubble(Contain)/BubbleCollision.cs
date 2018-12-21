@@ -4,45 +4,34 @@ using UnityEngine;
 
 public class BubbleCollision : MonoBehaviour
 {
-    private BubbleSetController setController;
-
-    [SerializeField]
-    private bool canBeDestroy;
-
-    [SerializeField]
-    private bool canAddForceToInsideObj;
-
     [SerializeField]
     private List<Collider> insideColliderList = new List<Collider>();
+
+    private BubbleSetController setController;
+    private BubbleController controller;
+    private bool canAddForceToInsideObj;
 
     // Use this for initialization
     void Start()
     {
-        canBeDestroy = false;
+        controller = GetComponent<BubbleController>();
         setController = transform.parent.GetComponent<BubbleSetController>();
     }
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.gameObject.layer == 11/*PlayerTrigger*/ && canBeDestroy)
+        if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating)
         {
             setController.DestroyBubbleSet();
         }
-        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
+        if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Add(_other);
-        }
-    }
-
-    private void OnTriggerStay(Collider _other)
-    {
-        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
-        {
             canAddForceToInsideObj = true;
         }
     }
     private void OnTriggerExit(Collider _other)
     {
-        if (_other.gameObject.layer == 12 /*Uribou*/ || _other.gameObject.layer == 16 /*StageObj*/)
+        if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Remove(_other);
         }
@@ -54,21 +43,9 @@ public class BubbleCollision : MonoBehaviour
 
         foreach (Collider insideCollider in insideColliderList)
         {
-            if (insideCollider.gameObject.layer == 16 /*StageObj*/
-                || insideCollider.gameObject.layer == 12 /*EnemyHit*/ )
-            {
-                if (insideCollider&& insideCollider.GetComponent<ObjController>())
-                    insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
-            }
+            if (insideCollider && insideCollider.GetComponent<ObjController>())
+                insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
 
-            //else if (insideCollider.gameObject.layer == 12/*Uribou*/)
-            //    insideCollider.transform.parent.GetComponent<EnemyFloatByDamage>().AddForceByPush(_direction);
         }
-    }
-
-
-    public void SetDestroyEnable()
-    {
-        canBeDestroy = true;
     }
 }

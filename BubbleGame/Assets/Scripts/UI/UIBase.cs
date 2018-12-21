@@ -73,7 +73,7 @@ public class UIBase : MonoBehaviour
         int maxHp = 200;
         int nowHp = _objController.NowHp;
         float newRate = 1 * (nowHp * 100 / maxHp) * 0.01f;
-        _bossHp.uvRect = new Rect(0, newRate, 1, 1);
+        _bossHp.uvRect = new Rect(0, 1 - newRate, 1, 1);
 
     }
     private void DrawPlayerAmmo(PlayerWeapon _weapon, RawImage _playerAmmoImage)

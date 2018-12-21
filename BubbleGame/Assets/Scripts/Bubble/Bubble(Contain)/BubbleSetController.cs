@@ -4,15 +4,13 @@ using UnityEngine;
 public class BubbleSetController : MonoBehaviour
 {
     private GameObject bubble;
-    private GameObject bubbleExplosion;
     private BubbleExplosionEffController bubbleExplosionEffController;
     
     // Use this for initialization
     void Start()
     {
         bubble = transform.Find("Bubble").gameObject;
-        bubbleExplosion = transform.Find("BubbleExplosion").gameObject;
-        bubbleExplosionEffController = bubbleExplosion.GetComponent<BubbleExplosionEffController>();
+        bubbleExplosionEffController = transform.Find("BubbleExplosion").gameObject.GetComponent<BubbleExplosionEffController>();
     }
     public void DestroyBubbleSet()
     {
