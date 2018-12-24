@@ -1168,7 +1168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472144079773110}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -33.706642, y: -7.15, z: -80.84186}
+  m_LocalPosition: {x: -36.200195, y: -7.091193, z: -67.40219}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4126859428558910}
@@ -1502,7 +1502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa23171c92222b540b58d8a284b5d686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 114894001029953538}
 --- !u!114 &114305939298699304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1543,7 +1542,6 @@ MonoBehaviour:
   behaviorsToSetTarget:
   - {fileID: 114152496366742146}
   behaviorToSetStartPos: {fileID: 114052725700756340}
-  maxTargetNum: 3
 --- !u!114 &114418025638396536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6771,7 +6769,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7154,7 +7152,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0.41334075, y: 1, z: 1}
+    m_Scale: {x: 0.87221813, y: 1.3527498, z: 1.2574115}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0

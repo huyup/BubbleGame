@@ -11,7 +11,7 @@ public class StageManager : Singleton<StageManager>
 
     public int UribouCount { get; private set; }
     public int HarinezumiCount { get; private set; }
-
+    
 
     public void AddUribouCount()
     {

@@ -22,6 +22,9 @@ public class BubbleController : MonoBehaviour
     [SerializeField]
     private float lastTimeByAirGun = 1f;
 
+    [SerializeField]
+    private float timeToStopBubble = 1f;
+
     private bool canAddForceByPush = true;
 
     private bool canAddForceToBubble = true;
@@ -31,6 +34,19 @@ public class BubbleController : MonoBehaviour
     {
         bubbleCollision = GetComponent<BubbleCollision>();
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (nowBubbleState == BubbleState.StandBy)
+            Invoke("DelayStopBubble", timeToStopBubble);
+        else
+            CancelInvoke("DelayStopBubble");
+    }
+
+    private void DelayStopBubble()
+    {
+        rb.velocity = Vector3.zero;
     }
     public BubbleState GetBubbleState()
     {
@@ -45,6 +61,7 @@ public class BubbleController : MonoBehaviour
     {
         if (canAddForceByPush)
         {
+            Debug.Log("AddForce");
             rb.velocity += _direction;
             bubbleCollision.AddForceToInsideObj(_direction);
             canAddForceByPush = false;

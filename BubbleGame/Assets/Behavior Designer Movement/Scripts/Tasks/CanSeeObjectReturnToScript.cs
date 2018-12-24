@@ -127,7 +127,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             {
                 if (!TargetCtr)
                     TargetCtr = GetComponent<TargetCtr>();
-                TargetCtr.SetTarget(returnedObject.Value);
+                TargetCtr.TryToSetTarget(returnedObject.Value);
                 // Return success if an object was found
                 return TaskStatus.Success;
             }

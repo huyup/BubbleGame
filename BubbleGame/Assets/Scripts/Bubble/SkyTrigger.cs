@@ -9,6 +9,7 @@ public class SkyTrigger : MonoBehaviour
         if (_other.gameObject.layer == 10 /*Bubble*/)
         {
             _other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            _other.GetComponent<BubbleCollision>().SetInsideObjDestroyable();
             BubbleProperty bubbleProperty = _other.GetComponent<BubbleProperty>();
             BubbleSetController bubbleSetController = _other.transform.parent.GetComponent<BubbleSetController>();
             StartCoroutine(DelayDestroy(bubbleProperty.LastTime, bubbleSetController));

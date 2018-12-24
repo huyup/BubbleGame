@@ -11,6 +11,7 @@ public class BubbleCollision : MonoBehaviour
     private BubbleController controller;
     private bool canAddForceToInsideObj;
 
+    private bool canAddInsideObj = true;
     // Use this for initialization
     void Start()
     {
@@ -25,8 +26,12 @@ public class BubbleCollision : MonoBehaviour
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
-            insideColliderList.Add(_other);
-            canAddForceToInsideObj = true;
+            if (canAddInsideObj)
+            {
+                insideColliderList.Add(_other);
+                canAddForceToInsideObj = true;
+                canAddInsideObj = false;
+            }
         }
     }
     private void OnTriggerExit(Collider _other)
@@ -34,6 +39,16 @@ public class BubbleCollision : MonoBehaviour
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Remove(_other);
+        }
+    }
+
+    public void SetInsideObjDestroyable()
+    {
+        foreach (Collider insideCollider in insideColliderList)
+        {
+            if (insideCollider && insideCollider.GetComponent<ObjController>())
+                insideCollider.GetComponent<ObjBodyCollision>().SetObjDestroy();
+
         }
     }
     public void AddForceToInsideObj(Vector3 _direction)

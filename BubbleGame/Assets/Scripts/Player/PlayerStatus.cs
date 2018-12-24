@@ -195,6 +195,7 @@ public class PlayerStatus : MonoBehaviour
 
     [HideInInspector]
     public int nowHp;
+    
     #endregion
 
     private void Start()

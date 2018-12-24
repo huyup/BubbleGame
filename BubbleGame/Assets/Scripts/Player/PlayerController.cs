@@ -33,11 +33,14 @@ public class PlayerController : MonoBehaviour
 
     private bool isVincible = false;
     private bool isSlow = false;
-    public bool IsUsingAirGun { get; private set; }
+
     private bool canJump = false;
     private bool canMove = false;
     private bool canRotate = false;
     private bool canJumpAttack = false;
+
+    public bool IsUsingAirGun { get; private set; }
+    public int TargetedCount { get; private set; }
 
     #region 初期化
     void Start()
@@ -304,6 +307,14 @@ public class PlayerController : MonoBehaviour
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
             this.gameObject.SetActive(false);
         }
+    }
+    #endregion
+
+    #region ターゲット用
+
+    public void AddTargetedCount()
+    {
+        TargetedCount++;
     }
     #endregion
 

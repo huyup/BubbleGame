@@ -24,16 +24,22 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "BubbleCollider")
         {
-            //当たった時に、大きさを比較
-            if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
+            //すでに何かが入っている
+            if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
             {
-                //泡に破裂命令
-                other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                //当たった時に、大きさを比較
+                if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
+                {
+                    //泡に破裂命令
+                    other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                }
+                else
+                {
+                    other.GetComponent<BubbleJudgeCollider>().AddObjInside();
+                    canBeContained = true;
+                }
             }
-            else
-            {
-                canBeContained = true;
-            }
+
         }
     }
 
@@ -60,7 +66,11 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (_boxCollider == null)
             return;
+
+
         if (controller.ObjState == ObjState.OnGround)
             floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
+
+
     }
 }

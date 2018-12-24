@@ -204,10 +204,8 @@ public class PlayerWeaponA : PlayerWeapon
         if (bubbles[bubbles.Count - 1] == null || isPushed)
             return;
 
-        bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleFowardPower,
-            ForceMode.VelocityChange);
-        bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower,
-            ForceMode.VelocityChange);
+        bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleFowardPower);
+        bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower);
 
         bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.StandBy);
     }

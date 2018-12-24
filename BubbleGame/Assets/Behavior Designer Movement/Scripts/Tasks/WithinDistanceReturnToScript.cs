@@ -118,7 +118,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                             returnedObject.Value = objects[i];
                             if (!TargetCtr)
                                 TargetCtr = GetComponent<TargetCtr>();
-                            TargetCtr.SetTarget(returnedObject.Value);
+                            TargetCtr.TryToSetTarget(returnedObject.Value);
                             return TaskStatus.Success;
                         }
                     }
@@ -128,7 +128,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                         returnedObject.Value = objects[i];
                         if (!TargetCtr)
                             TargetCtr = GetComponent<TargetCtr>();
-                        TargetCtr.SetTarget(returnedObject.Value);
+                        TargetCtr.TryToSetTarget(returnedObject.Value);
                         return TaskStatus.Success;
                     }
                 }

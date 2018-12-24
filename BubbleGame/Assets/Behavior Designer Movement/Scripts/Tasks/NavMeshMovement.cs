@@ -98,7 +98,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             // The path hasn't been computed yet if the path is pending.
             float remainingDistance;
-            if (navMeshAgent.pathPending) {
+            if (navMeshAgent.pathPending&& navMeshAgent) {
                 remainingDistance = float.PositiveInfinity;
             } else {
                 remainingDistance = navMeshAgent.remainingDistance;

@@ -19,10 +19,19 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         private Vector3 targetPosition;
         private bool hasArrived = false;
         private RaycastHit hit;
+
+        public SharedFloat timeToFinish = 3;
+
+        private float waitDuration;
+
+        private float startTime;
+
         public override void OnStart()
         {
             base.OnStart();
+            startTime = Time.time;
 
+            waitDuration = timeToFinish.Value;
 
             targetPosition = target.Value.transform.position;
             Vector3 direction = (targetPosition - transform.position).normalized;
@@ -35,7 +44,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override TaskStatus OnUpdate()
         {
             ResetDestination();
-            if (hasArrived)
+            if (hasArrived || (startTime + waitDuration < Time.time))
             {
                 hasArrived = false;
                 return TaskStatus.Success;

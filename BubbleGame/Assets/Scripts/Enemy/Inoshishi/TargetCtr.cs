@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
-
-using NaughtyAttributes;
 public class TargetCtr : MonoBehaviour
 {
     [SerializeField]
@@ -12,22 +10,15 @@ public class TargetCtr : MonoBehaviour
     [SerializeField]
     private BehaviorTree behaviorToSetStartPos;
 
-    [SerializeField]
-    private int maxTargetNum = 3;
-
     private GameObject nowTarget;
 
     private GameObject startTarget;
 
-    private bool canSetTarget;
-    
-    public void SetTarget(GameObject _target)
+    private bool canSetNowTarget;
+    public void TryToSetTarget(GameObject _target)
     {
-        if (canSetTarget)
-            return;
-
         nowTarget = _target;
-        canSetTarget = true;
+        canSetNowTarget = true;
     }
 
     public void SetStartPos(GameObject _startPos)
@@ -38,13 +29,13 @@ public class TargetCtr : MonoBehaviour
     }
     private void Update()
     {
-        if (canSetTarget)
+        if (canSetNowTarget)
         {
             foreach (var behaviour in behaviorsToSetTarget)
             {
                 behaviour.SetVariableValue("Target", nowTarget);
             }
-            canSetTarget = false;
+            canSetNowTarget = false;
         }
     }
 }

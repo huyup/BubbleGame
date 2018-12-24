@@ -174,6 +174,9 @@ public class ObjController : MonoBehaviour
 
     public void OnReset()
     {
+        if (GetComponent<Rigidbody>())
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+
         ObjState = ObjState.OnGround;
         NowHp = status.MaxHp;
         GetComponent<BoxCollider>().isTrigger = false;
@@ -188,6 +191,8 @@ public class ObjController : MonoBehaviour
         if (status.Type == ObjType.Harinezemi)
         {
             mouseAnimator.SetDownAnimation();
+            agent.enabled = true;
+            behaviorCtr.RestartBehaviors();
         }
     }
     public void AddForceByPush(Vector3 _direction)

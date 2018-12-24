@@ -10,7 +10,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override TaskStatus OnUpdate()
         {
             returnTarget.Value = target.Value;
-            if (returnTarget != null)
+            if (returnTarget.Value.GetComponent<PlayerStatus>().nowHp > 0)
             {
                 return TaskStatus.Success;
             }
