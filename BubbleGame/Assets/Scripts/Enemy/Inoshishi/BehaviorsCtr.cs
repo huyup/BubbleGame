@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
-
-public class BossBehaviorCtr : MonoBehaviour
+/// <summary>
+/// TODO:ここを汎用クラスに修正
+/// </summary>
+public class BehaviorsCtr : MonoBehaviour
 {
     [SerializeField]
     private List<BehaviorTree> behaviors = new List<BehaviorTree>();

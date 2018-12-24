@@ -56,7 +56,7 @@ public class ObjController : MonoBehaviour
     private GameObject collisionEff;
 
     [SerializeField]
-    private BossBehaviorCtr behaviorCtr;
+    private BehaviorsCtr behaviorCtr;
 
     [SerializeField]
     private UIBase uiCtr;
@@ -78,6 +78,15 @@ public class ObjController : MonoBehaviour
     {
         //Debug.Log("NowHp"+NowHp);
 
+        if (ObjState == ObjState.Floating&&status.Type!=ObjType.Obj)
+        {
+            if (status.Type == ObjType.Inoshishi)
+            {
+                StartCoroutine(DebugSetClear());
+            }
+            behaviorCtr.DisableBehaviors();
+        }
+
         if (status.Type == ObjType.Inoshishi)
             summon.SetVariableValue("Hp", NowHp);
 
@@ -85,11 +94,7 @@ public class ObjController : MonoBehaviour
         {
             if (NowHp < status.HpToFloat)
             {
-                if (status.Type == ObjType.Inoshishi)
-                {
-                    StartCoroutine(DebugSetClear());
-                    behaviorCtr.DisableBehaviors();
-                }
+
 
                 bubbleDamageEff.StopEmitter();
                 floatByDamage.CreateBubbleByDamage();
@@ -105,7 +110,7 @@ public class ObjController : MonoBehaviour
                 GetComponent<BoxCollider>().isTrigger = true;
         }
 
-        if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
+        if (status.Type == ObjType.Uribou )
             SetSpeedByDamage(NowHp, status.MaxHp);
 
     }

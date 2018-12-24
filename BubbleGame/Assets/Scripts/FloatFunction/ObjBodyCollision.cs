@@ -22,7 +22,7 @@ public class ObjBodyCollision : MonoBehaviour
             if (canHitBoss)
             {
                 _other.transform.root.GetComponent<ObjController>().SetObjState(ObjState.Dizziness);
-                _other.transform.root.GetComponent<BossBehaviorCtr>().Dizziness();
+                _other.transform.root.GetComponent<BehaviorsCtr>().Dizziness();
                 controller.Collision(_other.transform.position);
                 canHitBoss = false;
             }

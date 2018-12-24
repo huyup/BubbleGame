@@ -14,7 +14,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedFloat targetDistPredictionMult = 20;
         [Tooltip("The GameObject that the agent is pursuing")]
         public SharedGameObject target;
-        
+        public SharedFloat timeToFinish = 3;
+
+        private float waitDuration;
+
+        private float startTime;
+
+
         // The position of the target at the last frame
         private Vector3 targetPosition;
 
@@ -24,13 +30,18 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             targetPosition = target.Value.transform.position;
             SetDestination(Target());
+
+            startTime = Time.time;
+
+            waitDuration = timeToFinish.Value;
         }
 
         // Pursue the destination. Return success once the agent has reached the destination.
         // Return running if the agent hasn't reached the destination yet
         public override TaskStatus OnUpdate()
         {
-            if (HasArrived()) {
+            if (HasArrived() || (startTime + waitDuration < Time.time))
+            {
                 return TaskStatus.Success;
             }
 
@@ -48,9 +59,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             float futurePrediction = 0;
             // Set the future prediction to max prediction if the speed is too small to give an accurate prediction
-            if (speed <= distance / targetDistPrediction.Value) {
+            if (speed <= distance / targetDistPrediction.Value)
+            {
                 futurePrediction = targetDistPrediction.Value;
-            } else {
+            }
+            else
+            {
                 futurePrediction = (distance / speed) * targetDistPredictionMult.Value; // the prediction should be accurate enough
             }
 

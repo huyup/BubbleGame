@@ -34,13 +34,13 @@ public class SummonCtr : MonoBehaviour
         {
             StageManager.Instance.AddUribouCount();
             GameObject uribouInstance= Instantiate(uribou, startList[_startNum].transform.position,Quaternion.identity);
-            uribouInstance.GetComponent<SendVariableToBehaviorTreeCtr>().SetStartPos(defaultStartPosList[_startNum]);
+            uribouInstance.GetComponent<TargetCtr>().SetStartPos(defaultStartPosList[_startNum]);
         }
         else if (_enemyType == EnemyType.Harinezumi)
         {
             StageManager.Instance.AddHarinezumiCount();
             GameObject harinezumiInstance = Instantiate(harinezumi, startList[_startNum].transform.position, Quaternion.identity);
-            harinezumiInstance.GetComponent<SendVariableToBehaviorTreeCtr>().SetStartPos(defaultStartPosList[_startNum]);
+            harinezumiInstance.GetComponent<TargetCtr>().SetStartPos(defaultStartPosList[_startNum]);
         }
     }
 }

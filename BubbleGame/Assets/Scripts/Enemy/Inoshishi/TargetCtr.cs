@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
-public class SendVariableToBehaviorTreeCtr : MonoBehaviour
+
+using NaughtyAttributes;
+public class TargetCtr : MonoBehaviour
 {
     [SerializeField]
     private List<BehaviorTree> behaviorsToSetTarget = new List<BehaviorTree>();
-    
+
     [SerializeField]
+    private BehaviorTree behaviorToSetStartPos;
+
+    [SerializeField]
+    private int maxTargetNum = 3;
+
     private GameObject nowTarget;
 
     private GameObject startTarget;
 
     private bool canSetTarget;
-
-    [SerializeField]
-    private BehaviorTree behaviorToSetStartPos;
-
+    
     public void SetTarget(GameObject _target)
     {
+        if (canSetTarget)
+            return;
+
         nowTarget = _target;
         canSetTarget = true;
     }

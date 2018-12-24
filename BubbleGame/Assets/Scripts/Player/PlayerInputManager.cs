@@ -71,7 +71,8 @@ public class PlayerInputManager : MonoBehaviour
         //武器の切り替えボタン
         if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, (GamePad.Index)playerNum))
         {
-            playerController.ChangeWeapon();
+            if (!playerController.IsUsingAirGun)
+                playerController.ChangeWeapon();
         }
 
         //攻撃ボタン

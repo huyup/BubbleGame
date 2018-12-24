@@ -25,4 +25,13 @@ public class BubbleSetController : MonoBehaviour
 
         Destroy(this.gameObject,1.5f);
     }
+    public void DestroyBubbleItemSet()
+    {
+        if (this.gameObject == null || bubble == null)
+            return;
+        
+        Destroy(bubble);
+        bubbleExplosionEffController.PlayExplosionEff(bubble.transform.position);
+        Destroy(this.gameObject, 1.5f);
+    }
 }

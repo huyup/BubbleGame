@@ -91,6 +91,7 @@ public class UIBase : MonoBehaviour
     }
     private void DrawPlayerWeapon(WeaponType _weaponType, Text _weaponText)
     {
+
         switch (_weaponType)
         {
             case WeaponType.WeaponA:
@@ -98,6 +99,9 @@ public class UIBase : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 _weaponText.text = "装備中:小さいストロー";
+                break;
+            case WeaponType.WeaponC:
+                _weaponText.text = "装備中:空気砲";
                 break;
             default:
                 _weaponText.text = "None";

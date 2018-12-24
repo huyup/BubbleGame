@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput; //マルチコントローラーアセット
-
+using NaughtyAttributes;
 public enum WeaponType
 {
     WeaponA = 1,
     WeaponB,
     Max,
+    WeaponC,
 }
 public class PlayerController : MonoBehaviour
 {
@@ -30,15 +31,14 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimatorCtr animatorCtr;
     private GroundDetector groundDetector;
 
-    //無敵かどうか
     private bool isVincible = false;
     private bool isSlow = false;
-
+    public bool IsUsingAirGun { get; private set; }
     private bool canJump = false;
     private bool canMove = false;
     private bool canRotate = false;
     private bool canJumpAttack = false;
-    
+
     #region 初期化
     void Start()
     {
@@ -171,6 +171,12 @@ public class PlayerController : MonoBehaviour
 
     private void CheckCanJumpAttack()
     {
+        if (IsUsingAirGun)
+        {
+            ResetAttack();
+            return;
+        }
+
         switch (nowWeaponType)
         {
             case WeaponType.WeaponA:
@@ -198,12 +204,30 @@ public class PlayerController : MonoBehaviour
             ResetAttack();
         }
     }
+
     public WeaponType GetNowWeaponType()
     {
+        if (IsUsingAirGun)
+            return WeaponType.WeaponC;
+
         return nowWeaponType;
+    }
+
+    public void UseAirGun()
+    {
+        IsUsingAirGun = true;
+        Invoke("DisableAirGun", status.AirGunLastTime);
+    }
+
+    private void DisableAirGun()
+    {
+        weaponC.OnAttackButtonUp();
+        IsUsingAirGun = false;
     }
     public PlayerWeapon GetWeapon()
     {
+        if (IsUsingAirGun)
+            return weaponC;
 
         switch (nowWeaponType)
         {
@@ -223,7 +247,7 @@ public class PlayerController : MonoBehaviour
     public void PullBack()
     {
         Vector3 backVelocity = transform.forward * -1;
-        rb.velocity = backVelocity * Time.fixedDeltaTime * 60*status.PullBackSpeed;
+        rb.velocity = backVelocity * Time.fixedDeltaTime * 60 * status.PullBackSpeed;
     }
     #endregion
 

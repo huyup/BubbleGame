@@ -35,7 +35,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // distance * distance, optimization so we don't have to take the square root
         private float sqrMagnitude;
         private bool overlapCast = false;
-        private SendVariableToBehaviorTreeCtr TargetCtr;
+        private TargetCtr TargetCtr;
         public override void OnStart()
         {
             sqrMagnitude = magnitude.Value * magnitude.Value;
@@ -117,7 +117,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                             // the object has a magnitude less than the specified magnitude and is within sight. Set the object and return success
                             returnedObject.Value = objects[i];
                             if (!TargetCtr)
-                                TargetCtr = GetComponent<SendVariableToBehaviorTreeCtr>();
+                                TargetCtr = GetComponent<TargetCtr>();
                             TargetCtr.SetTarget(returnedObject.Value);
                             return TaskStatus.Success;
                         }
@@ -127,7 +127,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                         // the object has a magnitude less than the specified magnitude. Set the object and return success
                         returnedObject.Value = objects[i];
                         if (!TargetCtr)
-                            TargetCtr = GetComponent<SendVariableToBehaviorTreeCtr>();
+                            TargetCtr = GetComponent<TargetCtr>();
                         TargetCtr.SetTarget(returnedObject.Value);
                         return TaskStatus.Success;
                     }

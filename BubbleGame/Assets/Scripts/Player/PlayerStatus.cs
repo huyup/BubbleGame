@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum PlayerSelection
+{
+    Player1 = 1,
+    Player2,
+};
 public class PlayerStatus : MonoBehaviour
 {
-    public enum PlayerSelection
-    {
-        Player1 = 1,
-        Player2,
-    };
+
 
     public PlayerSelection playerNum = PlayerSelection.Player1;
 
@@ -145,6 +145,16 @@ public class PlayerStatus : MonoBehaviour
     public float PullBackTime
     {
         get { return pullBackTime; }
+    }
+
+    /// <summary>
+    /// 空気砲を使える時間
+    /// </summary>
+    [SerializeField]
+    float airGunLastTime = 10;
+    public float AirGunLastTime
+    {
+        get { return airGunLastTime; }
     }
     #endregion
 

@@ -11,6 +11,7 @@ public class StageMain : MainBase
     protected override void OnFinishedInitialize()
     {
     }
+    [RuntimeInitializeOnLoadMethod]
     protected override void OnStart()
     {
         StageManager.CreateInstance();

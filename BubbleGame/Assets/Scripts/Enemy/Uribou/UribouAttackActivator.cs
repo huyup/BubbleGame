@@ -16,7 +16,7 @@ public class UribouAttackActivator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (animator.GetBool("IsAttacking")||
+        if (animator.GetBool("Attacking")||
             (bool)attack.GetVariable("IsAttacking").GetValue())
         {
             sphereCollider.enabled = true;
