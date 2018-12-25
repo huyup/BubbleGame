@@ -97,10 +97,14 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         protected override bool HasArrived()
         {
             // The path hasn't been computed yet if the path is pending.
-            float remainingDistance;
-            if (navMeshAgent.pathPending&& navMeshAgent) {
+            float remainingDistance = 0;
+            if (navMeshAgent.pathPending && navMeshAgent)
+            {
                 remainingDistance = float.PositiveInfinity;
-            } else {
+            }
+            else
+            {
+
                 remainingDistance = navMeshAgent.remainingDistance;
             }
 
@@ -113,7 +117,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         protected override void Stop()
         {
             UpdateRotation(startUpdateRotation);
-            if (navMeshAgent.hasPath) {
+            if (navMeshAgent.hasPath)
+            {
                 navMeshAgent.isStopped = true;
             }
         }
@@ -123,9 +128,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         /// </summary>
         public override void OnEnd()
         {
-            if (stopOnTaskEnd.Value) {
+            if (stopOnTaskEnd.Value)
+            {
                 Stop();
-            } else {
+            }
+            else
+            {
                 UpdateRotation(startUpdateRotation);
             }
         }

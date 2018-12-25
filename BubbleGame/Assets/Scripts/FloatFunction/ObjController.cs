@@ -187,6 +187,8 @@ public class ObjController : MonoBehaviour
         if (status.Type == ObjType.Uribou)
         {
             uribouAnimator.SetDownAnimation();
+            agent.enabled = true;
+            behaviorCtr.RestartBehaviors();
         }
         if (status.Type == ObjType.Harinezemi)
         {

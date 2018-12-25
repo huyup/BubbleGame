@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using NaughtyAttributes;
 public class BubbleItemMovement : MonoBehaviour
 {
     [SerializeField]
@@ -13,30 +13,25 @@ public class BubbleItemMovement : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed = 0.05f;
-
-
+    
     [SerializeField]
     private float randomRange = 5;
 
     [SerializeField]
     private Transform initPos;
-
+    
     private bool hasArrivalToInitPos;
 
     private bool canSetNextDestination;
-
-    private Vector3 destination;
     
-    // Use this for initialization
-    void Start()
-    {
-    }
+    [ShowNonSerializedField]
+    private Vector3 destination;
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Vector3.Distance(initPos.position, transform.position) < 5)
+        if (Vector3.Distance(initPos.position, transform.position) < 5 && !hasArrivalToInitPos)
         {
 
             canSetNextDestination = true;
@@ -47,10 +42,6 @@ public class BubbleItemMovement : MonoBehaviour
             MoveToInitPos();
         else
         {
-            Debug.Log("Distance" + Vector3.Distance(initPos.position, transform.position));
-            if (Vector3.Distance(destination-new Vector3(0, destination.y, 0), transform.position - new Vector3(0, transform.position.y, 0)) < 2f)
-                canSetNextDestination = true;
-
             if (canSetNextDestination)
             {
                 SetRandomDestination();
@@ -58,14 +49,20 @@ public class BubbleItemMovement : MonoBehaviour
             }
 
             MoveToRandomPos();
+
+            if (Vector3.Distance(destination,
+                    transform.position) < 2f)
+            {
+                canSetNextDestination = true;
+            }
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time * pingPongSpeed, pingPongLength), transform.position.z);
     }
 
+
     void MoveToInitPos()
     {
-        Debug.Log("MoveToInitPos");
         Vector3 direction = (initPos.position - transform.position).normalized;
 
         transform.position += direction * Time.fixedDeltaTime * 60 * moveSpeed;
@@ -73,7 +70,8 @@ public class BubbleItemMovement : MonoBehaviour
 
     void SetRandomDestination()
     {
-        destination = initPos.transform.position + Random.insideUnitSphere * randomRange;
+        Vector3 randomSphere = Random.insideUnitSphere * randomRange + Vector3.one;
+        destination = new Vector3(initPos.position.x + randomSphere.x, initPos.position.y, initPos.position.z + randomSphere.z);
     }
     void MoveToRandomPos()
     {

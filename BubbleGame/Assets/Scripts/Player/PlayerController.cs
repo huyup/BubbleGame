@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     private PlayerWeaponB weaponB;
 
     [SerializeField]
+    private StageMain satgeMain;
+
+    [SerializeField]
     private PlayerWeaponC weaponC;
     /// <summary>
     /// アタッチするコンポーネント
@@ -226,11 +229,14 @@ public class PlayerController : MonoBehaviour
     public void DisableAirGun()
     {
         IsUsingAirGun = false;
+        satgeMain.CreateItemInRandomPoint();
+
     }
     public void DisableAirGunByTime()
     {
         weaponC.OnAttackButtonUp();
         IsUsingAirGun = false;
+        satgeMain.CreateItemInRandomPoint();
     }
     public PlayerWeapon GetWeapon()
     {

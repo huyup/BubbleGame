@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 public class ObjBodyCollision : MonoBehaviour
 {
     private ObjController controller;
 
     private bool canHitBoss = true;
-
+    
     public bool CanBeDestroy { get; private set; }
 
     public void SetObjDestroy()
@@ -20,11 +21,6 @@ public class ObjBodyCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.gameObject.layer == 16 /*StageObj*/)
-        {
-            Debug.Log("My" + transform.name);
-            Debug.Log("Name" + _other.gameObject.name);
-        }
         if (_other.gameObject.layer == 9 /*Ground*/&& controller.ObjState == ObjState.Falling)
         {
             controller.OnReset();
