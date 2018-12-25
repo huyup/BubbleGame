@@ -13,8 +13,8 @@ Shader "Particles/Alpha Blended Cubemap" {
 	SubShader {
 		Tags { "Queue"="Transparent" "RenderType"="Transparent" "PreviewType" = "Plane"}
 		Cull Back
-		ZTest Off
-		ZWrite Off
+		ZTest LEqual
+		ZWrite On
 		Lighting On
 		Blend SrcAlpha OneMinusSrcAlpha
 

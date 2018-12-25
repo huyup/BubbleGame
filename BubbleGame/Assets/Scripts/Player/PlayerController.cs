@@ -219,10 +219,15 @@ public class PlayerController : MonoBehaviour
     public void UseAirGun()
     {
         IsUsingAirGun = true;
-        Invoke("DisableAirGun", status.AirGunLastTime);
-    }
+        weaponC.Reload();
+        Invoke("DisableAirGunByTime", status.AirGunLastTime);
 
-    private void DisableAirGun()
+    }
+    public void DisableAirGun()
+    {
+        IsUsingAirGun = false;
+    }
+    public void DisableAirGunByTime()
     {
         weaponC.OnAttackButtonUp();
         IsUsingAirGun = false;

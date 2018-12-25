@@ -63,7 +63,8 @@ public class BubbleController : MonoBehaviour
         {
             Debug.Log("AddForce");
             rb.velocity += _direction;
-            bubbleCollision.AddForceToInsideObj(_direction);
+            if (bubbleCollision)
+                bubbleCollision.AddForceToInsideObj(_direction);
             canAddForceByPush = false;
             StartCoroutine(ResetDestroyTimeByAirGun());
         }
