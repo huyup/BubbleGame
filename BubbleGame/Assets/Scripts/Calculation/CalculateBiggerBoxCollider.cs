@@ -6,52 +6,63 @@ using UnityEngine;
 /// </summary>
 public class CalculateBiggerBoxCollider : MonoBehaviour
 {
+    enum BiggerObject
+    {
+        Bubble,
+        Obj,
+        None,
+    }
+
+
+    private BiggerObject biggerObject;
+
     /// <summary>
-    /// _boxAが_boxBより大きい場合、Trueを返す、
+    /// 物体が泡より大きい場合、Trueを返す、
     /// _boxAが_boxBより小さい場合、Falseを返す、
     /// </summary>
-    public bool JudgeWhichBoxIsBigger(GameObject enemy, GameObject bubble)
+    public bool JudgeWhichBoxIsBigger(GameObject _Obj, GameObject _bubble)
     {
         //FIXME:ここのreturn文がおかしい
-        if (enemy == null || bubble == null)
+        if (_Obj == null || _bubble == null)
             return false;
 
-        bool isEnemyBiggerThanBubble = false;
+        bool isObjBiggerThanBubble = false;
 
-        bool isEnemyLongerThanBubble = false;
-        bool isEnemyHigherThanBubble = false;
-        bool isEnemyDeeperThanBubble = false;
+        bool isObjLongerThanBubble = false;
+        bool isObjHigherThanBubble = false;
+        bool isObjDeeperThanBubble = false;
 
-        isEnemyLongerThanBubble = JudgeTwoBoxColliderInLength(enemy.GetComponent<CalculateBoxColliderVertices>().LengthVertices,
-            bubble.GetComponent<CalculateBoxColliderVertices>().LengthVertices);
+        isObjLongerThanBubble = JudgeTwoBoxColliderInLength(_Obj.GetComponent<CalculateBoxColliderVertices>().LengthVertices,
+            _bubble.GetComponent<CalculateBoxColliderVertices>().LengthVertices);
 
-        isEnemyHigherThanBubble = JudgeTwoBoxColliderInHeight(enemy.GetComponent<CalculateBoxColliderVertices>().HeightVertices,
-    bubble.GetComponent<CalculateBoxColliderVertices>().HeightVertices);
+        isObjHigherThanBubble = JudgeTwoBoxColliderInHeight(_Obj.GetComponent<CalculateBoxColliderVertices>().HeightVertices,
+    _bubble.GetComponent<CalculateBoxColliderVertices>().HeightVertices);
 
-        isEnemyDeeperThanBubble = JudgeTwoBoxColliderInDepth(enemy.GetComponent<CalculateBoxColliderVertices>().DepthVertices,
-    bubble.GetComponent<CalculateBoxColliderVertices>().DepthVertices);
+        isObjDeeperThanBubble = JudgeTwoBoxColliderInDepth(_Obj.GetComponent<CalculateBoxColliderVertices>().DepthVertices,
+    _bubble.GetComponent<CalculateBoxColliderVertices>().DepthVertices);
 
-        if (isEnemyDeeperThanBubble && isEnemyHigherThanBubble && isEnemyLongerThanBubble)
+        if (isObjDeeperThanBubble && isObjHigherThanBubble && isObjLongerThanBubble)
         {
-            isEnemyBiggerThanBubble = true;
+            isObjBiggerThanBubble = true;
         }
-        else if (!isEnemyDeeperThanBubble && !isEnemyHigherThanBubble && !isEnemyLongerThanBubble)
+        else if (!isObjDeeperThanBubble && !isObjHigherThanBubble && !isObjLongerThanBubble)
         {
 
-            isEnemyBiggerThanBubble = false;
+            isObjBiggerThanBubble = false;
         }
 
-
-        return isEnemyBiggerThanBubble;
+        Debug.Log("Return"+ isObjBiggerThanBubble);
+        return isObjBiggerThanBubble;
     }
 
     private bool JudgeTwoBoxColliderInLength(Vector3[] _boxLengthVertices, Vector3[] _bubbleLengthVertices)
     {
         bool isBoxLoggerThanBubble = false;
 
-        float boxLength = (_boxLengthVertices[0] - _boxLengthVertices[1]).magnitude;
+        float boxLength = (_boxLengthVertices[0] - _boxLengthVertices[1]).magnitude ;
         float bubbleLength = (_bubbleLengthVertices[0] - _bubbleLengthVertices[1]).magnitude;
-
+        Debug.Log("boxLength"+ boxLength);
+        Debug.Log("bubbleLength" + bubbleLength);
         if (boxLength > bubbleLength)
         {
             isBoxLoggerThanBubble = true;
@@ -70,7 +81,8 @@ public class CalculateBiggerBoxCollider : MonoBehaviour
 
         float boxHeight = (_boxHeightVertices[0] - _boxHeightVertices[1]).magnitude;
         float bubbleHeight = (_bubbleHeightVertices[0] - _bubbleHeightVertices[1]).magnitude;
-
+        Debug.Log("boxHeight" + boxHeight);
+        Debug.Log("bubbleHeight" + bubbleHeight);
         if (boxHeight > bubbleHeight)
         {
             isBoxHigherThanBubble = true;
@@ -87,9 +99,10 @@ public class CalculateBiggerBoxCollider : MonoBehaviour
     {
         bool isBoxDeeperThanBubble = false;
 
-        float boxDepth = (_boxDepthVertices[0] - _boxDepthVertices[1]).magnitude;
+        float boxDepth = (_boxDepthVertices[0] - _boxDepthVertices[1]).magnitude ;
         float bubbleDepth = (_bubbleDepthVertices[0] - _bubbleDepthVertices[1]).magnitude;
-
+        Debug.Log("boxDepth" + boxDepth);
+        Debug.Log("bubbleDepth" + bubbleDepth);
         if (boxDepth > bubbleDepth)
         {
             isBoxDeeperThanBubble = true;

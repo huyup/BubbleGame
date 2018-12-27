@@ -20,7 +20,6 @@ public class EnemyJudgeCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider _other)
     {
-
         if (_other.gameObject.layer == 13/*JudgeBox*/ )
         {
             //当たった時に、大きさを比較

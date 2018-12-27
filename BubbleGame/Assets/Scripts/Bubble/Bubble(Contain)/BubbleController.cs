@@ -38,6 +38,8 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
+
+        Debug.Log("state"+nowBubbleState);
         if (nowBubbleState == BubbleState.StandBy)
             Invoke("DelayStopBubble", timeToStopBubble);
         else

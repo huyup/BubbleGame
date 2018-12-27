@@ -12,6 +12,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private bool canBeContained = false;
 
+    private bool isBubbleBigger = false;
     // Use this for initialization
     void Start()
     {
@@ -24,14 +25,14 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "BubbleCollider")
         {
-            //すでに何かが入っている
+            //何も入っていない状態だけ、処理する
             if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
             {
                 //当たった時に、大きさを比較
                 if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
                 {
                     //泡に破裂命令
-                    other.transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                    other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
                 }
                 else
                 {
@@ -55,11 +56,15 @@ public class ObjJudgeCollision : MonoBehaviour
                     canBeContained = false;
                 }
             }
-            else
-            {
-                //一定時間後に、泡を破滅させる
-            }
+            //var bubbleController = other.transform.parent.GetComponent<BubbleController>();
+            //if (bubbleController.GetBubbleState() != BubbleState.Creating && controller.ObjState != ObjState.OnGround)
+            //{
+            //    //泡に破裂命令
+            //    other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+            //}
         }
+
+
     }
 
     private void SetBoxAndBubbleFloat(GameObject _enemy, GameObject _boxCollider)
@@ -67,10 +72,8 @@ public class ObjJudgeCollision : MonoBehaviour
         if (_boxCollider == null)
             return;
 
-
         if (controller.ObjState == ObjState.OnGround)
-            floatByContain.FloatByContain(_boxCollider.transform.parent.Find("Bubble"));
-
+            floatByContain.FloatByContain(_boxCollider.transform.parent);
 
     }
 }
