@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4375491169667714}
   - component: {fileID: 33161761679080600}
   - component: {fileID: 23020276162215184}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sphere(Shadow)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1124367558409386}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.409042, y: -6.841193, z: -81.66904}
+  m_LocalPosition: {x: -38.652824, y: 2.8106437, z: -73.013275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4395931554500238}
@@ -474,6 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upForceWhenContain: 2
   lastTimeByAirGun: 1
+  timeToStopBubble: 1
 --- !u!135 &135083579305979332
 SphereCollider:
   m_ObjectHideFlags: 1

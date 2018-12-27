@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pingPongSpeed: 1
   pingPongLength: 1.5
-  moveSpeed: 0.1
+  moveSpeed: 0.05
   randomRange: 20
   initPos: {fileID: 4083883141630540, guid: 7f8b9fac62b3a7b4c9efeeea528ad4fe, type: 2}
 --- !u!135 &135311696503445008
