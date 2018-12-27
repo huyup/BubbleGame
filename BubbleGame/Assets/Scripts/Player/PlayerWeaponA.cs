@@ -38,6 +38,9 @@ public class PlayerWeaponA : PlayerWeapon
     [SerializeField]
     private int maxAmmoCost = 30;
 
+    [SerializeField]
+    private float factorToCalAmmoRecovery = 1.5f;
+
     private float spaceKeyStorage = 0.0f;
 
     private bool isPushed = false;
@@ -50,7 +53,7 @@ public class PlayerWeaponA : PlayerWeapon
 
     private float prevAmmoLeft;
     #endregion
-    
+
     void Start()
     {
         prevAmmoLeft = MaxAmmo;
@@ -69,7 +72,7 @@ public class PlayerWeaponA : PlayerWeapon
 
         if (nowAmmoLeft < 0)
             nowAmmoLeft = 0;
-        
+
         ////泡の発射位置を更新させる
         bubbleStartPos = weaponAStartRef.transform.position;
     }
@@ -180,6 +183,7 @@ public class PlayerWeaponA : PlayerWeapon
         controller.ResetMove();
         controller.ResetAttack();
         animatorCtr.SetAttackAnimationOnButtonUp();
+
         if (!isPushed)
         {
             PushTheBubbleOnceTime();
@@ -187,6 +191,12 @@ public class PlayerWeaponA : PlayerWeapon
         }
     }
 
+    public override void AmmoRecovery(float _bubbleSize)
+    {
+        nowAmmoLeft += _bubbleSize * factorToCalAmmoRecovery;
+        if (nowAmmoLeft >= MaxAmmo)
+            nowAmmoLeft = MaxAmmo;
+    }
     private void Reload()
     {
         if (nowAmmoLeft < MaxAmmo && !isAttacking)

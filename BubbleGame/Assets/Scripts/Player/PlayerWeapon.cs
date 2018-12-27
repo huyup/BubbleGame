@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 public class PlayerWeapon : MonoBehaviour
 {
     [FormerlySerializedAs("weaponLeftCount")]
+
     [SerializeField]
     protected int MaxAmmo;
 
@@ -49,6 +50,11 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     public virtual void OnReset()
+    {
+
+    }
+
+    public virtual void AmmoRecovery(float _bubbleSize)
     {
 
     }

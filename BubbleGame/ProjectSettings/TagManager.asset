@@ -12,6 +12,7 @@ TagManager:
   - Warg
   - Octopus
   - SearchTrigger
+  - BubbleAirCollider
   layers:
   - Default
   - TransparentFX

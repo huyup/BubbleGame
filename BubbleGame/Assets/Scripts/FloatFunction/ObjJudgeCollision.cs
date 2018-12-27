@@ -86,10 +86,7 @@ public class ObjJudgeCollision : MonoBehaviour
                 }
             }
         }
-
-
     }
-
     private void SetBoxAndBubbleFloat(GameObject _enemy, GameObject _boxCollider)
     {
         if (_boxCollider == null)

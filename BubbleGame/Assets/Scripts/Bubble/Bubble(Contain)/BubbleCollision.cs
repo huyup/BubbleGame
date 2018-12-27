@@ -18,10 +18,14 @@ public class BubbleCollision : MonoBehaviour
         controller = GetComponent<BubbleController>();
         setController = transform.parent.GetComponent<BubbleSetController>();
     }
+
+
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating)
         {
+            Debug.Log("this.transform.localScale.magnitude"+ this.transform.localScale.magnitude);
+            _other.gameObject.GetComponent<PlayerController>().GetWeapon().AmmoRecovery(this.transform.localScale.magnitude);
             setController.DestroyBubbleSet();
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)

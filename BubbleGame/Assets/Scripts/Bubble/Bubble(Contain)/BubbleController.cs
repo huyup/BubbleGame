@@ -40,6 +40,9 @@ public class BubbleController : MonoBehaviour
     private void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            rb.velocity += Vector3.forward * 5000;
+
         if (nowBubbleState == BubbleState.StandBy)
             Invoke("DelayStopBubble", timeToStopBubble);
         else
@@ -61,15 +64,12 @@ public class BubbleController : MonoBehaviour
 
     public void AddForceByPush(Vector3 _direction)
     {
-        if (canAddForceByPush)
-        {
-            Debug.Log("AddForce");
-            rb.velocity += _direction;
-            if (bubbleCollision)
-                bubbleCollision.AddForceToInsideObj(_direction);
-            canAddForceByPush = false;
-            StartCoroutine(ResetDestroyTimeByAirGun());
-        }
+        Debug.Log("AddForceByPush");
+        Debug.Log("AddForce");
+        rb.velocity = _direction;
+        if (bubbleCollision)
+            bubbleCollision.AddForceToInsideObj(_direction);
+        StartCoroutine(ResetDestroyTimeByAirGun());
     }
 
     IEnumerator ResetDestroyTimeByAirGun()

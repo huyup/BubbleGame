@@ -24,7 +24,10 @@ public class PlayerWeaponB : PlayerWeapon
 
     [SerializeField]
     private float buttonStayCost = 0.3f;
-    
+
+    [SerializeField]
+    private float factorToCalAmmoRecovery = 1.5f;
+
     private float tmpAmmoCost;
 
     private float nowAmmoLeft;
@@ -101,7 +104,13 @@ public class PlayerWeaponB : PlayerWeapon
         isAttacking = false;
         prevAmmoLeft = nowAmmoLeft;
     }
+    public override void AmmoRecovery(float _bubbleSize)
+    {
+        nowAmmoLeft += _bubbleSize * factorToCalAmmoRecovery;
 
+        if (nowAmmoLeft >= MaxAmmo)
+            nowAmmoLeft = MaxAmmo;
+    }
     private void OnCreateBubble()
     {
         playerController.ResetJump();
