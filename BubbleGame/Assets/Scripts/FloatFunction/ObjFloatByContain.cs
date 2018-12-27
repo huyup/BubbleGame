@@ -24,12 +24,18 @@ public class ObjFloatByContain : MonoBehaviour
 
     private Rigidbody rb;
 
+    private bool isCreatedByDamage = false;
+
     private void Start()
     {
         objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
     }
 
+    public void SetCreatedByDamageFlag(bool _flag)
+    {
+        isCreatedByDamage = _flag;
+    }
     void Update()
     {
         if (canStartFloating)
@@ -80,7 +86,6 @@ public class ObjFloatByContain : MonoBehaviour
             else if (Vector3.Distance(transform.position, bubbleInstance.position) < 0.1f)
             {
                 canMoveToCenter = false;
-                //rb.velocity=Vector3.zero;
                 FloatByBubbleVelocity();
             }
         }
@@ -99,7 +104,10 @@ public class ObjFloatByContain : MonoBehaviour
 
     private void FloatByBubbleVelocity()
     {
-        rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
+        if (isCreatedByDamage)
+            rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
+        else
+            rb.velocity = Vector3.zero;
     }
     public void ResetFloatFlag()
     {

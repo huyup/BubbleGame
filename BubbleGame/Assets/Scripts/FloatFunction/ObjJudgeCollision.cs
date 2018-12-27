@@ -12,7 +12,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private bool canBeContained = false;
 
-    private bool isBubbleBigger = false;
+    private BiggerObject biggerObject;
     // Use this for initialization
     void Start()
     {
@@ -23,30 +23,59 @@ public class ObjJudgeCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "BubbleCollider")
+        if (other.gameObject.CompareTag("BubbleCollider"))
         {
             //何も入っていない状態だけ、処理する
             if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
             {
+                biggerObject = calculationController.GetBiggerFunction()
+                    .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
                 //当たった時に、大きさを比較
-                if (calculationController.GetBiggerFunction().JudgeWhichBoxIsBigger(this.gameObject, other.gameObject))
+                if (biggerObject == BiggerObject.Obj)
                 {
-                    //泡に破裂命令
-                    other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                    if (other.transform.parent.Find("Bubble").GetComponent<BubbleController>().GetBubbleState() !=
+                        BubbleState.Creating)
+                    {
+                        //泡に破裂命令
+                        other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                    }
                 }
-                else
+                else if (biggerObject == BiggerObject.Bubble)
                 {
                     other.GetComponent<BubbleJudgeCollider>().AddObjInside();
                     canBeContained = true;
                 }
             }
-
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "BubbleCollider")
+        if (other.gameObject.CompareTag("BubbleCollider"))
+        {
+            //何も入っていない状態だけ、処理する
+            if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
+            {
+                biggerObject = calculationController.GetBiggerFunction()
+                    .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
+                //当たった時に、大きさを比較
+                if (biggerObject == BiggerObject.Obj)
+                {
+                    if (other.transform.parent.Find("Bubble").GetComponent<BubbleController>().GetBubbleState() !=
+                        BubbleState.Creating)
+                    {
+                        //泡に破裂命令
+                        other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                    }
+                }
+                else if (biggerObject == BiggerObject.Bubble)
+                {
+                    other.GetComponent<BubbleJudgeCollider>().AddObjInside();
+                    canBeContained = true;
+                }
+            }
+        }
+        if (other.gameObject.CompareTag("BubbleCollider"))
         {
             if (calculationController.GetContainFunction().JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
             {
@@ -56,12 +85,6 @@ public class ObjJudgeCollision : MonoBehaviour
                     canBeContained = false;
                 }
             }
-            //var bubbleController = other.transform.parent.GetComponent<BubbleController>();
-            //if (bubbleController.GetBubbleState() != BubbleState.Creating && controller.ObjState != ObjState.OnGround)
-            //{
-            //    //泡に破裂命令
-            //    other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
-            //}
         }
 
 
@@ -72,8 +95,12 @@ public class ObjJudgeCollision : MonoBehaviour
         if (_boxCollider == null)
             return;
 
+        Transform bubble = _boxCollider.transform.parent.Find("Bubble");
+
         if (controller.ObjState == ObjState.OnGround)
-            floatByContain.FloatByContain(_boxCollider.transform.parent);
+            floatByContain.FloatByContain(bubble);
+
+        bubble.GetComponent<BubbleController>().StopBubble();
 
     }
 }

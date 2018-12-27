@@ -56,7 +56,10 @@ public class ObjFloatByDamage : MonoBehaviour
             bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
 
             if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
+            {
+                objFloatByContain.SetCreatedByDamageFlag(true);
                 objFloatByContain.FloatByContain(bubbleInstance);
+            }
         }
     }
 

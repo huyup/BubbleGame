@@ -29,6 +29,7 @@ public class BubbleController : MonoBehaviour
 
     private bool canAddForceToBubble = true;
 
+    private bool canStopBubble = true;
     // Use this for initialization
     void Start()
     {
@@ -39,7 +40,6 @@ public class BubbleController : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log("state"+nowBubbleState);
         if (nowBubbleState == BubbleState.StandBy)
             Invoke("DelayStopBubble", timeToStopBubble);
         else
@@ -89,6 +89,15 @@ public class BubbleController : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.velocity = Vector3.up * upForceWhenContain;
             canAddForceToBubble = false;
+        }
+    }
+
+    public void StopBubble()
+    {
+        if (canStopBubble)
+        {
+            rb.velocity = Vector3.zero;
+            canStopBubble = false;
         }
     }
 }

@@ -140,6 +140,9 @@ public class UIBase : MonoBehaviour
         switch (_player2Hp)
         {
             case 0:
+                player2Heart1.enabled = false;
+                player2Heart2.enabled = false;
+                player2Heart3.enabled = false;
                 break;
             case 1:
                 player2Heart1.enabled = true;

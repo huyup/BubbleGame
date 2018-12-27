@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// XXX:計算が間違う場合がある
-/// </summary>
 public class CalculateBoxContainBox : MonoBehaviour
 {
     /// <summary>
