@@ -18,7 +18,7 @@ public class ObjBodyCollision : MonoBehaviour
         if (_other.gameObject.layer == 9 /*Ground*/)
         {
             if (controller.ObjState == ObjState.Falling)
-            controller.OnReset();
+                controller.OnReset();
         }
         if (_other.gameObject.layer == 16 /*StageObj*/)
         {

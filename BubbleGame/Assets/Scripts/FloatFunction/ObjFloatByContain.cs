@@ -111,7 +111,9 @@ public class ObjFloatByContain : MonoBehaviour
     }
     public void ResetFloatFlag()
     {
+        canMoveToCenter = false;
         rb.velocity = Vector3.zero;
         canStartFloating = false;
+        isCreatedByDamage = false;
     }
 }

@@ -6,10 +6,13 @@ public class DeadZoneCollisionCtr : MonoBehaviour
 {
     private void OnTriggerEnter(Collider _other)
     {
-        _other.GetComponent<ObjController>().Dead();
+        if (_other.gameObject.GetComponent<ObjController>())
+            _other.GetComponent<ObjController>().Dead();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.GetComponent<ObjController>().Dead();
+
+        if (collision.gameObject.GetComponent<ObjController>())
+            collision.gameObject.GetComponent<ObjController>().Dead();
     }
 }

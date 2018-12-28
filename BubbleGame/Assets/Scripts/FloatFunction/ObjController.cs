@@ -57,7 +57,7 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private UIBase uiCtr;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -159,6 +159,7 @@ public class ObjController : MonoBehaviour
         }
         else if (status.Type != ObjType.Obj)
         {
+            Debug.Log("Dead");
             GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
 
             destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
@@ -175,6 +176,7 @@ public class ObjController : MonoBehaviour
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        GetComponent<Rigidbody>().isKinematic = true;
         ObjState = ObjState.OnGround;
         NowHp = status.MaxHp;
         GetComponent<BoxCollider>().isTrigger = false;
@@ -184,9 +186,16 @@ public class ObjController : MonoBehaviour
 
         if (status.Type != ObjType.Obj)
         {
-            agent.enabled = true;
-            behaviorCtr.RestartBehaviors();
+            StartCoroutine(DelayResetObj());
         }
+    }
+    IEnumerator DelayResetObj()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        agent.enabled = true;
+        behaviorCtr.RestartBehaviors();
+
     }
     public void AddForceByPush(Vector3 _direction)
     {

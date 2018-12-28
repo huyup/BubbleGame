@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 195135651464547440}
   - component: {fileID: 114277601984334230}
   - component: {fileID: 114783226783975758}
-  m_Layer: 16
+  m_Layer: 12
   m_Name: Uribou
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1058,7 +1058,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1966200872255888}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.763, z: 0}
+  m_LocalPosition: {x: 0, y: 0.861, z: 0}
   m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
   m_Children: []
   m_Father: {fileID: 4750604836934506}
@@ -1168,7 +1168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472144079773110}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -36.200195, y: -7.091193, z: -67.40219}
+  m_LocalPosition: {x: -39.599102, y: -6.8, z: -66.224396}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4126859428558910}
@@ -1366,8 +1366,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.97334397, y: 1.1255922, z: 1.9828949}
-  m_Center: {x: 0.000000029802322, y: 0.580204, z: 0.19983673}
+  m_Size: {x: 0.77794456, y: 1.1222539, z: 1.6300659}
+  m_Center: {x: 0.097699806, y: 0.5818732, z: 0.24431357}
 --- !u!95 &95879269078750052
 Animator:
   serializedVersion: 3
@@ -1633,8 +1633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0214f86d3ca9b54e884a3cf0f037f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  hpToFloat: 20
+  maxHp: 60
+  hpToFloat: 1
   Type: 1
 --- !u!114 &114759491756432500
 MonoBehaviour:
@@ -1683,9 +1683,10 @@ MonoBehaviour:
   bubbleInstanceStartRef: {fileID: 4456145442613812}
   objFloatByContain: {fileID: 114443604398231806}
   increaseScaleVelocity: 0.05
-  factorToFloatInCreating: 0
+  factorToFloatInCreating: 1
   canCreateBubbleInstanceByDamage: 1
   maxSize: 5
+  behaviorCtr: {fileID: 0}
 --- !u!114 &114801517140509506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1761,11 +1762,10 @@ MonoBehaviour:
   attack: {fileID: 114152496366742146}
   summon: {fileID: 0}
   agent: {fileID: 195135651464547440}
-  uribouAnimator: {fileID: 114305939298699304}
-  mouseAnimator: {fileID: 0}
   collisionEff: {fileID: 1614943042425664, guid: 577a873a79b6a3944b98f5cce0120e9e,
     type: 2}
   behaviorCtr: {fileID: 114783226783975758}
+  destroyEff: {fileID: 1946385480042418, guid: 3effe04cb59e3fb4295beab44a0189bd, type: 2}
   uiCtr: {fileID: 0}
 --- !u!135 &135350294332611780
 SphereCollider:

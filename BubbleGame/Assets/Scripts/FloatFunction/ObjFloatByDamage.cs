@@ -28,11 +28,21 @@ public class ObjFloatByDamage : MonoBehaviour
     [SerializeField]
     private float maxSize = 14;
 
+    [SerializeField]
+    private BehaviorsCtr behaviorCtr;
+
     private Rigidbody rb;
 
+    private ObjStatus status;
+
+    private NavMeshAgent agent;
     void Start()
     {
+        if (GetComponent<BehaviorsCtr>())
+            behaviorCtr = GetComponent<BehaviorsCtr>();
+        agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        status = GetComponent<ObjStatus>();
     }
     public void CreateBubbleByDamage()
     {
@@ -49,12 +59,13 @@ public class ObjFloatByDamage : MonoBehaviour
         //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
         if (bubbleInstance.localScale.x < maxSize)
         {
+            Debug.Log("SetBubbleToFloatPos");
             SetBubbleToFloatPos();
         }
         else
         {
+            Debug.Log("FloatByContain");
             bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-
             if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
             {
                 objFloatByContain.SetCreatedByDamageFlag(true);
@@ -68,9 +79,14 @@ public class ObjFloatByDamage : MonoBehaviour
         Transform bubbleSetInstance = Instantiate(bubbleSetInstanceRef) as Transform;
 
         bubbleInstance = bubbleSetInstance.transform.Find("Bubble");
-        
+
         bubbleInstance.position = bubbleInstanceStartRef.position;
 
+        if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi || status.Type == ObjType.Inoshishi)
+        {
+            behaviorCtr.DisableBehaviors();
+            agent.enabled = false;
+        }
     }
     private void SetBubbleToFloatPos()
     {
