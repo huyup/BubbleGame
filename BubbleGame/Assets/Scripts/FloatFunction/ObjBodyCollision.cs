@@ -8,6 +8,8 @@ public class ObjBodyCollision : MonoBehaviour
 
     private bool canHitBoss = true;
 
+
+    private Vector3 collisionPos;
     private void Start()
     {
         controller = GetComponent<ObjController>();
@@ -29,15 +31,24 @@ public class ObjBodyCollision : MonoBehaviour
                     controller.Dead();
             }
         }
-        if (_other.gameObject.layer == 12 /*EnemyHit*/
+        if ((_other.gameObject.layer == 12 /*EnemyHit*/|| _other.gameObject.layer == 15 /*EnemyAttack*/)
             && controller.ObjState == ObjState.MovingByAirGun)
         {
-            if (canHitBoss)
+            collisionPos = transform.position;
+            if (canHitBoss && _other.transform.root.GetComponent<ObjStatus>().Type == ObjType.Inoshishi)
             {
-                _other.transform.root.GetComponent<ObjController>().SetObjState(ObjState.Dizziness);
-                _other.transform.root.GetComponent<BehaviorsCtr>().Dizziness();
-                controller.Collision(_other.transform.position);
+                controller.PlayCollisionEff(collisionPos);
+                _other.transform.root.GetComponent<ObjController>().DamageByCollision(10);
+                Destroy(this.gameObject);
                 canHitBoss = false;
+            }
+            else
+            {
+                if (GetComponent<ObjStatus>().Type != ObjType.Obj)
+                {
+                    controller.Dead();
+                    _other.transform.root.GetComponentInChildren<ObjController>().Dead();
+                }
             }
         }
     }

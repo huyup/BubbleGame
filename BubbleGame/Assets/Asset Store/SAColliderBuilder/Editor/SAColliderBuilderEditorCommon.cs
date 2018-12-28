@@ -575,7 +575,7 @@ public class SAColliderBuilderEditorCommon
 			rigidbodyProperty.angularDrag = EditorGUILayout.FloatField( "Angular Drag", rigidbodyProperty.mass );
 			rigidbodyProperty.useGravity = EditorGUILayout.Toggle( "Use Gravity", rigidbodyProperty.useGravity );
 			rigidbodyProperty.interpolation = (RigidbodyInterpolation)EditorGUILayout.EnumPopup( "Interpolation", rigidbodyProperty.interpolation );
-			rigidbodyProperty.collisionDetectionMode = (CollisionDetectionMode)EditorGUILayout.EnumPopup( "Collision Detection Mode", rigidbodyProperty.collisionDetectionMode );
+			rigidbodyProperty.collisionDetectionMode = (CollisionDetectionMode)EditorGUILayout.EnumPopup( "PlayCollisionEff Detection Mode", rigidbodyProperty.collisionDetectionMode );
 		}
 		GUI.enabled = enabled;
 	}

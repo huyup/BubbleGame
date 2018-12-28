@@ -58,10 +58,12 @@ public class ObjController : MonoBehaviour
     [SerializeField]
     private UIBase uiCtr;
 
+    private int bossNowHp;
     // Use this for initialization
     void Start()
     {
         NowHp = status.MaxHp;
+        bossNowHp = status.BossHp;
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
         {
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
@@ -74,11 +76,16 @@ public class ObjController : MonoBehaviour
     {
         if (ObjState == ObjState.Floating && status.Type != ObjType.Obj)
         {
-            if (status.Type == ObjType.Inoshishi)
-            {
-                StartCoroutine(DebugSetClear());
-            }
             behaviorCtr.DisableBehaviors();
+        }
+        if (status.Type == ObjType.Inoshishi)
+        {
+            if (bossNowHp <= 0)
+            {
+                behaviorCtr.DisableBehaviors();
+                Destroy(this.gameObject);
+                uiCtr.DrawClearText();
+            }
         }
 
         if (status.Type == ObjType.Inoshishi)
@@ -106,13 +113,6 @@ public class ObjController : MonoBehaviour
             SetSpeedByDamage(NowHp, status.MaxHp);
 
     }
-
-    IEnumerator DebugSetClear()
-    {
-        yield return new WaitForSeconds(10);
-        uiCtr.DrawClearText();
-    }
-
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
         var rate = (_nowHp * 100 / _maxHp);
@@ -129,7 +129,7 @@ public class ObjController : MonoBehaviour
     {
         ObjState = _state;
     }
-    public void Damage(int _power)
+    public void DamageByBubble(int _power)
     {
         if (status.Type == ObjType.Inoshishi)
         {
@@ -144,11 +144,29 @@ public class ObjController : MonoBehaviour
 
     }
 
-    public void Collision(Vector3 _initPos)
+    public int GetBossNowHp()
+    {
+        return bossNowHp;
+    }
+    public void DamageByCollision(int _Power)
+    {
+        if (status.Type == ObjType.Inoshishi)
+        {
+            if (bossNowHp > 0)
+                bossNowHp -= _Power;
+        }
+    }
+    public void PlayCollisionEff(Vector3 _initPos)
     {
         GameObject collisionInstance = Instantiate(collisionEff);
         collisionInstance.transform.position = _initPos;
-        collisionInstance.GetComponent<ParticleSystem>().Play();
+        ParticleSystem[] particleSystems = collisionEff.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particle in particleSystems)
+        {
+            if (!particle.isPlaying)
+                particle.Play();
+        }
     }
 
     public void Dead()
@@ -173,13 +191,15 @@ public class ObjController : MonoBehaviour
 
     public void OnReset()
     {
+        if (GetComponent<BoxCollider>())
+            GetComponent<BoxCollider>().isTrigger = false;
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         GetComponent<Rigidbody>().isKinematic = true;
         ObjState = ObjState.OnGround;
         NowHp = status.MaxHp;
-        GetComponent<BoxCollider>().isTrigger = false;
+
         floatByContain.ResetFloatFlag();
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
@@ -199,6 +219,7 @@ public class ObjController : MonoBehaviour
     }
     public void AddForceByPush(Vector3 _direction)
     {
+        GetComponent<BoxCollider>().isTrigger = false;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         ObjState = ObjState.MovingByAirGun;
         GetComponent<Rigidbody>().velocity = _direction;

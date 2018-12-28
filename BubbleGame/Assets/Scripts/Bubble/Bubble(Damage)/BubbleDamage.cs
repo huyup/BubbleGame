@@ -13,18 +13,18 @@ public class BubbleDamage : MonoBehaviour
         //{
         //    EnemyFunctionRef enemyFunctionRef;
         //    enemyFunctionRef = _obj.transform.parent.GetComponent<EnemyFunctionRef>();
-        //    enemyFunctionRef.GetEnemyController().Damage(power);
+        //    enemyFunctionRef.GetEnemyController().DamageByBubble(power);
         //}
 
         if (_obj.layer == 16 /*StageObject*/ || _obj.layer == 12 /*EnemyHit*/)
         {
             if (_obj.GetComponent<ObjController>())
             {
-                _obj.GetComponent<ObjController>().Damage(power);
+                _obj.GetComponent<ObjController>().DamageByBubble(power);
             }
             else
             {
-                _obj.transform.root.GetComponent<ObjController>().Damage(power);
+                _obj.transform.root.GetComponent<ObjController>().DamageByBubble(power);
             }
         }
     }

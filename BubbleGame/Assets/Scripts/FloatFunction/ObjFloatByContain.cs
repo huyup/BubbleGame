@@ -24,12 +24,18 @@ public class ObjFloatByContain : MonoBehaviour
 
     private Rigidbody rb;
 
+    private float initAngularDrag;
+    private float initDrag;
+
     private bool isCreatedByDamage = false;
 
     private void Start()
     {
+
         objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
+        initAngularDrag = rb.angularDrag;
+        initDrag = rb.drag;
     }
 
     public void SetCreatedByDamageFlag(bool _flag)
@@ -61,7 +67,8 @@ public class ObjFloatByContain : MonoBehaviour
 
             GetComponent<Animator>().applyRootMotion = false;
         }
-
+        rb.angularDrag = 0.05f;
+        rb.drag = 0.05f;
         canStartFloating = true;
         canMoveToCenter = true;
         rb.velocity = Vector3.zero;
@@ -111,6 +118,8 @@ public class ObjFloatByContain : MonoBehaviour
     }
     public void ResetFloatFlag()
     {
+        rb.angularDrag = initAngularDrag;
+        rb.drag = initDrag;
         canMoveToCenter = false;
         rb.velocity = Vector3.zero;
         canStartFloating = false;

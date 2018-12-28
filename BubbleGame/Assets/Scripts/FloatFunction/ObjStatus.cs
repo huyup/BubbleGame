@@ -35,4 +35,14 @@ public class ObjStatus : MonoBehaviour
     /// タイプ
     /// </summary>
     [SerializeField] public ObjType Type;
+
+    /// <summary>
+    /// ボスの最大Hp
+    /// </summary>
+    [SerializeField]
+    private int bossHp = 100;
+    public int BossHp
+    {
+        get { return bossHp; }
+    }
 }
