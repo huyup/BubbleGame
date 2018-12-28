@@ -30,6 +30,8 @@ public class BubbleController : MonoBehaviour
     private bool canAddForceToBubble = true;
 
     private bool canStopBubble = true;
+
+
     // Use this for initialization
     void Start()
     {
@@ -51,7 +53,11 @@ public class BubbleController : MonoBehaviour
 
     private void DelayStopBubble()
     {
-        rb.velocity = Vector3.zero;
+        if (canStopBubble)
+        {
+            rb.velocity = Vector3.zero;
+            canStopBubble = false;
+        }
     }
     public BubbleState GetBubbleState()
     {
@@ -64,8 +70,6 @@ public class BubbleController : MonoBehaviour
 
     public void AddForceByPush(Vector3 _direction)
     {
-        Debug.Log("AddForceByPush");
-        Debug.Log("AddForce");
         rb.velocity = _direction;
         if (bubbleCollision)
             bubbleCollision.AddForceToInsideObj(_direction);
@@ -89,15 +93,6 @@ public class BubbleController : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.velocity = Vector3.up * upForceWhenContain;
             canAddForceToBubble = false;
-        }
-    }
-
-    public void StopBubble()
-    {
-        if (canStopBubble)
-        {
-            rb.velocity = Vector3.zero;
-            canStopBubble = false;
         }
     }
 }

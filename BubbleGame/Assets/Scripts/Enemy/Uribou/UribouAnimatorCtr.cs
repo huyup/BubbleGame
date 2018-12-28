@@ -36,10 +36,4 @@ public class UribouAnimatorCtr : MonoBehaviour
             animator.SetBool("Stopping", false);
         }
     }
-
-    public void SetDownAnimation()
-    {
-        Debug.Log("Down");
-        animator.SetBool("Down", true);
-    }
 }

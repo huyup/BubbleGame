@@ -61,11 +61,16 @@ public class ObjJudgeCollision : MonoBehaviour
                 //当たった時に、大きさを比較
                 if (biggerObject == BiggerObject.Obj)
                 {
-                    if (other.transform.parent.Find("Bubble").GetComponent<BubbleController>().GetBubbleState() !=
-                        BubbleState.Creating)
+
+                    if (other.transform.root.Find("Bubble"))
                     {
-                        //泡に破裂命令
-                        other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                        var bubbleCtr = other.transform.parent.Find("Bubble").GetComponent<BubbleController>();
+                        if (bubbleCtr.GetBubbleState() !=
+                            BubbleState.Creating)
+                        {
+                            //泡に破裂命令
+                            other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
+                        }
                     }
                 }
                 else if (biggerObject == BiggerObject.Bubble)
@@ -96,8 +101,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
         if (controller.ObjState == ObjState.OnGround)
             floatByContain.FloatByContain(bubble);
-
-        bubble.GetComponent<BubbleController>().StopBubble();
+        
 
     }
 }

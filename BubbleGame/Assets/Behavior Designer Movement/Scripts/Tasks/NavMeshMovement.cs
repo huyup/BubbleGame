@@ -104,7 +104,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             else
             {
-
                 remainingDistance = navMeshAgent.remainingDistance;
             }
 

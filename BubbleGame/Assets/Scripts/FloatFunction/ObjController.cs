@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
-
+using NaughtyAttributes;
 public enum ObjState
 {
     OnGround,
@@ -47,24 +47,21 @@ public class ObjController : MonoBehaviour
     private float initAttackSpeed;
 
     [SerializeField]
-    private UribouAnimatorCtr uribouAnimator;
-
-    [SerializeField]
-    private HarinezumiAnimatorCtr mouseAnimator;
-
-    [SerializeField]
     private GameObject collisionEff;
 
     [SerializeField]
     private BehaviorsCtr behaviorCtr;
 
     [SerializeField]
+    private GameObject destroyEff;
+
+    [SerializeField]
     private UIBase uiCtr;
+    
     // Use this for initialization
     void Start()
     {
         NowHp = status.MaxHp;
-
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
         {
             initWanderSpeed = (float)wander.GetVariable("WanderSpeed").GetValue();
@@ -72,13 +69,10 @@ public class ObjController : MonoBehaviour
             agent.speed = initWanderSpeed;
         }
     }
-
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("NowHp"+NowHp);
-
-        if (ObjState == ObjState.Floating&&status.Type!=ObjType.Obj)
+        if (ObjState == ObjState.Floating && status.Type != ObjType.Obj)
         {
             if (status.Type == ObjType.Inoshishi)
             {
@@ -90,12 +84,10 @@ public class ObjController : MonoBehaviour
         if (status.Type == ObjType.Inoshishi)
             summon.SetVariableValue("Hp", NowHp);
 
-        if (ObjState == ObjState.OnGround|| ObjState == ObjState.Dizziness)
+        if (ObjState == ObjState.OnGround || ObjState == ObjState.Dizziness)
         {
             if (NowHp < status.HpToFloat)
             {
-
-
                 bubbleDamageEff.StopEmitter();
                 floatByDamage.CreateBubbleByDamage();
             }
@@ -110,7 +102,7 @@ public class ObjController : MonoBehaviour
                 GetComponent<BoxCollider>().isTrigger = true;
         }
 
-        if (status.Type == ObjType.Uribou )
+        if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(NowHp, status.MaxHp);
 
     }
@@ -165,10 +157,16 @@ public class ObjController : MonoBehaviour
         {
             uiCtr.DrawClearText();
         }
-        else
+        else if (status.Type != ObjType.Obj)
         {
+            GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
+
+            destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
+
+            destroyEffInstance.GetComponent<ParticleSystem>().Play();
+
             StageManager.Instance.RemoveEnemyCount(status.Type);
-            Destroy(this.gameObject, 0.3f);
+            Destroy(this.gameObject);
         }
     }
 
@@ -184,15 +182,8 @@ public class ObjController : MonoBehaviour
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();
 
-        if (status.Type == ObjType.Uribou)
+        if (status.Type != ObjType.Obj)
         {
-            uribouAnimator.SetDownAnimation();
-            agent.enabled = true;
-            behaviorCtr.RestartBehaviors();
-        }
-        if (status.Type == ObjType.Harinezemi)
-        {
-            mouseAnimator.SetDownAnimation();
             agent.enabled = true;
             behaviorCtr.RestartBehaviors();
         }

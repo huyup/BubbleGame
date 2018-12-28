@@ -22,7 +22,7 @@ public class BehaviorsCtr : MonoBehaviour
 
     public void DisableBehaviors()
     {
-        Debug.Log("Stop");
+
         foreach (var behavior in behaviors)
         {
             //behavior.CancelInvoke();

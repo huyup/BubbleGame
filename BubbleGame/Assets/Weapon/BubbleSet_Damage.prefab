@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 33478286228337096}
   - component: {fileID: 23219808188238232}
   - component: {fileID: 135943964813121284}
+  - component: {fileID: 54570169437563986}
+  - component: {fileID: 114527522378595332}
   m_Layer: 17
   m_Name: BubbleColliderForAirGun
   m_TagString: Untagged
@@ -73,7 +75,7 @@ GameObject:
   - component: {fileID: 4985220793953676}
   - component: {fileID: 33504204137213614}
   - component: {fileID: 23901386642533882}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sphere(Shadow)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587569636955896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.697708, y: 3.3106437, z: -85.211395}
+  m_LocalPosition: {x: -40.051575, y: 2.8106437, z: 73.52702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4520341589476302}
@@ -316,6 +318,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!54 &54570169437563986
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375385793320932}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &114012030483334032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,6 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upForceWhenContain: 2
   lastTimeByAirGun: 1
+  timeToStopBubble: 1
 --- !u!114 &114091552915899794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,6 +372,17 @@ MonoBehaviour:
   lastTime: 8
   maxSize: 0.11
   maxSizeInDamageCreated: 4
+--- !u!114 &114527522378595332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375385793320932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38543c3b28181946b3f3742baf5fbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114571180035814808
 MonoBehaviour:
   m_ObjectHideFlags: 1

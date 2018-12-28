@@ -24,7 +24,6 @@ public class BubbleCollision : MonoBehaviour
     {
         if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating)
         {
-            Debug.Log("this.transform.localScale.magnitude"+ this.transform.localScale.magnitude);
             _other.gameObject.GetComponent<PlayerController>().GetWeapon().AmmoRecovery(this.transform.localScale.magnitude);
             setController.DestroyBubbleSet();
         }
@@ -43,16 +42,6 @@ public class BubbleCollision : MonoBehaviour
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {
             insideColliderList.Remove(_other);
-        }
-    }
-
-    public void SetInsideObjDestroyable()
-    {
-        foreach (Collider insideCollider in insideColliderList)
-        {
-            if (insideCollider && insideCollider.GetComponent<ObjController>())
-                insideCollider.GetComponent<ObjBodyCollision>().SetObjDestroy();
-
         }
     }
     public void AddForceToInsideObj(Vector3 _direction)
