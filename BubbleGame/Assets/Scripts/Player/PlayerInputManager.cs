@@ -44,6 +44,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
+        if (playerController.IsDead)
+            return;
+
         //左スティック
         leftXAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).x;
         leftYAxisInput = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)playerNum).y;

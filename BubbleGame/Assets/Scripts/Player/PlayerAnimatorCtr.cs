@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerAnimatorCtr : MonoBehaviour
 {
     private Animator animator;
+
+    private bool setDeadOnce = true;
     // Use this for initialization
     void Start()
     {
@@ -32,13 +34,22 @@ public class PlayerAnimatorCtr : MonoBehaviour
     }
     public void SetAttackAnimationOnButtonStay()
     {
-        animator.speed = 0.5f;
+        animator.speed = 0.8f;
     }
     public void SetAttackAnimationOnButtonUp()
     {
         animator.speed = 1;
         animator.SetBool("Attacking", false);
 
+    }
+
+    public void SetDeadAnimation()
+    {
+        if (setDeadOnce)
+        {
+            animator.SetBool("Dead", true);
+            setDeadOnce = false;
+        }
     }
     #endregion
 }

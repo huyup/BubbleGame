@@ -19,8 +19,12 @@ public class ObjBodyCollision : MonoBehaviour
     {
         if (_other.gameObject.layer == 9 /*Ground*/)
         {
+
             if (controller.ObjState == ObjState.Falling)
+            {
+                Debug.Log("ObjState"+ controller.ObjState);
                 controller.OnReset();
+            }
         }
         if (_other.gameObject.layer == 16 /*StageObj*/)
         {
@@ -52,4 +56,6 @@ public class ObjBodyCollision : MonoBehaviour
             }
         }
     }
+
+    
 }

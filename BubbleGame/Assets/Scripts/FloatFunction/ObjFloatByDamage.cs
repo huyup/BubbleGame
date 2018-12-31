@@ -48,7 +48,6 @@ public class ObjFloatByDamage : MonoBehaviour
     {
         if (canCreateBubbleInstanceByDamage)
         {
-
             CreateBubbleByDamageOnInit();
             canCreateBubbleInstanceByDamage = false;
         }
@@ -59,12 +58,10 @@ public class ObjFloatByDamage : MonoBehaviour
         //XXX:もし、泡のscaleがbubbleMaxSiezより大きい場合は、参照が見つからなくなる
         if (bubbleInstance.localScale.x < maxSize)
         {
-            Debug.Log("SetBubbleToFloatPos");
             SetBubbleToFloatPos();
         }
         else
         {
-            Debug.Log("FloatByContain");
             bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
             if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
             {

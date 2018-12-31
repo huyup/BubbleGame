@@ -15,10 +15,19 @@ public class TargetCtr : MonoBehaviour
     private GameObject startTarget;
 
     private bool canSetNowTarget;
-    public void TryToSetTarget(GameObject _target)
+
+    public bool TryToSetTarget(GameObject _target)
     {
         nowTarget = _target;
+
         canSetNowTarget = true;
+        Debug.Log("nowTarget"+_target);
+        if (nowTarget.GetComponent<PlayerController>().IsDead)
+        {
+            return false;
+        }
+        else
+            return true;
     }
 
     public void SetStartPos(GameObject _startPos)

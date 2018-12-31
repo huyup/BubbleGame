@@ -10,7 +10,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private ObjController controller;
 
-    private bool canBeContained = false;
+    private bool canSetFloatOnce = false;
 
     private BiggerObject biggerObject;
     // Use this for initialization
@@ -21,10 +21,17 @@ public class ObjJudgeCollision : MonoBehaviour
 
         floatByContain = transform.parent.GetComponent<ObjFloatByContain>();
     }
+    private void Update()
+    {
+
+
+    }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTriggerEnter");
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
+            canSetFloatOnce = true;
             //何も入っていない状態だけ、処理する
             if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
             {
@@ -43,7 +50,10 @@ public class ObjJudgeCollision : MonoBehaviour
                 else if (biggerObject == BiggerObject.Bubble)
                 {
                     other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                    canBeContained = true;
+                    //canSetFloatOnce = true;
+                    if (transform.parent.name == "Stone_1")
+                        Debug.Log("Bigger");
+
                 }
             }
         }
@@ -76,7 +86,10 @@ public class ObjJudgeCollision : MonoBehaviour
                 else if (biggerObject == BiggerObject.Bubble)
                 {
                     other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                    canBeContained = true;
+                    //canSetFloatOnce = true;
+
+                    if (transform.parent.name == "Stone_1")
+                        Debug.Log("BiggerStay");
                 }
             }
         }
@@ -84,10 +97,14 @@ public class ObjJudgeCollision : MonoBehaviour
         {
             if (calculationController.GetContainFunction().JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
             {
-                if (canBeContained)
+                if (transform.parent.name == "Stone_1")
+                    Debug.Log("Contain");
+                if (transform.parent.name == "Stone_1")
+                    Debug.Log("Ok");
+                if (canSetFloatOnce)
                 {
                     SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
-                    canBeContained = false;
+                    canSetFloatOnce = false;
                 }
             }
         }
@@ -101,7 +118,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
         if (controller.ObjState == ObjState.OnGround)
             floatByContain.FloatByContain(bubble);
-        
+
 
     }
 }

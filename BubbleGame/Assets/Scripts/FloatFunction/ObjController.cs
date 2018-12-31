@@ -191,15 +191,14 @@ public class ObjController : MonoBehaviour
 
     public void OnReset()
     {
+        GetComponent<Rigidbody>().isKinematic = true;
+        ObjState = ObjState.OnGround;
+
         if (GetComponent<BoxCollider>())
             GetComponent<BoxCollider>().isTrigger = false;
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-        GetComponent<Rigidbody>().isKinematic = true;
-        ObjState = ObjState.OnGround;
         NowHp = status.MaxHp;
-
         floatByContain.ResetFloatFlag();
         floatByDamage.ResetFloatFlag();
         bubbleDamageEff.ResetEmitter();

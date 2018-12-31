@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsUsingAirGun { get; private set; }
     public int TargetedCount { get; private set; }
+    public bool IsDead { get; private set; }
 
     #region 初期化
     void Start()
@@ -316,7 +317,8 @@ public class PlayerController : MonoBehaviour
         if (status.nowHp <= 0)
         {
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
-            this.gameObject.SetActive(false);
+            IsDead = true;
+            animatorCtr.SetDeadAnimation();
         }
     }
     #endregion

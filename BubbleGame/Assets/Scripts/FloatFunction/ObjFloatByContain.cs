@@ -12,6 +12,8 @@ public class ObjFloatByContain : MonoBehaviour
     [SerializeField]
     private float moveToCenterSpeed = 4;
 
+    private BehaviorsCtr behaviorCtr;
+
     [SerializeField]
     private NavMeshAgent agent;
 
@@ -31,7 +33,7 @@ public class ObjFloatByContain : MonoBehaviour
 
     private void Start()
     {
-
+        behaviorCtr = GetComponent<BehaviorsCtr>();
         objController = GetComponent<ObjController>();
         rb = GetComponent<Rigidbody>();
         initAngularDrag = rb.angularDrag;
@@ -64,9 +66,11 @@ public class ObjFloatByContain : MonoBehaviour
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi || status.Type == ObjType.Inoshishi)
         {
             agent.enabled = false;
-
+            behaviorCtr.DisableBehaviors();
             GetComponent<Animator>().applyRootMotion = false;
         }
+
+        rb.useGravity = false;
         rb.angularDrag = 0.05f;
         rb.drag = 0.05f;
         canStartFloating = true;
@@ -118,6 +122,7 @@ public class ObjFloatByContain : MonoBehaviour
     }
     public void ResetFloatFlag()
     {
+        rb.useGravity = true;
         rb.angularDrag = initAngularDrag;
         rb.drag = initDrag;
         canMoveToCenter = false;
