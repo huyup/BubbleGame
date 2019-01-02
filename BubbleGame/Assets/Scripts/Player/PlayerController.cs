@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private PlayerWeaponB weaponB;
 
     [SerializeField]
-    private StageMain satgeMain;
+    private StageMain stageMain;
 
     [SerializeField]
     private PlayerWeaponC weaponC;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus status;
     private PlayerAnimatorCtr animatorCtr;
     private GroundDetector groundDetector;
-
+    private PlayerRescueTriggerCtr rescueTriggerCtr;
     private bool isVincible = false;
     private bool isSlow = false;
 
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         animatorCtr = GetComponent<PlayerAnimatorCtr>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
-
+        rescueTriggerCtr = transform.Find("RescueTrigger").GetComponent<PlayerRescueTriggerCtr>();
         int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
 
         groundDetector = GetComponent<GroundDetector>();
@@ -230,14 +230,15 @@ public class PlayerController : MonoBehaviour
     public void DisableAirGun()
     {
         IsUsingAirGun = false;
-        satgeMain.CreateItemInRandomPoint();
+        if (stageMain)
+            stageMain.CreateItemInRandomPoint();
 
     }
     public void DisableAirGunByTime()
     {
         weaponC.OnAttackButtonUp();
         IsUsingAirGun = false;
-        satgeMain.CreateItemInRandomPoint();
+        stageMain.CreateItemInRandomPoint();
     }
     public PlayerWeapon GetWeapon()
     {
@@ -312,12 +313,39 @@ public class PlayerController : MonoBehaviour
         isVincible = false;
     }
 
+    public void Revival()
+    {
+        Debug.Log("Revival" + transform.name);
+        animatorCtr.SetRevivalAnimation();
+        StartCoroutine(DelayResetPlayer());
+    }
+
+    IEnumerator DelayResetPlayer()
+    {
+        yield return new WaitForSeconds(status.RevivalAnimationTime);
+        animatorCtr.SetOffFlagWhenRevival();
+        status.nowHp = status.MaxHp;
+        IsDead = false;
+        rb.isKinematic = false;
+    }
+
+
+    public void Rescue()
+    {
+        Debug.Log("Rescue");
+        if (rescueTriggerCtr.IsPlayerInResucePoint)
+        {
+            Debug.Log("rescueTriggerCtr.DeadPlayer" + rescueTriggerCtr.DeadPlayer.name);
+            rescueTriggerCtr.DeadPlayer.GetComponent<PlayerController>().Revival();
+        }
+    }
     private void CheckDied()
     {
         if (status.nowHp <= 0)
         {
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
             IsDead = true;
+            rb.isKinematic = true;
             animatorCtr.SetDeadAnimation();
         }
     }

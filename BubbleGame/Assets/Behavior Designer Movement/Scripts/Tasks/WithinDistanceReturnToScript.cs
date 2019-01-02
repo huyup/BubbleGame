@@ -101,7 +101,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             // check each object. All it takes is one object to be able to return success
             for (int i = 0; i < objects.Count; ++i)
             {
-                if (objects[i] == null)
+                if (objects[i] == null||objects[i].GetComponent<PlayerController>().IsDead)
                 {
                     continue;
                 }
@@ -109,32 +109,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 // check to see if the square magnitude is less than what is specified
                 if (Vector3.SqrMagnitude(direction) < sqrMagnitude)
                 {
-                    // the magnitude is less. If lineOfSight is true do one more check
-                    if (lineOfSight.Value)
-                    {
-                        if (MovementUtility.LineOfSight(transform, offset.Value, objects[i], targetOffset.Value, usePhysics2D, ignoreLayerMask.value))
-                        {
-                            // the object has a magnitude less than the specified magnitude and is within sight. Set the object and return success
-                            returnedObject.Value = objects[i];
-                            if (!TargetCtr)
-                                TargetCtr = GetComponent<TargetCtr>();
-                            if (TargetCtr.TryToSetTarget(returnedObject.Value))
-                                return TaskStatus.Success;
-                            else
-                                return TaskStatus.Failure;
-                        }
-                    }
-                    else
-                    {
-                        // the object has a magnitude less than the specified magnitude. Set the object and return success
-                        returnedObject.Value = objects[i];
-                        if (!TargetCtr)
-                            TargetCtr = GetComponent<TargetCtr>();
-                        if (TargetCtr.TryToSetTarget(returnedObject.Value))
-                            return TaskStatus.Success;
-                        else
-                            return TaskStatus.Failure;
-                    }
+                    // the object has a magnitude less than the specified magnitude. Set the object and return success
+                    returnedObject.Value = objects[i];
+                    if (!TargetCtr)
+                        TargetCtr = GetComponent<TargetCtr>();
+                    TargetCtr.TryToSetTarget(returnedObject.Value);
+                    return TaskStatus.Success;
+
                 }
             }
             // no objects are within distance. Return failure

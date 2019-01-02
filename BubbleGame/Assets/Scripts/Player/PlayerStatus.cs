@@ -163,6 +163,17 @@ public class PlayerStatus : MonoBehaviour
     /// 点滅間隔
     /// </summary>
     [SerializeField]
+    float revivalAnimationTime = 1.3f;
+    public float RevivalAnimationTime
+    {
+        get { return revivalAnimationTime; }
+    }
+
+
+    /// <summary>
+    /// 点滅間隔
+    /// </summary>
+    [SerializeField]
     float invincibleInterval = 0.1f;
     public float InvincibleInterval
     {
@@ -191,14 +202,18 @@ public class PlayerStatus : MonoBehaviour
     /// 最大hp
     /// </summary>
     [SerializeField]
-    private int MaxHp = 5;
+    int maxHp = 3;
+    public int MaxHp
+    {
+        get { return maxHp; }
+    }
 
-    [HideInInspector]
+    [SerializeField]
     public int nowHp;
     
     #endregion
 
-    private void Start()
+    public void Start()
     {
         nowHp = MaxHp;
     }

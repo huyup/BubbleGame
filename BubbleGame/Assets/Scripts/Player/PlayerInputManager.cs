@@ -94,16 +94,22 @@ public class PlayerInputManager : MonoBehaviour
             if (playerController.GetWeapon().CanAttack)
                 playerController.GetWeapon().OnAttackButtonUp();
         }
-        //攻撃ボタン2
+        //救助ボタン
         if (GamePad.GetButtonDown(GamePad.Button.X, (GamePad.Index)playerNum))
+        {
+            playerController.Rescue();
+        }
+
+        //Debug:攻撃ボタン2
+        if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
         {
             airWeapon.OnAttackButtonDown();
         }
-        if (GamePad.GetButton(GamePad.Button.X, (GamePad.Index)playerNum))
+        if (GamePad.GetButton(GamePad.Button.B, (GamePad.Index)playerNum))
         {
             airWeapon.OnAttackButtonStay();
         }
-        if (GamePad.GetButtonUp(GamePad.Button.X, (GamePad.Index)playerNum))
+        if (GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index)playerNum))
         {
             airWeapon.OnAttackButtonUp();
         }

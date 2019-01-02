@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using BehaviorDesigner.Runtime;
 using NaughtyAttributes;
 public class StageMain : MainBase
 {
@@ -8,6 +9,10 @@ public class StageMain : MainBase
 
     [SerializeField]
     private List<GameObject> itemBirthPoints = new List<GameObject>();
+
+    [SerializeField]
+    private List<GameObject> players = new List<GameObject>();
+
 
     private GameObject itemInstance;
     
@@ -38,11 +43,11 @@ public class StageMain : MainBase
     {
         StageManager.CreateInstance();
         CreateItemInRandomPoint();
+        GlobalVariables.Instance.SetVariableValue("Players", players);
     }
 
     protected override void OnUpdate()
     {
-
     }
 
     protected override void OnLateUpdate()

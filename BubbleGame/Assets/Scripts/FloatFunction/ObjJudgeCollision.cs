@@ -28,7 +28,7 @@ public class ObjJudgeCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
+
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
             canSetFloatOnce = true;

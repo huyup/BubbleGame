@@ -85,13 +85,19 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 {
                     float angle;
                     GameObject obj;
-                    if ((obj = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObjects.Value[i], targetOffset.Value, false, angleOffset2D.Value, out angle, ignoreLayerMask, useTargetBone.Value, targetBone)) != null)
+                    if (!targetObjects.Value[i].GetComponent<PlayerController>().IsDead)
                     {
-                        // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
-                        if (angle < minAngle)
+                        if ((obj = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value,
+                                viewDistance.Value, targetObjects.Value[i], targetOffset.Value, false,
+                                angleOffset2D.Value, out angle, ignoreLayerMask, useTargetBone.Value, targetBone)) !=
+                            null)
                         {
-                            minAngle = angle;
-                            objectFound = obj;
+                            // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
+                            if (angle < minAngle)
+                            {
+                                minAngle = angle;
+                                objectFound = obj;
+                            }
                         }
                     }
                 }
@@ -127,10 +133,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             {
                 if (!TargetCtr)
                     TargetCtr = GetComponent<TargetCtr>();
-                if (TargetCtr.TryToSetTarget(returnedObject.Value))
-                    return TaskStatus.Success;
-                else
-                    return TaskStatus.Failure;
+                TargetCtr.TryToSetTarget(returnedObject.Value);
+
+                return TaskStatus.Success;
             }
             // An object is not within sight so return failure
             return TaskStatus.Failure;

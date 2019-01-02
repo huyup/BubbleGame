@@ -19,7 +19,6 @@ public class PlayerWeaponA : PlayerWeapon
     private float offsetForceToCalculateFront = 1.2f;
 
     private List<GameObject> bubbles = new List<GameObject>();
-
     private Rigidbody rb;
     private PlayerStatus status;
     private PlayerAnimatorCtr animatorCtr;
@@ -100,7 +99,7 @@ public class PlayerWeaponA : PlayerWeapon
         GameObject bubbleInstance = bubbleSetInstance.transform.Find("Bubble").gameObject;
 
         bubbles.Add(bubbleInstance);
-
+        
         bubbles[bubbles.Count - 1].transform.position = bubbleStartPos;
 
         bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.Creating);

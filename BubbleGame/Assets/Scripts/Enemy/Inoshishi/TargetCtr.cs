@@ -6,28 +6,19 @@ public class TargetCtr : MonoBehaviour
 {
     [SerializeField]
     private List<BehaviorTree> behaviorsToSetTarget = new List<BehaviorTree>();
-
+    
     [SerializeField]
     private BehaviorTree behaviorToSetStartPos;
-
-    private GameObject nowTarget;
-
+    
     private GameObject startTarget;
 
-    private bool canSetNowTarget;
-
-    public bool TryToSetTarget(GameObject _target)
+    public void TryToSetTarget(GameObject _receiveTarget)
     {
-        nowTarget = _target;
-
-        canSetNowTarget = true;
-        Debug.Log("nowTarget"+_target);
-        if (nowTarget.GetComponent<PlayerController>().IsDead)
+        foreach (var behaviour in behaviorsToSetTarget)
         {
-            return false;
+
+            behaviour.SetVariableValue("Target", _receiveTarget);
         }
-        else
-            return true;
     }
 
     public void SetStartPos(GameObject _startPos)
@@ -36,15 +27,16 @@ public class TargetCtr : MonoBehaviour
 
         behaviorToSetStartPos.SetVariableValue("StartTarget", startTarget);
     }
-    private void Update()
+
+    public void Update()
     {
-        if (canSetNowTarget)
-        {
-            foreach (var behaviour in behaviorsToSetTarget)
-            {
-                behaviour.SetVariableValue("Target", nowTarget);
-            }
-            canSetNowTarget = false;
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    dush.SetVariableValue("Target", player1);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    dush.SetVariableValue("Target", player2);
+        //}
     }
 }

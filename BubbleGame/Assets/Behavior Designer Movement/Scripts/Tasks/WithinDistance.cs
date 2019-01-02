@@ -40,22 +40,32 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             sqrMagnitude = magnitude.Value * magnitude.Value;
 
-            if (objects != null) {
+            if (objects != null)
+            {
                 objects.Clear();
-            } else {
+            }
+            else
+            {
                 objects = new List<GameObject>();
             }
             // if objects is null then find all of the objects using the layer mask or tag
-            if (targetObject.Value == null) {
-                if (!string.IsNullOrEmpty(targetTag.Value)) {
+            if (targetObject.Value == null)
+            {
+                if (!string.IsNullOrEmpty(targetTag.Value))
+                {
                     var gameObjects = GameObject.FindGameObjectsWithTag(targetTag.Value);
-                    for (int i = 0; i < gameObjects.Length; ++i) {
+                    for (int i = 0; i < gameObjects.Length; ++i)
+                    {
                         objects.Add(gameObjects[i]);
                     }
-                } else {
+                }
+                else
+                {
                     overlapCast = true;
                 }
-            } else {
+            }
+            else
+            {
                 objects.Add(targetObject.Value);
             }
         }
@@ -66,16 +76,22 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             if (transform == null || objects == null)
                 return TaskStatus.Failure;
 
-            if (overlapCast) {
+            if (overlapCast)
+            {
                 objects.Clear();
-                if (usePhysics2D) {
+                if (usePhysics2D)
+                {
                     var colliders = Physics.OverlapSphere(transform.position, magnitude.Value, objectLayerMask.value);
-                    for (int i = 0; i < colliders.Length; ++i) {
+                    for (int i = 0; i < colliders.Length; ++i)
+                    {
                         objects.Add(colliders[i].gameObject);
                     }
-                } else {
+                }
+                else
+                {
                     var colliders = Physics2D.OverlapCircleAll(transform.position, magnitude.Value, objectLayerMask.value);
-                    for (int i = 0; i < colliders.Length; ++i) {
+                    for (int i = 0; i < colliders.Length; ++i)
+                    {
                         objects.Add(colliders[i].gameObject);
                     }
                 }
@@ -83,21 +99,34 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             Vector3 direction;
             // check each object. All it takes is one object to be able to return success
-            for (int i = 0; i < objects.Count; ++i) {
-                if (objects[i] == null) {
+            for (int i = 0; i < objects.Count; ++i)
+            {
+                if (objects[i] == null)
+                {
                     continue;
+                }
+
+                if (objects[i].GetComponent<PlayerController>())
+                {
+                    if (objects[i].GetComponent<PlayerController>().IsDead)
+                        continue;
                 }
                 direction = objects[i].transform.position - (transform.position + offset.Value);
                 // check to see if the square magnitude is less than what is specified
-                if (Vector3.SqrMagnitude(direction) < sqrMagnitude) {
+                if (Vector3.SqrMagnitude(direction) < sqrMagnitude)
+                {
                     // the magnitude is less. If lineOfSight is true do one more check
-                    if (lineOfSight.Value) {
-                        if (MovementUtility.LineOfSight(transform, offset.Value, objects[i], targetOffset.Value, usePhysics2D, ignoreLayerMask.value)) {
+                    if (lineOfSight.Value)
+                    {
+                        if (MovementUtility.LineOfSight(transform, offset.Value, objects[i], targetOffset.Value, usePhysics2D, ignoreLayerMask.value))
+                        {
                             // the object has a magnitude less than the specified magnitude and is within sight. Set the object and return success
                             returnedObject.Value = objects[i];
                             return TaskStatus.Success;
                         }
-                    } else {
+                    }
+                    else
+                    {
                         // the object has a magnitude less than the specified magnitude. Set the object and return success
                         returnedObject.Value = objects[i];
                         return TaskStatus.Success;
@@ -125,7 +154,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override void OnDrawGizmos()
         {
 #if UNITY_EDITOR
-            if (Owner == null || magnitude == null) {
+            if (Owner == null || magnitude == null)
+            {
                 return;
             }
             var oldColor = UnityEditor.Handles.color;

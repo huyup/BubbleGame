@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerAnimatorCtr : MonoBehaviour
 {
     private Animator animator;
-
-    private bool setDeadOnce = true;
     // Use this for initialization
     void Start()
     {
@@ -42,14 +40,20 @@ public class PlayerAnimatorCtr : MonoBehaviour
         animator.SetBool("Attacking", false);
 
     }
+    public void SetRevivalAnimation()
+    {
+        animator.SetBool("Revival", true);
 
+    }
+
+    public void SetOffFlagWhenRevival()
+    {
+        animator.SetBool("Revival", false);
+        animator.SetBool("Dead", false);
+    }
     public void SetDeadAnimation()
     {
-        if (setDeadOnce)
-        {
-            animator.SetBool("Dead", true);
-            setDeadOnce = false;
-        }
+        animator.SetBool("Dead", true);
     }
     #endregion
 }
