@@ -14,8 +14,8 @@
 			"Queue"      = "Geometry"
 			"RenderType" = "Opaque"
 		}
-		Cull Back
-		ZTest On
+		Cull Front 
+		ZTest NotEqual      
 		ZWrite On
 		Lighting On
 		Blend SrcAlpha OneMinusSrcAlpha

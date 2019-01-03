@@ -6,7 +6,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityInput
     [TaskDescription("Stores the pressed state of the specified key.")]
     public class GetKey : Action
     {
-        [Tooltip("The key to test.")]
+        [Tooltip("The key to PlayerPosRefInXZ.")]
         public KeyCode key;
         [RequiredField]
         [Tooltip("The stored result")]

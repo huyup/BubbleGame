@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     public bool IsUsingAirGun { get; private set; }
     public int TargetedCount { get; private set; }
     public bool IsDead { get; private set; }
-
+    
     #region 初期化
     void Start()
     {
@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
         CheckDied();
         ChangeGravity();
         CheckCanJumpAttack();
+        
     }
     #endregion
 
@@ -358,6 +359,8 @@ public class PlayerController : MonoBehaviour
         TargetedCount++;
     }
     #endregion
+
+
 
     #region 禁止機能・スピード低下機能
 
