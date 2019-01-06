@@ -47,7 +47,6 @@ public class PlayerWeaponC : PlayerWeapon
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Power" + spaceStorage);
         //泡の発射位置を更新させる
         bubbleStartPos = weaponCStartRef.transform.position;
     }
@@ -98,7 +97,7 @@ public class PlayerWeaponC : PlayerWeapon
         if (!canAttack)
             return;
 
-        
+
 
         if (spaceStorage < airGunMaxPower)
         {

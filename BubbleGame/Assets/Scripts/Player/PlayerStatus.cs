@@ -1,26 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 public enum PlayerSelection
 {
     Player1 = 1,
     Player2,
 };
+
+public enum WeaponSelection
+{
+    Bubble,
+    AirGun,
+};
 public class PlayerStatus : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerSelection playerNum = PlayerSelection.Player1;
 
-
-    public PlayerSelection playerNum = PlayerSelection.Player1;
+    [SerializeField]
+    private WeaponSelection weaponSelection = WeaponSelection.Bubble;
 
     /// <summary>
     /// プレイヤーの番号
     /// </summary>
-    //FIXME:ここにNumのsetの制限を追加する
     public int Num
     {
         get { return (int)playerNum; }
     }
 
+    /// <summary>
+    /// 武器の種類
+    /// </summary>
+    public WeaponSelection WeaponSelection
+    {
+        get { return weaponSelection; }
+        private set { weaponSelection = value; }
+    }
+
+    public void SetWeaponSelection(WeaponSelection _newWeaponSelection)
+    {
+        weaponSelection = _newWeaponSelection;
+    }
 
     #region 移動・ジャンプ用
     /// <summary>
@@ -85,14 +106,14 @@ public class PlayerStatus : MonoBehaviour
     /// 泡を前に押す力
     /// </summary>
     [SerializeField]
-    float bubbleFowardPower = 15f;
-    public float BubbleFowardPower
+    float bubbleForwardPower = 15f;
+    public float BubbleForwardPower
     {
-        get { return bubbleFowardPower; }
+        get { return bubbleForwardPower; }
         private set
         {
-            if (bubbleFowardPower > 0 && bubbleFowardPower != 0)
-                bubbleFowardPower = value;
+            if (bubbleForwardPower > 0 && bubbleForwardPower != 0)
+                bubbleForwardPower = value;
         }
     }
 
@@ -174,13 +195,13 @@ public class PlayerStatus : MonoBehaviour
     /// 点滅間隔
     /// </summary>
     [SerializeField]
-    float invincibleInterval = 0.1f;
-    public float InvincibleInterval
+    float invincibleLastTime = 0.1f;
+    public float InvincibleLastTime
     {
-        get { return invincibleInterval; }
+        get { return invincibleLastTime; }
         private set
         {
-            invincibleInterval = value;
+            invincibleLastTime = value;
         }
     }
 
@@ -210,7 +231,7 @@ public class PlayerStatus : MonoBehaviour
 
     [SerializeField]
     public int nowHp;
-    
+
     #endregion
 
     public void Start()

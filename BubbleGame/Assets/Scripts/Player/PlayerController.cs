@@ -8,8 +8,9 @@ public enum WeaponType
 {
     WeaponA = 1,
     WeaponB,
-    Max,
     WeaponC,
+    WeaponD,
+    Max,
 }
 public class PlayerController : MonoBehaviour
 {
@@ -22,10 +23,11 @@ public class PlayerController : MonoBehaviour
     private PlayerWeaponB weaponB;
 
     [SerializeField]
-    private StageMain stageMain;
+    private PlayerWeaponC weaponC;
 
     [SerializeField]
-    private PlayerWeaponC weaponC;
+    private StageMain stageMain;
+
     /// <summary>
     /// アタッチするコンポーネント
     /// </summary>
@@ -42,11 +44,9 @@ public class PlayerController : MonoBehaviour
     private bool canRotate = false;
     private bool canJumpAttack = false;
     private bool canUseGravity = true;
-
-    public bool IsUsingAirGun { get; private set; }
-    public int TargetedCount { get; private set; }
-    public bool IsDead { get; private set; }
     
+    public bool IsDead { get; private set; }
+
     #region 初期化
     void Start()
     {
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
         CheckCanJumpAttack();
-        
+
     }
     #endregion
 
@@ -173,28 +173,26 @@ public class PlayerController : MonoBehaviour
         {
             GetWeapon().OnReset();
         }
-
-        int nextWeaponTypeNum = (int)nowWeaponType;
-
-        nextWeaponTypeNum++;
-
-        if (nextWeaponTypeNum == (int)WeaponType.Max)
-            nextWeaponTypeNum = (int)WeaponType.WeaponA;
-
-        WeaponType nextWeaponType = (WeaponType)Enum.ToObject(typeof(WeaponType), nextWeaponTypeNum);
-
-        nowWeaponType = nextWeaponType;
-
+        if (status.WeaponSelection == WeaponSelection.Bubble)
+        {
+            WeaponType tmpWeaponSelection = nowWeaponType;
+            if (tmpWeaponSelection == WeaponType.WeaponA)
+                nowWeaponType = WeaponType.WeaponB;
+            if (tmpWeaponSelection == WeaponType.WeaponB)
+                nowWeaponType = WeaponType.WeaponA;
+        }
+        if (status.WeaponSelection == WeaponSelection.AirGun)
+        {
+            WeaponType tmpWeaponSelection = nowWeaponType;
+            if (tmpWeaponSelection == WeaponType.WeaponC)
+                nowWeaponType = WeaponType.WeaponD;
+            if (tmpWeaponSelection == WeaponType.WeaponD)
+                nowWeaponType = WeaponType.WeaponC;
+        }
     }
 
     private void CheckCanJumpAttack()
     {
-        if (IsUsingAirGun)
-        {
-            ResetAttack();
-            return;
-        }
-
         switch (nowWeaponType)
         {
             case WeaponType.WeaponA:
@@ -202,6 +200,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 canJumpAttack = false;
+                break;
+            case WeaponType.WeaponC:
+                canJumpAttack = true;
+                break;
+            case WeaponType.WeaponD:
+                canJumpAttack = true;
                 break;
             default:
                 canJumpAttack = false;
@@ -225,37 +229,32 @@ public class PlayerController : MonoBehaviour
 
     public WeaponType GetNowWeaponType()
     {
-        if (IsUsingAirGun)
-            return WeaponType.WeaponC;
-
         return nowWeaponType;
     }
-
+    [Button]
     public void UseAirGun()
     {
-        IsUsingAirGun = true;
+        Debug.Log("UseAirGun");
+        status.SetWeaponSelection(WeaponSelection.AirGun);
+        nowWeaponType = WeaponType.WeaponC;
         weaponC.Reload();
-        Invoke("DisableAirGunByTime", status.AirGunLastTime);
-
+        Invoke("DelayDisableAirGun", status.AirGunLastTime);
     }
+    [Button]
     public void DisableAirGun()
     {
-        IsUsingAirGun = false;
-        if (stageMain)
-            stageMain.CreateItemInRandomPoint();
-
+        status.SetWeaponSelection(WeaponSelection.Bubble);
+        nowWeaponType = WeaponType.WeaponA;
+        //if (stageMain)
+        //    stageMain.CreateItemInRandomPoint();
     }
-    public void DisableAirGunByTime()
+    private void DelayDisableAirGun()
     {
         weaponC.OnAttackButtonUp();
-        IsUsingAirGun = false;
         stageMain.CreateItemInRandomPoint();
     }
     public PlayerWeapon GetWeapon()
     {
-        if (IsUsingAirGun)
-            return weaponC;
-
         switch (nowWeaponType)
         {
             case WeaponType.WeaponA:
@@ -263,6 +262,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case WeaponType.WeaponB:
                 nowWeapon = weaponB;
+                break;
+            case WeaponType.WeaponC:
+                nowWeapon = weaponC;
+                break;
+            case WeaponType.WeaponD:
+                nowWeapon = weaponC;
                 break;
             default:
                 nowWeapon = null;
@@ -318,7 +323,7 @@ public class PlayerController : MonoBehaviour
         {
             renderer.enabled = !renderer.enabled;
             isVincible = true;
-            yield return new WaitForSeconds(status.InvincibleInterval);
+            yield return new WaitForSeconds(status.InvincibleLastTime);
         }
 
         isVincible = false;
@@ -359,14 +364,6 @@ public class PlayerController : MonoBehaviour
             rb.isKinematic = true;
             animatorCtr.SetDeadAnimation();
         }
-    }
-    #endregion
-
-    #region ターゲット用
-
-    public void AddTargetedCount()
-    {
-        TargetedCount++;
     }
     #endregion
     
@@ -433,4 +430,5 @@ public class PlayerController : MonoBehaviour
         canUseGravity = true;
     }
     #endregion
+
 }

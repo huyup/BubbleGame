@@ -30,17 +30,8 @@ public class AirGunCtr : MonoBehaviour
     {
         airGunParticle = GetComponent<ParticleSystem>();
     }
-
-
     public void SetAirGunParticle(float _Power, float _MaxPower)
     {
-        //MaxPower 
-        //Max StartSize 5
-        //Force Overtime  z 100
-        //StartSpeed 10
-
-        //200->1 100->0.5 0->0
-        //200-100=100 
         float newRate = (_Power * 100 / _MaxPower) * 0.01f;
 
         float newStartSize = maxStartSize * newRate;
@@ -55,7 +46,6 @@ public class AirGunCtr : MonoBehaviour
         var force = airGunParticle.forceOverLifetime;
         force.z = newForceOverTimeInZ;
 
-
         var main2 = shadowParticle.main;
         main2.startSpeed = newStartSpeed;
         main2.startSize = newStartSize * 0.5f;
@@ -63,15 +53,10 @@ public class AirGunCtr : MonoBehaviour
         var force2 = shadowParticle.forceOverLifetime;
         force2.z = newForceOverTimeInZ;
 
-
         var main3 = deathParticle.main;
         main3.startSize = newStartSize * 0.1f;
         var shape = deathParticle.shape;
         shape.radius = newDeathShapeSize;
-
-
-        Debug.Log("Rate" + newRate);
-
     }
     public void SetAirGunPower(float _Power)
     {
