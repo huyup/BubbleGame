@@ -21,19 +21,13 @@ public class ObjJudgeCollision : MonoBehaviour
 
         floatByContain = transform.parent.GetComponent<ObjFloatByContain>();
     }
-    private void Update()
-    {
-
-
-    }
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
             canSetFloatOnce = true;
             //何も入っていない状態だけ、処理する
-            if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
+            if (other.GetComponent<BubbleJudgeCollider>().HadObjInside)
             {
                 biggerObject = calculationController.GetBiggerFunction()
                     .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
@@ -50,10 +44,6 @@ public class ObjJudgeCollision : MonoBehaviour
                 else if (biggerObject == BiggerObject.Bubble)
                 {
                     other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                    //canSetFloatOnce = true;
-                    if (transform.parent.name == "Stone_1")
-                        Debug.Log("Bigger");
-
                 }
             }
         }
@@ -64,14 +54,12 @@ public class ObjJudgeCollision : MonoBehaviour
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
             //何も入っていない状態だけ、処理する
-            if (other.GetComponent<BubbleJudgeCollider>().CanAddObjInside)
+            if (other.GetComponent<BubbleJudgeCollider>().HadObjInside)
             {
                 biggerObject = calculationController.GetBiggerFunction()
                     .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
-                //当たった時に、大きさを比較
                 if (biggerObject == BiggerObject.Obj)
                 {
-
                     if (other.transform.root.Find("Bubble"))
                     {
                         var bubbleCtr = other.transform.parent.Find("Bubble").GetComponent<BubbleController>();
@@ -83,32 +71,22 @@ public class ObjJudgeCollision : MonoBehaviour
                         }
                     }
                 }
-                else if (biggerObject == BiggerObject.Bubble)
-                {
-                    other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                    //canSetFloatOnce = true;
 
-                    if (transform.parent.name == "Stone_1")
-                        Debug.Log("BiggerStay");
-                }
-            }
-        }
-        if (other.gameObject.CompareTag("BubbleCollider"))
-        {
-            if (calculationController.GetContainFunction().JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
-            {
-                if (transform.parent.name == "Stone_1")
-                    Debug.Log("Contain");
-                if (transform.parent.name == "Stone_1")
-                    Debug.Log("Ok");
-                if (canSetFloatOnce)
+                if (calculationController.GetContainFunction()
+                    .JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
                 {
-                    SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
-                    canSetFloatOnce = false;
+                    if (canSetFloatOnce)
+                    {
+                        SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
+                        other.GetComponent<BubbleJudgeCollider>().AddObjInside();
+                        canSetFloatOnce = false;
+                    }
                 }
             }
+
         }
     }
+
     private void SetBoxAndBubbleFloat(GameObject _enemy, GameObject _boxCollider)
     {
         if (_boxCollider == null)

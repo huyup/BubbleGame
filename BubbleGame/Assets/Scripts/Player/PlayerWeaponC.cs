@@ -17,6 +17,9 @@ public class PlayerWeaponC : PlayerWeapon
 
     private PlayerStatus playerStatus;
 
+
+    private float spaceStorage;
+
     [SerializeField]
     private int minShootCost = 10;
 
@@ -58,10 +61,13 @@ public class PlayerWeaponC : PlayerWeapon
         {
             tmpAmmoCost = minShootCost;
             nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+
+            spaceStorage = 0;
             rb.velocity = Vector3.zero;
             airGun.transform.position = bubbleStartPos;
             airGun.transform.rotation = Quaternion.LookRotation(transform.forward);
             ParticleSystem[] particleSystems = airGun.GetComponentsInChildren<ParticleSystem>();
+
             foreach (var particleSystem in particleSystems)
             {
                 particleSystem.Play();

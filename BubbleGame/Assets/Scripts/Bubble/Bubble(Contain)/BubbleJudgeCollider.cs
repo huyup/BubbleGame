@@ -6,17 +6,18 @@ public class BubbleJudgeCollider : MonoBehaviour
 {
     private GameObject bubble;
 
-    public bool CanAddObjInside { get; private set; }
+    public bool HadObjInside { get; private set; }
+
     // Use this for initialization
     void Start()
     {
-        CanAddObjInside = true;
+        HadObjInside = true;
         bubble = transform.parent.Find("Bubble").gameObject;
     }
 
     public void AddObjInside()
     {
-        CanAddObjInside = false;
+        HadObjInside = false;
     }
     // Update is called once per frame
     void Update()
@@ -25,7 +26,7 @@ public class BubbleJudgeCollider : MonoBehaviour
             return;
 
         transform.position = bubble.transform.position;
-        transform.localScale = bubble.transform.lossyScale;
+        transform.localScale = bubble.transform.localScale;
 
     }
 }

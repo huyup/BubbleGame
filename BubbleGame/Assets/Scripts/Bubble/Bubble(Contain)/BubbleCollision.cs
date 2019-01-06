@@ -12,6 +12,8 @@ public class BubbleCollision : MonoBehaviour
     private bool canAddForceToInsideObj;
 
     private bool canAddInsideObj = true;
+    private bool canAddStaminaDamageToBoss = true;
+
     // Use this for initialization
     void Start()
     {
@@ -29,9 +31,12 @@ public class BubbleCollision : MonoBehaviour
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 15 /*EnemyAttack*/)
         {
-            if (controller.GetBubbleState() == BubbleState.BePressed)
+            if (controller.GetBubbleState() != BubbleState.Creating && canAddStaminaDamageToBoss)
+            {
+                _other.transform.root.GetComponent<BossStaminaCtr>().StaminaDamageByBigBubble(transform.localScale.magnitude * 2.5f);
                 StartCoroutine(DelayDestroy());
-
+                canAddStaminaDamageToBoss = false;
+            }
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
         {

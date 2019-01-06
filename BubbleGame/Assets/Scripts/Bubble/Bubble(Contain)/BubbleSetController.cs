@@ -13,7 +13,6 @@ public class BubbleSetController : MonoBehaviour
 
         if (transform.Find("BubbleCollider"))
         {
-            Debug.Log("Name" + transform.name);
             bubbleCollider = transform.Find("BubbleCollider").gameObject;
         }
 

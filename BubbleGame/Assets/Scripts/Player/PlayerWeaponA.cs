@@ -25,6 +25,9 @@ public class PlayerWeaponA : PlayerWeapon
     private PlayerController controller;
     private BubbleProperty bubbleProperty;
     private Vector3 bubbleStartPos;
+
+    private float spaceKeyStorage = 0.0f;
+
     #endregion
 
     #region 消費用
@@ -40,7 +43,6 @@ public class PlayerWeaponA : PlayerWeapon
     [SerializeField]
     private float factorToCalAmmoRecovery = 1.5f;
 
-    private float spaceKeyStorage = 0.0f;
 
     private bool isPushed = false;
 

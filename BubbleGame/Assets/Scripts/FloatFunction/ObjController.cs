@@ -59,6 +59,8 @@ public class ObjController : MonoBehaviour
     private UIBase uiCtr;
 
     private int bossNowHp;
+
+    private Vector3 objBoxColliderDefaultSize;
     // Use this for initialization
     void Start()
     {
@@ -70,14 +72,16 @@ public class ObjController : MonoBehaviour
             initAttackSpeed = (float)attack.GetVariable("RunSpeed").GetValue();
             agent.speed = initWanderSpeed;
         }
+        else if (status.Type == ObjType.Obj)
+        {
+            if (GetComponent<BoxCollider>())
+                objBoxColliderDefaultSize = GetComponent<BoxCollider>().size;
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        if (ObjState == ObjState.Floating && status.Type != ObjType.Obj)
-        {
-            behaviorCtr.DisableBehaviors();
-        }
+
         if (status.Type == ObjType.Inoshishi)
         {
             if (bossNowHp <= 0)
@@ -88,30 +92,37 @@ public class ObjController : MonoBehaviour
             }
         }
 
-        if (status.Type == ObjType.Inoshishi)
-            summon.SetVariableValue("Hp", NowHp);
 
-        if (ObjState == ObjState.OnGround || ObjState == ObjState.Dizziness)
+
+        if (status.Type != ObjType.Inoshishi)
         {
-            if (NowHp < status.HpToFloat)
+            if (ObjState == ObjState.OnGround)
             {
-                bubbleDamageEff.StopEmitter();
-                floatByDamage.CreateBubbleByDamage();
+                if (NowHp < status.HpToFloat)
+                {
+                    bubbleDamageEff.StopEmitter();
+                    floatByDamage.CreateBubbleByDamage();
+                }
+                else
+                {
+                    bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, NowHp);
+                }
             }
             else
             {
-                bubbleDamageEff.ChangeEmitterOnUpdate(status.MaxHp, NowHp);
+                if (GetComponent<BoxCollider>())
+                    GetComponent<BoxCollider>().isTrigger = true;
             }
         }
-        else
-        {
-            if (GetComponent<BoxCollider>())
-                GetComponent<BoxCollider>().isTrigger = true;
-        }
 
+        if (status.Type == ObjType.Inoshishi)
+            summon.SetVariableValue("Hp", NowHp);
         if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(NowHp, status.MaxHp);
-
+        if (ObjState == ObjState.Floating && status.Type != ObjType.Obj)
+        {
+            behaviorCtr.DisableBehaviors();
+        }
     }
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
@@ -195,7 +206,11 @@ public class ObjController : MonoBehaviour
         ObjState = ObjState.OnGround;
 
         if (GetComponent<BoxCollider>())
+        {
             GetComponent<BoxCollider>().isTrigger = false;
+            GetComponent<BoxCollider>().size = objBoxColliderDefaultSize;
+        }
+
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().velocity = Vector3.zero;
         NowHp = status.MaxHp;

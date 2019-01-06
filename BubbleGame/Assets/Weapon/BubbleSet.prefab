@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastTime: 8
-  maxSize: 0.165
+  maxSize: 0.17
   maxSizeInDamageCreated: 4
 --- !u!114 &114178811544416230
 MonoBehaviour:

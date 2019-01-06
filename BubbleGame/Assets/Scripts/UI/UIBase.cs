@@ -19,6 +19,7 @@ public class UIBase : MonoBehaviour
 
     [SerializeField] private Text bossNameText;
     [SerializeField] private RawImage bossHpImage;
+    [SerializeField] private RawImage bossStaminaImage;
 
     [SerializeField] private Text player1NameText;
     [SerializeField] private Text player2NameText;
@@ -51,7 +52,10 @@ public class UIBase : MonoBehaviour
     private void Update()
     {
         if (boss)
+        {
             DrawBossHp(boss.GetComponent<ObjController>(), bossHpImage);
+            DrawBossStamina(boss.GetComponent<BossStaminaCtr>(), bossStaminaImage);
+        }
 
         DrawPlayerAmmo(player1.GetComponent<PlayerController>().GetWeapon(), player1AmmoImage);
         DrawPlayerAmmo(player2.GetComponent<PlayerController>().GetWeapon(), player2AmmoImage);
@@ -67,6 +71,18 @@ public class UIBase : MonoBehaviour
     {
         clearText.enabled = true;
     }
+    private void DrawBossStamina(BossStaminaCtr _staminaController, RawImage _bossStamina)
+    {
+        //200->1 100->0.5 0->0
+        //200-100=100 
+        int maxStamina = 100;
+        int nowStamina = _staminaController.GetNowStamina();
+        float newRate = 1 * (nowStamina * 100 / maxStamina) * 0.01f;
+
+        _bossStamina.uvRect = new Rect(0, 1 - newRate, _bossStamina.uvRect.width, _bossStamina.uvRect.height);
+
+    }
+
     private void DrawBossHp(ObjController _objController, RawImage _bossHp)
     {
         //200->1 100->0.5 0->0

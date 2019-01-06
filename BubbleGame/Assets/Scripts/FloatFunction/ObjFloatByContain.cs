@@ -70,6 +70,13 @@ public class ObjFloatByContain : MonoBehaviour
             GetComponent<Animator>().applyRootMotion = false;
         }
 
+        if (status.Type == ObjType.Obj)
+        {
+            if (GetComponent<BoxCollider>())
+            {
+                GetComponent<BoxCollider>().size -= new Vector3(GetComponent<BoxCollider>().size.x * 0.7f, 0, GetComponent<BoxCollider>().size.z * 0.7f);
+            }
+        }
         rb.useGravity = false;
         rb.angularDrag = 0.05f;
         rb.drag = 0.05f;
