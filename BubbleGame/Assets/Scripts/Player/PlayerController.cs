@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private bool canMove = false;
     private bool canRotate = false;
     private bool canJumpAttack = false;
+    private bool canUseGravity = true;
 
     public bool IsUsingAirGun { get; private set; }
     public int TargetedCount { get; private set; }
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
         int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
 
         groundDetector = GetComponent<GroundDetector>();
-        groundDetector.Initialize(0.25f, 2.0f, 0.01f, 0.05f, groundLayer);
+        groundDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, groundLayer);
 
         nowWeaponType = WeaponType.WeaponA;
         isSlow = false;
@@ -72,7 +73,16 @@ public class PlayerController : MonoBehaviour
     {
         groundDetector.UpdateDetection();
         CheckDied();
-        ChangeGravity();
+        if (canUseGravity)
+        {
+            rb.useGravity = true;
+            ChangeGravity();
+        }
+        else
+        {
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+        }
         CheckCanJumpAttack();
         
     }
@@ -359,10 +369,14 @@ public class PlayerController : MonoBehaviour
         TargetedCount++;
     }
     #endregion
-
-
+    
 
     #region 禁止機能・スピード低下機能
+
+    public void BanGravity()
+    {
+        canUseGravity = false;
+    }
 
     public void BanRotate()
     {
@@ -412,6 +426,11 @@ public class PlayerController : MonoBehaviour
     public void ResetAttack()
     {
         GetWeapon().ResetAttack();
+    }
+
+    public void ResetGravity()
+    {
+        canUseGravity = true;
     }
     #endregion
 }

@@ -75,8 +75,7 @@ public class PlayerWeaponB : PlayerWeapon
         isAttacking = true;
         tmpAmmoCost = minShootCost;
         nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
-
-
+        
         rb.velocity = Vector3.zero;
         playerController.BanJump();
         OnCreateBubble();

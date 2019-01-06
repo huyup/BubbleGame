@@ -101,7 +101,7 @@ public class PlayerWeaponA : PlayerWeapon
         GameObject bubbleInstance = bubbleSetInstance.transform.Find("Bubble").gameObject;
 
         bubbles.Add(bubbleInstance);
-        
+
         bubbles[bubbles.Count - 1].transform.position = bubbleStartPos;
 
         bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.Creating);
@@ -109,17 +109,18 @@ public class PlayerWeaponA : PlayerWeapon
 
     public override void OnAttackButtonStay()
     {
-        if (bubbles.Count == 0)
+        if (isPushed)
             return;
+
+        if (bubbles.Count == 0)
+        {
+            OnAttackButtonUp();
+            return;
+        }
 
         if (nowAmmoLeft <= 0)
         {
-            //残量が足りなかったら、自動的に前へ出す
-            if (!isPushed)
-            {
-                PushTheBubbleOnceTime();
-                isPushed = true;
-            }
+            StartCoroutine(DelayReset());
             return;
         }
 
@@ -145,16 +146,21 @@ public class PlayerWeaponA : PlayerWeapon
             }
             else
             {
-                //最大値を超えたら、自動的に前へ出す
-                if (!isPushed)
-                {
-                    PushTheBubbleOnceTime();
-                    isPushed = true;
-                }
+                StartCoroutine(DelayReset());
             }
         }
+        else
+        {
+            OnAttackButtonUp();
+        }
+
     }
 
+    IEnumerator DelayReset()
+    {
+        yield return new WaitForSeconds(0.3f);
+        OnAttackButtonUp();
+    }
     public override void OnAttackButtonUp()
     {
         controller.ResetJump();
@@ -215,10 +221,12 @@ public class PlayerWeaponA : PlayerWeapon
         if (bubbles[bubbles.Count - 1] == null || isPushed)
             return;
 
+        bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.StandBy);
+
         bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.forward * status.BubbleFowardPower);
         bubbles[bubbles.Count - 1].GetComponent<Rigidbody>().AddForce(transform.up * status.BubbleUpPower);
 
-        bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.StandBy);
+
     }
 
 
