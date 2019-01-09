@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using BehaviorDesigner.Runtime;
 using UnityEngine;
 public enum BubbleState
 {
     Creating,
     StandBy,
     Floating,
+    BeTakeIn,
     BePressed,
 }
 public class BubbleController : MonoBehaviour
 {
+    private Vector3 tornadoPosition;
+
     private BubbleState nowBubbleState;
 
     private BubbleCollision bubbleCollision;
@@ -24,6 +26,12 @@ public class BubbleController : MonoBehaviour
 
     [SerializeField]
     private float timeToStopBubble = 1f;
+
+    [SerializeField]
+    private float takeInSpeedByTornado = 5;
+
+    [SerializeField]
+    private float stopDistanceByTornado = 1.5f;
 
     private bool canAddForceByPush = true;
 
@@ -41,14 +49,33 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            rb.velocity += Vector3.forward * 5000;
-
         if (nowBubbleState == BubbleState.StandBy)
             Invoke("DelayStopBubble", timeToStopBubble);
+        else if (nowBubbleState == BubbleState.BeTakeIn)
+            TakeInByTornado();
         else
             CancelInvoke("DelayStopBubble");
+    }
+
+    public void SetTornadoPosition(Vector3 _destination)
+    {
+        tornadoPosition = _destination;
+    }
+
+    public void TakeInByTornado()
+    {
+        var tornadoPositionInBubbleHeight =  new Vector3(tornadoPosition.x, transform.position.y, tornadoPosition.z);
+        if (Vector3.Distance(tornadoPositionInBubbleHeight, transform.position) < stopDistanceByTornado)
+        {
+            nowBubbleState = BubbleState.StandBy;
+            rb.velocity = Vector3.zero;
+        }
+        else
+        {
+
+            var direction = (tornadoPositionInBubbleHeight - transform.position).normalized;
+            rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeedByTornado;
+        }
     }
 
     private void DelayStopBubble()

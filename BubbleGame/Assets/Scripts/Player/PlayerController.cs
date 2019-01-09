@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GamepadInput; //マルチコントローラーアセット
-using NaughtyAttributes;
 public enum WeaponType
 {
     WeaponA = 1,
@@ -19,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PlayerWeaponA weaponA;
+
     [SerializeField]
     private PlayerWeaponB weaponB;
 
@@ -26,8 +25,7 @@ public class PlayerController : MonoBehaviour
     private PlayerWeaponC weaponC;
 
     [SerializeField]
-    private StageMain stageMain;
-
+    private PlayerWeaponD weaponD;
     /// <summary>
     /// アタッチするコンポーネント
     /// </summary>
@@ -44,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool canRotate = false;
     private bool canJumpAttack = false;
     private bool canUseGravity = true;
-    
+
     public bool IsDead { get; private set; }
 
     #region 初期化
@@ -71,6 +69,7 @@ public class PlayerController : MonoBehaviour
     #region Update
     private void Update()
     {
+
         groundDetector.UpdateDetection();
         CheckDied();
         if (canUseGravity)
@@ -231,16 +230,13 @@ public class PlayerController : MonoBehaviour
     {
         return nowWeaponType;
     }
-    [Button]
     public void UseAirGun()
     {
-        Debug.Log("UseAirGun");
         status.SetWeaponSelection(WeaponSelection.AirGun);
         nowWeaponType = WeaponType.WeaponC;
         weaponC.Reload();
         Invoke("DelayDisableAirGun", status.AirGunLastTime);
     }
-    [Button]
     public void DisableAirGun()
     {
         status.SetWeaponSelection(WeaponSelection.Bubble);
@@ -251,7 +247,6 @@ public class PlayerController : MonoBehaviour
     private void DelayDisableAirGun()
     {
         weaponC.OnAttackButtonUp();
-        stageMain.CreateItemInRandomPoint();
     }
     public PlayerWeapon GetWeapon()
     {
@@ -267,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 nowWeapon = weaponC;
                 break;
             case WeaponType.WeaponD:
-                nowWeapon = weaponC;
+                nowWeapon = weaponD;
                 break;
             default:
                 nowWeapon = null;
@@ -366,7 +361,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
-    
+
 
     #region 禁止機能・スピード低下機能
 

@@ -102,16 +102,20 @@ public class PlayerInputManager : MonoBehaviour
         //Debug:攻撃ボタン2
         if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
         {
-            airWeapon.OnAttackButtonDown();
+            playerController.UseAirGun();
         }
-        if (GamePad.GetButton(GamePad.Button.B, (GamePad.Index)playerNum))
-        {
-            airWeapon.OnAttackButtonStay();
-        }
-        if (GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index)playerNum))
-        {
-            airWeapon.OnAttackButtonUp();
-        }
+        //if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
+        //{
+        //    airWeapon.OnAttackButtonDown();
+        //}
+        //if (GamePad.GetButton(GamePad.Button.B, (GamePad.Index)playerNum))
+        //{
+        //    airWeapon.OnAttackButtonStay();
+        //}
+        //if (GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index)playerNum))
+        //{
+        //    airWeapon.OnAttackButtonUp();
+        //}
         //ジャンプボタン
         if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)playerNum))
         {

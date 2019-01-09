@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
-using NaughtyAttributes;
 public class StageMain : MainBase
 {
     [SerializeField]

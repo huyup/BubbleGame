@@ -13,6 +13,7 @@ TagManager:
   - Octopus
   - SearchTrigger
   - BubbleAirCollider
+  - TornadoTrigger
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - AirGun
   - SearchTrigger
   - Wall
-  - 
+  - TornadoTrigger
   - 
   - 
   - 

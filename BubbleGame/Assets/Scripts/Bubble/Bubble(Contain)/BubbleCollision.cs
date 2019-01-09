@@ -24,9 +24,11 @@ public class BubbleCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating)
+        if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating
+            && !_other.gameObject.CompareTag("TornadoTrigger"))
         {
-            _other.gameObject.GetComponent<PlayerController>().GetWeapon().AmmoRecovery(this.transform.localScale.magnitude);
+            if (_other.gameObject.GetComponent<PlayerStatus>().WeaponSelection != WeaponSelection.AirGun)
+                _other.gameObject.GetComponent<PlayerController>().GetWeapon().AmmoRecovery(this.transform.localScale.magnitude);
             setController.DestroyBubbleSet();
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 15 /*EnemyAttack*/)

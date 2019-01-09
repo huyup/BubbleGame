@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using NaughtyAttributes;
 public class BubbleItemMovement : MonoBehaviour
 {
     [SerializeField]
@@ -24,7 +22,6 @@ public class BubbleItemMovement : MonoBehaviour
 
     private bool canSetNextDestination;
     
-    [ShowNonSerializedField]
     private Vector3 destination;
 
     // Update is called once per frame

@@ -120,6 +120,9 @@ public class UIBase : MonoBehaviour
             case WeaponType.WeaponC:
                 _weaponText.text = "装備中:空気砲";
                 break;
+            case WeaponType.WeaponD:
+                _weaponText.text = "装備中:空気逆流装置";
+                break;
             default:
                 _weaponText.text = "None";
                 break;

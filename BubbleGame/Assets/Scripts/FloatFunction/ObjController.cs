@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
-using NaughtyAttributes;
 public enum ObjState
 {
     OnGround,
