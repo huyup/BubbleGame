@@ -20,7 +20,6 @@ public class BubbleDamage : MonoBehaviour
 
         if (_obj.layer == 16 /*StageObject*/ || _obj.layer == 12 /*EnemyHit*/)
         {
-
             if (_obj.transform.root.GetComponent<ObjStatus>())
             {
                 if (_obj.transform.root.GetComponent<ObjStatus>().Type == ObjType.Inoshishi)

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerOutsideIndication : MonoBehaviour
 {
+    [SerializeField]
     GameObject arrow;
     Camera targetCamera;
 
@@ -16,8 +17,7 @@ public class PlayerOutsideIndication : MonoBehaviour
     void Start()
     {
         targetCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-
-        arrow=transform.Find("Arrow").gameObject;
+        
     }
 
     void Update()

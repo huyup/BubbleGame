@@ -24,7 +24,9 @@ public class BubbleCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.gameObject.layer == 11/*PlayerTrigger*/ && controller.GetBubbleState() != BubbleState.Creating
+        if (_other.gameObject.layer == 11/*PlayerTrigger*/
+            && controller.GetBubbleState() != BubbleState.Creating
+            && controller.GetBubbleState() != BubbleState.BePressed
             && !_other.gameObject.CompareTag("TornadoTrigger"))
         {
             if (_other.gameObject.GetComponent<PlayerStatus>().WeaponSelection != WeaponSelection.AirGun)
@@ -33,11 +35,15 @@ public class BubbleCollision : MonoBehaviour
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 15 /*EnemyAttack*/)
         {
-            if (controller.GetBubbleState() != BubbleState.Creating && canAddStaminaDamageToBoss)
+            if (_other.transform.root.GetComponent<ObjStatus>().Type == ObjType.Inoshishi)
             {
-                _other.transform.root.GetComponent<BossStaminaCtr>().StaminaDamageByBigBubble(transform.localScale.magnitude * 2.5f);
-                StartCoroutine(DelayDestroy());
-                canAddStaminaDamageToBoss = false;
+                if (controller.GetBubbleState() != BubbleState.Creating && canAddStaminaDamageToBoss)
+                {
+                    _other.transform.root.GetComponent<BossStaminaCtr>()
+                        .StaminaDamageByBigBubble(transform.localScale.magnitude * 2.5f);
+                    StartCoroutine(DelayDestroy());
+                    canAddStaminaDamageToBoss = false;
+                }
             }
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 16 /*StageObj*/)
@@ -74,6 +80,20 @@ public class BubbleCollision : MonoBehaviour
             if (insideCollider && insideCollider.GetComponent<ObjController>())
                 insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
 
+        }
+    }
+
+    public void TakeObjInByTornado(Vector3 _destinatio, float _takeInSpeed, float _stopDistance)
+    {
+        foreach (Collider insideCollider in insideColliderList)
+        {
+            if (insideCollider && insideCollider.GetComponent<ObjController>())
+            {
+                insideCollider.GetComponent<ObjController>()
+                    .SetTakeInParamater(_destinatio, _takeInSpeed, _stopDistance);
+                insideCollider.GetComponent<ObjController>().SetObjState(ObjState.MovingByTornado);
+
+            }
         }
     }
 }

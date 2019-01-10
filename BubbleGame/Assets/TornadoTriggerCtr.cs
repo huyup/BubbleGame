@@ -7,7 +7,38 @@ public class TornadoTriggerCtr : MonoBehaviour
     [SerializeField]
     private float minAngle = 10;
 
+    [SerializeField]
+    private float minRadius = 0.3f;
+
+    [SerializeField]
+    private float radiusIncreaseSpeed = 0.1f;
+
+    [SerializeField]
+    private float maxRadius = 0.45f;
+
+    private float nowRadius;
+
     private List<GameObject> bubbles = new List<GameObject>();
+
+
+    private void Start()
+    {
+        nowRadius = minRadius;
+        GetComponent<SphereCollider>().radius = nowRadius;
+    }
+
+    public void ResetTriggerRadius()
+    {
+        nowRadius = minRadius;
+        GetComponent<SphereCollider>().radius = nowRadius;
+    }
+
+    public void IncreaseTriggerRadius()
+    {
+        if (nowRadius < maxRadius)
+            nowRadius += radiusIncreaseSpeed * Time.fixedDeltaTime * 60;
+        GetComponent<SphereCollider>().radius = nowRadius;
+    }
 
     public void TakeObjIn()
     {

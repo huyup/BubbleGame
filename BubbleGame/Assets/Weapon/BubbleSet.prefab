@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ba3386fd97bb84ebad35c2045848ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  factorToCalScale: 1.3
 --- !u!114 &114464823241374890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,7 +459,7 @@ MonoBehaviour:
   lastTimeByAirGun: 1
   timeToStopBubble: 1
   takeInSpeedByTornado: 8
-  stopDistanceByTornado: 1
+  stopDistanceByTornado: 1.5
 --- !u!114 &114823986843319652
 MonoBehaviour:
   m_ObjectHideFlags: 1

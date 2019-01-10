@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus status;
     private PlayerAnimatorCtr animatorCtr;
     private GroundDetector groundDetector;
+    private BubbleDetector bubbleDetector;
     private PlayerRescueTriggerCtr rescueTriggerCtr;
     private bool isVincible = false;
     private bool isSlow = false;
@@ -53,8 +54,14 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
         rescueTriggerCtr = transform.Find("RescueTrigger").GetComponent<PlayerRescueTriggerCtr>();
-        int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
 
+        int bubbleLayer = (1 << 10) | (1 << 0);
+
+        bubbleDetector = GetComponent<BubbleDetector>();
+        bubbleDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, bubbleLayer);
+
+
+        int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
         groundDetector = GetComponent<GroundDetector>();
         groundDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, groundLayer);
 
@@ -69,8 +76,14 @@ public class PlayerController : MonoBehaviour
     #region Update
     private void Update()
     {
-
+        bubbleDetector.UpdateDetection(transform.forward);
         groundDetector.UpdateDetection();
+
+        if (bubbleDetector.IsHit)
+        {
+            Debug.Log("Hit");
+        }
+
         CheckDied();
         if (canUseGravity)
         {
@@ -312,7 +325,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Blink()
     {
         Renderer renderer;
-        renderer = transform.Find("PlayerMesh").GetComponent<Renderer>();
+        renderer = transform.Find("MeshList").Find("PlayerMesh").GetComponent<Renderer>();
 
         for (int i = 0; i < status.InvincibleTotalTime; i++)
         {
@@ -361,7 +374,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
-
 
     #region 禁止機能・スピード低下機能
 

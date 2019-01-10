@@ -13,13 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mVariableData:
     variableStartIndex: 
-    JSONSerialization: "{\n\t\"Variables\":[{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedGameObjectList\",\n\t\t\"Name\":\"Players\",\n\t\t\"IsShared\":true,\n\t\t\"IsGlobal\":true,\n\t\t\"List`1mValue\":[]\n\t}]\n}"
+    JSONSerialization: "{\n\t\"Variables\":[{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedGameObjectList\",\n\t\t\"Name\":\"Players\",\n\t\t\"IsShared\":true,\n\t\t\"IsGlobal\":true,\n\t\t\"List`1mValue\":[0,1]\n\t}]\n}"
     fieldSerializationData:
       typeName: []
       fieldNameHash: 
       startIndex: 
       dataPosition: 
-      unityObjects: []
+      unityObjects:
+      - {fileID: 0}
+      - {fileID: 0}
       byteData: 
       byteDataArray: 
   mVersion: 1.6

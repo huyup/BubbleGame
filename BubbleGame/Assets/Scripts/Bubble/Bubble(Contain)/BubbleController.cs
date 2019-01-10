@@ -32,9 +32,7 @@ public class BubbleController : MonoBehaviour
 
     [SerializeField]
     private float stopDistanceByTornado = 1.5f;
-
-    private bool canAddForceByPush = true;
-
+    
     private bool canAddForceToBubble = true;
 
     private bool canStopBubble = true;
@@ -75,6 +73,8 @@ public class BubbleController : MonoBehaviour
 
             var direction = (tornadoPositionInBubbleHeight - transform.position).normalized;
             rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeedByTornado;
+            if (bubbleCollision)
+                bubbleCollision.TakeObjInByTornado(tornadoPosition, takeInSpeedByTornado,stopDistanceByTornado);
         }
     }
 

@@ -25,13 +25,13 @@ public class ObjBodyCollision : MonoBehaviour
         }
         if (_other.gameObject.layer == 16 /*StageObj*/)
         {
-            if ((_other.GetComponent<ObjController>().ObjState == ObjState.Falling ||
-                 _other.GetComponent<ObjController>().ObjState == ObjState.MovingByAirGun))
-            {
-                if (GetComponent<ObjStatus>().Type != ObjType.Obj)
-                    controller.Dead();
-            }
+            //オブジェクトにぶつかったときの処理
         }
+        if (_other.gameObject.name == "DeadZone")
+        {
+            controller.Dead();
+        }
+        //Bossに当たったときの処理
         if ((_other.gameObject.layer == 12 /*EnemyHit*/|| _other.gameObject.layer == 15 /*EnemyAttack*/)
             && controller.ObjState == ObjState.MovingByAirGun)
         {
@@ -40,16 +40,9 @@ public class ObjBodyCollision : MonoBehaviour
             {
                 controller.PlayCollisionEff(collisionPos);
                 _other.transform.root.GetComponent<ObjController>().DamageByCollision(10);
+                StageManager.Instance.RemoveEnemyCount(this.gameObject.GetComponent<ObjStatus>().Type);
                 Destroy(this.gameObject);
                 canHitBoss = false;
-            }
-            else
-            {
-                if (GetComponent<ObjStatus>().Type != ObjType.Obj)
-                {
-                    controller.Dead();
-                    _other.transform.root.GetComponentInChildren<ObjController>().Dead();
-                }
             }
         }
     }

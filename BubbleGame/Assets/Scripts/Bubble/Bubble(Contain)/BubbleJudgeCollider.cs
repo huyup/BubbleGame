@@ -8,16 +8,18 @@ public class BubbleJudgeCollider : MonoBehaviour
 
     public bool HadObjInside { get; private set; }
 
+
+    [SerializeField] private float factorToCalScale = 1.3f;
     // Use this for initialization
     void Start()
     {
-        HadObjInside = true;
+        HadObjInside = false;
         bubble = transform.parent.Find("Bubble").gameObject;
     }
 
     public void AddObjInside()
     {
-        HadObjInside = false;
+        HadObjInside = true;
     }
     // Update is called once per frame
     void Update()
@@ -26,7 +28,7 @@ public class BubbleJudgeCollider : MonoBehaviour
             return;
 
         transform.position = bubble.transform.position;
-        transform.localScale = bubble.transform.localScale;
+        transform.localScale = bubble.transform.localScale* factorToCalScale;
 
     }
 }

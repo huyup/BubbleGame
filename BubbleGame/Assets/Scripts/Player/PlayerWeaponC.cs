@@ -14,6 +14,9 @@ public class PlayerWeaponC : PlayerWeapon
     private float airGunMaxPower = 30;
 
     [SerializeField]
+    private GameObject buttonStayEff;
+
+    [SerializeField]
     private float spaceKeySpeed = 0.5f;
 
     private Vector3 bubbleStartPos;
@@ -89,6 +92,7 @@ public class PlayerWeaponC : PlayerWeapon
         playerController.BanMove();
         spaceStorage = 0;
         canAttack = true;
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Play();
         tmpAmmoCost = minShootCost;
         nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
     }
@@ -116,15 +120,15 @@ public class PlayerWeaponC : PlayerWeapon
             //残量が足りなかったら、自動的に前へ出す
             OnAttackButtonUp();
         }
-
-
-
     }
     public override void OnAttackButtonUp()
     {
         if (!canAttack)
             return;
         Shoot(spaceStorage, airGunMaxPower);
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Clear();
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Stop();
+
         spaceStorage = 0;
         prevAmmoLeft = nowAmmoLeft;
 

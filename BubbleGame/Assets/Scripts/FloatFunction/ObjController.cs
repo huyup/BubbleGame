@@ -8,6 +8,7 @@ public enum ObjState
     OnGround,
     Floating,
     MovingByAirGun,
+    MovingByTornado,
     Dizziness,
     Falling,
 }
@@ -60,9 +61,18 @@ public class ObjController : MonoBehaviour
     private int bossNowHp;
 
     private Vector3 objBoxColliderDefaultSize;
+
+    private Rigidbody rb;
+
+    private Vector3 tornadoDestination;
+
+    private float takeInSpeed;
+
+    private float stopDistanceByTornado;
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         NowHp = status.MaxHp;
         bossNowHp = status.BossHp;
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi)
@@ -81,6 +91,11 @@ public class ObjController : MonoBehaviour
     void Update()
     {
 
+        if (ObjState == ObjState.MovingByTornado)
+        {
+            TakedInByTornado();
+        }
+
         if (status.Type == ObjType.Inoshishi)
         {
             if (bossNowHp <= 0)
@@ -90,9 +105,6 @@ public class ObjController : MonoBehaviour
                 uiCtr.DrawClearText();
             }
         }
-
-
-
         if (status.Type != ObjType.Inoshishi)
         {
             if (ObjState == ObjState.OnGround)
@@ -123,6 +135,8 @@ public class ObjController : MonoBehaviour
             behaviorCtr.DisableBehaviors();
         }
     }
+
+
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
         var rate = (_nowHp * 100 / _maxHp);
@@ -187,7 +201,6 @@ public class ObjController : MonoBehaviour
         }
         else if (status.Type != ObjType.Obj)
         {
-            Debug.Log("Dead");
             GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
 
             destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
@@ -219,22 +232,40 @@ public class ObjController : MonoBehaviour
 
         if (status.Type != ObjType.Obj)
         {
-            StartCoroutine(DelayResetObj());
+            agent.enabled = true;
+            behaviorCtr.RestartBehaviors();
         }
+
+        tornadoDestination = Vector3.zero;
+        takeInSpeed = 0;
+        stopDistanceByTornado = 0;
     }
-    IEnumerator DelayResetObj()
+    public void SetTakeInParamater(Vector3 _destination, float _takeInSpeedByTornado, float _stopDistanceByTornado)
     {
-        yield return new WaitForSeconds(0.1f);
+        tornadoDestination = _destination;
+        takeInSpeed = _takeInSpeedByTornado;
+        stopDistanceByTornado = _stopDistanceByTornado;
+    }
 
-        agent.enabled = true;
-        behaviorCtr.RestartBehaviors();
-
+    public void TakedInByTornado()
+    {
+        var destinationPositionInBubbleHeight = new Vector3(tornadoDestination.x, transform.position.y, tornadoDestination.z);
+        
+        if (Vector3.Distance(destinationPositionInBubbleHeight, transform.position) < stopDistanceByTornado)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            var direction = (destinationPositionInBubbleHeight - transform.position).normalized;
+            rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeed;
+        }
     }
     public void AddForceByPush(Vector3 _direction)
     {
         GetComponent<BoxCollider>().isTrigger = false;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
         ObjState = ObjState.MovingByAirGun;
-        GetComponent<Rigidbody>().velocity = _direction;
+        rb.velocity = _direction;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerWeaponD : PlayerWeapon
     [SerializeField]
     private GameObject tornadoTrigger;
 
+
     [SerializeField]
     private GameObject weaponDStartRef;
 
@@ -63,15 +64,18 @@ public class PlayerWeaponD : PlayerWeapon
         nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
 
         tornadoEff.transform.position = bubbleStartPos;
+
         tornadoEff.GetComponent<ParticleSystem>().Play();
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().TakeObjIn();
-
+        tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
     }
     public override void OnAttackButtonStay()
     {
+
         playerController.BanJump();
         playerController.BanMove();
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().TakeObjIn();
+        tornadoTrigger.GetComponent<TornadoTriggerCtr>().IncreaseTriggerRadius();
     }
     public override void OnAttackButtonUp()
     {
@@ -80,6 +84,7 @@ public class PlayerWeaponD : PlayerWeapon
         tornadoEff.GetComponent<ParticleSystem>().Clear();
         tornadoEff.GetComponent<ParticleSystem>().Stop();
 
+        tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
         prevAmmoLeft = nowAmmoLeft;
     }
     public override void OnReset()

@@ -50,7 +50,7 @@ public class BossStaminaCtr : MonoBehaviour
     private void OutOfStamina()
     {
         ParticleSystem.EmissionModule emissionModule = damageEff.GetComponent<ParticleSystem>().emission;
-        emissionModule.rateOverTime = 20;
+        emissionModule.rateOverTime = 15;
         damageEff.GetComponent<ParticleSystem>().Play();
 
         dash.SetVariableValue("DashSpeed", dashSpeedWhenOutOfStamina);
@@ -62,7 +62,7 @@ public class BossStaminaCtr : MonoBehaviour
     {
         if (stamina >= maxStamina)
         {
-            Debug.Log("Over");
+
             damageEff.GetComponent<ParticleSystem>().Clear();
             damageEff.GetComponent<ParticleSystem>().Stop();
             ParticleSystem.EmissionModule emissionModule = damageEff.GetComponent<ParticleSystem>().emission;
@@ -72,16 +72,20 @@ public class BossStaminaCtr : MonoBehaviour
             stamina = maxStamina;
             canStartRecovering = false;
             isRecovering = false;
+            return;
         }
-        isRecovering = true;
-        stamina += staminaRecoverySpeed * Time.fixedDeltaTime * 60;
+        else
+        {
+            isRecovering = true;
+            stamina += staminaRecoverySpeed * Time.fixedDeltaTime * 60;
+        }
+
     }
 
     public void StaminaDamageByLittleBubble(int _power)
     {
         if (isRecovering)
             return;
-
         if (stamina > 0)
             stamina -= _power;
         else
@@ -95,6 +99,7 @@ public class BossStaminaCtr : MonoBehaviour
     {
         if (isRecovering)
             return;
+
         if (stamina > 0)
             stamina -= _sizeMagnitude;
         else

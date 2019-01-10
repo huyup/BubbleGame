@@ -85,18 +85,21 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 {
                     float angle;
                     GameObject obj;
-                    if (!targetObjects.Value[i].GetComponent<PlayerController>().IsDead)
+                    if (targetObjects.Value[i])
                     {
-                        if ((obj = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value,
-                                viewDistance.Value, targetObjects.Value[i], targetOffset.Value, false,
-                                angleOffset2D.Value, out angle, ignoreLayerMask, useTargetBone.Value, targetBone)) !=
-                            null)
+                        if (!targetObjects.Value[i].GetComponent<PlayerController>().IsDead)
                         {
-                            // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
-                            if (angle < minAngle)
+                            if ((obj = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value,
+                                    viewDistance.Value, targetObjects.Value[i], targetOffset.Value, false,
+                                    angleOffset2D.Value, out angle, ignoreLayerMask, useTargetBone.Value,
+                                    targetBone)) != null)
                             {
-                                minAngle = angle;
-                                objectFound = obj;
+                                // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
+                                if (angle < minAngle)
+                                {
+                                    minAngle = angle;
+                                    objectFound = obj;
+                                }
                             }
                         }
                     }

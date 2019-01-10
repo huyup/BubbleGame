@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4539905583219590}
   - component: {fileID: 33024946252603470}
   - component: {fileID: 23562520232881766}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere(Shadow)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561172387305502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.03, y: 1.38, z: 3.09}
+  m_LocalPosition: {x: -34.312126, y: 2.8106437, z: -75.68536}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4140579988558648}
@@ -396,6 +396,8 @@ MonoBehaviour:
   upForceWhenContain: 2
   lastTimeByAirGun: 1
   timeToStopBubble: 1
+  takeInSpeedByTornado: 8
+  stopDistanceByTornado: 1.5
 --- !u!114 &114756217497577826
 MonoBehaviour:
   m_ObjectHideFlags: 1

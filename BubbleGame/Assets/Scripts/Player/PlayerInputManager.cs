@@ -10,10 +10,7 @@ public class PlayerInputManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float maxControllerTolerance = 0.02f;
-
-    [SerializeField]
-    private PlayerWeaponC airWeapon;
-
+    
     private PlayerController playerController;
     private PlayerStatus property;
 
@@ -100,22 +97,14 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         //Debug:攻撃ボタン2
-        if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
+        if (GamePad.GetButtonDown(GamePad.Button.Start, (GamePad.Index)playerNum))
         {
             playerController.UseAirGun();
         }
-        //if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)playerNum))
-        //{
-        //    airWeapon.OnAttackButtonDown();
-        //}
-        //if (GamePad.GetButton(GamePad.Button.B, (GamePad.Index)playerNum))
-        //{
-        //    airWeapon.OnAttackButtonStay();
-        //}
-        //if (GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index)playerNum))
-        //{
-        //    airWeapon.OnAttackButtonUp();
-        //}
+        if (GamePad.GetButtonDown(GamePad.Button.Back, (GamePad.Index)playerNum))
+        {
+            playerController.DisableAirGun();
+        }
         //ジャンプボタン
         if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)playerNum))
         {

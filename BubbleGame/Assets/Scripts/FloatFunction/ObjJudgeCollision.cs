@@ -10,7 +10,7 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private ObjController controller;
 
-    private bool canSetFloatOnce = false;
+    private bool canSetFloat = false;
 
     private BiggerObject biggerObject;
     // Use this for initialization
@@ -25,27 +25,7 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
-            canSetFloatOnce = true;
-            //何も入っていない状態だけ、処理する
-            if (other.GetComponent<BubbleJudgeCollider>().HadObjInside)
-            {
-                biggerObject = calculationController.GetBiggerFunction()
-                    .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
-                //当たった時に、大きさを比較
-                if (biggerObject == BiggerObject.Obj)
-                {
-                    if (other.transform.parent.Find("Bubble").GetComponent<BubbleController>().GetBubbleState() !=
-                        BubbleState.Creating)
-                    {
-                        //泡に破裂命令
-                        other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
-                    }
-                }
-                else if (biggerObject == BiggerObject.Bubble)
-                {
-                    other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                }
-            }
+            canSetFloat = true;
         }
     }
 
@@ -53,8 +33,8 @@ public class ObjJudgeCollision : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BubbleCollider"))
         {
-            //何も入っていない状態だけ、処理する
-            if (other.GetComponent<BubbleJudgeCollider>().HadObjInside)
+            var bubbleCtr = other.transform.parent.Find("Bubble").GetComponent<BubbleController>();
+            if (bubbleCtr.GetBubbleState() != BubbleState.Creating)
             {
                 biggerObject = calculationController.GetBiggerFunction()
                     .JudgeWhichBoxIsBigger(this.gameObject, other.gameObject);
@@ -62,28 +42,27 @@ public class ObjJudgeCollision : MonoBehaviour
                 {
                     if (other.transform.root.Find("Bubble"))
                     {
-                        var bubbleCtr = other.transform.parent.Find("Bubble").GetComponent<BubbleController>();
-                        if (bubbleCtr.GetBubbleState() !=
-                            BubbleState.Creating)
-                        {
-                            //泡に破裂命令
-                            other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
-                        }
-                    }
-                }
-
-                if (calculationController.GetContainFunction()
-                    .JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
-                {
-                    if (canSetFloatOnce)
-                    {
-                        SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
-                        other.GetComponent<BubbleJudgeCollider>().AddObjInside();
-                        canSetFloatOnce = false;
+                        //泡に破裂命令
+                        other.transform.root.GetComponent<BubbleSetController>().DestroyBubbleSet();
                     }
                 }
             }
-
+            //何も入っていない状態だけ、処理する
+            if (!other.GetComponent<BubbleJudgeCollider>().HadObjInside &&
+                bubbleCtr.GetBubbleState() != BubbleState.BePressed &&
+                bubbleCtr.GetBubbleState() != BubbleState.BeTakeIn)
+            {
+                if (calculationController.GetContainFunction()
+                    .JudgeIsBoxBContainBoxA(this.gameObject, other.gameObject))
+                {
+                    if (canSetFloat)
+                    {
+                        SetBoxAndBubbleFloat(this.gameObject, other.gameObject);
+                        other.GetComponent<BubbleJudgeCollider>().AddObjInside();
+                        canSetFloat = false;
+                    }
+                }
+            }
         }
     }
 
@@ -96,7 +75,5 @@ public class ObjJudgeCollision : MonoBehaviour
 
         if (controller.ObjState == ObjState.OnGround)
             floatByContain.FloatByContain(bubble);
-
-
     }
 }
