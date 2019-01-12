@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
         if (GetWeapon())
         {
-            GetWeapon().OnReset();
+            GetWeapon().OnChangeWeapon();
         }
         if (status.WeaponSelection == WeaponSelection.Bubble)
         {
@@ -246,13 +246,16 @@ public class PlayerController : MonoBehaviour
     public void UseAirGun()
     {
         status.SetWeaponSelection(WeaponSelection.AirGun);
-        nowWeaponType = WeaponType.WeaponC;
+        GetWeapon().OnChangeWeapon();
         weaponC.Reload();
+        nowWeaponType = WeaponType.WeaponC;
+
         Invoke("DelayDisableAirGun", status.AirGunLastTime);
     }
     public void DisableAirGun()
     {
         status.SetWeaponSelection(WeaponSelection.Bubble);
+        GetWeapon().OnChangeWeapon();
         nowWeaponType = WeaponType.WeaponA;
         //if (stageMain)
         //    stageMain.CreateItemInRandomPoint();
@@ -272,8 +275,11 @@ public class PlayerController : MonoBehaviour
                 nowWeapon = weaponB;
                 break;
             case WeaponType.WeaponC:
-                nowWeapon = weaponC;
-                break;
+                {
+                    nowWeapon = weaponC;
+                    nowWeapon.GetComponent<PlayerWeaponC>().UseShootSupportLine();
+                    break;
+                }
             case WeaponType.WeaponD:
                 nowWeapon = weaponD;
                 break;

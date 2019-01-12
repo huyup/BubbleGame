@@ -49,7 +49,7 @@ public class PlayerWeapon : MonoBehaviour
 
     }
 
-    public virtual void OnReset()
+    public virtual void OnChangeWeapon()
     {
 
     }

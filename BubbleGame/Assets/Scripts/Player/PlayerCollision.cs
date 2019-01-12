@@ -13,10 +13,10 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if ((other.gameObject.layer == 15/*EnemyHit*/&&!other.gameObject.CompareTag("SearchTrigger"))||
-            (other.gameObject.layer==16/*Environment*/&&other.GetComponent<ObjController>().ObjState==ObjState.Falling))
+        if ((other.gameObject.layer == 15/*EnemyHit*/&& !other.gameObject.CompareTag("SearchTrigger")) ||
+            (other.gameObject.layer == 16/*Environment*/&& other.GetComponent<ObjController>().ObjState == ObjState.Falling))
         {
+            Debug.Log("other" + other.name);
             controller.Damage();
         }
     }

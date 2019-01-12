@@ -15,7 +15,6 @@ public class PlayerWeaponD : PlayerWeapon
     private GameObject weaponDStartRef;
 
     private Vector3 bubbleStartPos;
-    private Rigidbody rb;
 
     private PlayerController playerController;
 
@@ -33,7 +32,6 @@ public class PlayerWeaponD : PlayerWeapon
         prevAmmoLeft = MaxAmmo;
         nowAmmoLeft = MaxAmmo;
         playerController = GetComponent<PlayerController>();
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -87,7 +85,7 @@ public class PlayerWeaponD : PlayerWeapon
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
         prevAmmoLeft = nowAmmoLeft;
     }
-    public override void OnReset()
+    public override void OnChangeWeapon()
     {
     }
 

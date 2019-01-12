@@ -183,9 +183,9 @@ public class PlayerWeaponA : PlayerWeapon
         return (int)nowAmmoLeft;
     }
 
-    public override void OnReset()
+    public override void OnChangeWeapon()
     {
-        base.OnReset();
+        base.OnChangeWeapon();
         controller.ResetJump();
         controller.ResetMove();
         controller.ResetAttack();

@@ -14,6 +14,7 @@ TagManager:
   - SearchTrigger
   - BubbleAirCollider
   - TornadoTrigger
+  - Boss
   layers:
   - Default
   - TransparentFX

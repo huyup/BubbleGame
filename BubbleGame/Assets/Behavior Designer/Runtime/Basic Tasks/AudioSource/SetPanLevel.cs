@@ -36,7 +36,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityAudioSource
             return TaskStatus.Success;
         }
 
-        public override void OnReset()
+        public override void OnChangeWeapon()
         {
             targetGameObject = null;
             panLevel = 1;

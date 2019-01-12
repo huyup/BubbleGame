@@ -397,7 +397,7 @@ MonoBehaviour:
   lastTimeByAirGun: 1
   timeToStopBubble: 1
   takeInSpeedByTornado: 8
-  stopDistanceByTornado: 1.5
+  stopDistanceByTornado: 2
 --- !u!114 &114756217497577826
 MonoBehaviour:
   m_ObjectHideFlags: 1

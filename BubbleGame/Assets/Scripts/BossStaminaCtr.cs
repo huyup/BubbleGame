@@ -108,6 +108,7 @@ public class BossStaminaCtr : MonoBehaviour
             isOutOfStamina = true;
         }
     }
+
     public int GetNowStamina()
     {
         return (int)stamina;

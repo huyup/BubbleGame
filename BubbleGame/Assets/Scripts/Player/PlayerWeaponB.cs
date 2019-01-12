@@ -118,9 +118,9 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.GetComponent<ParticleSystem>().Play();
     }
 
-    public override void OnReset()
+    public override void OnChangeWeapon()
     {
-        base.OnReset();
+        base.OnChangeWeapon();
         playerController.ResetAttack();
         playerController.ResetJump();
         rapidFireBubble.GetComponent<ParticleSystem>().Stop();

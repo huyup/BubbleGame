@@ -14,8 +14,7 @@ public enum WeaponSelection
 };
 public class PlayerStatus : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerSelection playerNum = PlayerSelection.Player1;
+    public PlayerSelection PlayerSelection = PlayerSelection.Player1;
 
     [SerializeField]
     private WeaponSelection weaponSelection = WeaponSelection.Bubble;
@@ -25,7 +24,7 @@ public class PlayerStatus : MonoBehaviour
     /// </summary>
     public int Num
     {
-        get { return (int)playerNum; }
+        get { return (int)PlayerSelection; }
     }
 
     /// <summary>

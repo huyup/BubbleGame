@@ -19,6 +19,9 @@ public class PlayerWeaponC : PlayerWeapon
     [SerializeField]
     private float spaceKeySpeed = 0.5f;
 
+    [SerializeField]
+    private BubbleDetectorLine bubbleDetectorLine;
+
     private Vector3 bubbleStartPos;
     private Rigidbody rb;
 
@@ -46,7 +49,6 @@ public class PlayerWeaponC : PlayerWeapon
         playerStatus = GetComponent<PlayerStatus>();
         rb = GetComponent<Rigidbody>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -63,6 +65,73 @@ public class PlayerWeaponC : PlayerWeapon
     public override int GetNowAmmo()
     {
         return (int)nowAmmoLeft;
+    }
+
+    public override void OnAttackButtonDown()
+    {
+        if (nowAmmoLeft < minShootCost)
+            return;
+        playerController.BanMove();
+        spaceStorage = 0;
+        canAttack = true;
+        buttonStayEff.transform.position = transform.position + new Vector3(0, 1.5f, 0);
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Play();
+        tmpAmmoCost = minShootCost;
+        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+    }
+    public override void OnAttackButtonStay()
+    {
+        if (!canAttack)
+            return;
+
+        if (spaceStorage < airGunMaxPower)
+        {
+            playerController.BanGravity();
+            spaceStorage += spaceKeySpeed * Time.fixedDeltaTime * 60;
+        }
+        else
+        {
+            //最大になったら、自動的に前へ出す
+            OnAttackButtonUp();
+        }
+        if (nowAmmoLeft <= 0)
+        {
+            //残量が足りなかったら、自動的に前へ出す
+            OnAttackButtonUp();
+        }
+    }
+    public override void OnAttackButtonUp()
+    {
+        if (!canAttack)
+            return;
+        
+        Shoot(spaceStorage, airGunMaxPower);
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Clear();
+        buttonStayEff.GetComponentInChildren<ParticleSystem>().Stop();
+
+        spaceStorage = 0;
+        prevAmmoLeft = nowAmmoLeft;
+
+        canAttack = false;
+        playerController.ResetMove();
+        playerController.ResetGravity();
+        //使い切ったら、禁止させる
+        if (nowAmmoLeft <= 0)
+        {
+            playerController.DisableAirGun();
+        }
+
+    }
+
+    public void UseShootSupportLine()
+    {
+        //補助線を更新
+        bubbleDetectorLine.CanUseShootSupportLine = true;
+    }
+    public override void OnChangeWeapon()
+    {
+        //補助線を更新
+        bubbleDetectorLine.CanUseShootSupportLine = false;
     }
     private void Shoot(float _power, float _maxPower)
     {
@@ -85,67 +154,6 @@ public class PlayerWeaponC : PlayerWeapon
             StartCoroutine(PullBack());
         }
     }
-    public override void OnAttackButtonDown()
-    {
-        if (nowAmmoLeft < minShootCost)
-            return;
-        playerController.BanMove();
-        spaceStorage = 0;
-        canAttack = true;
-        buttonStayEff.GetComponentInChildren<ParticleSystem>().Play();
-        tmpAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
-    }
-    public override void OnAttackButtonStay()
-    {
-        if (!canAttack)
-            return;
-
-
-
-        if (spaceStorage < airGunMaxPower)
-        {
-            playerController.BanGravity();
-            spaceStorage += spaceKeySpeed * Time.fixedDeltaTime * 60;
-        }
-        else
-        {
-            //最大になったら、自動的に前へ出す
-            OnAttackButtonUp();
-        }
-
-
-        if (nowAmmoLeft <= 0)
-        {
-            //残量が足りなかったら、自動的に前へ出す
-            OnAttackButtonUp();
-        }
-    }
-    public override void OnAttackButtonUp()
-    {
-        if (!canAttack)
-            return;
-        Shoot(spaceStorage, airGunMaxPower);
-        buttonStayEff.GetComponentInChildren<ParticleSystem>().Clear();
-        buttonStayEff.GetComponentInChildren<ParticleSystem>().Stop();
-
-        spaceStorage = 0;
-        prevAmmoLeft = nowAmmoLeft;
-
-        canAttack = false;
-        playerController.ResetMove();
-        playerController.ResetGravity();
-        //使い切ったら、禁止させる
-        if (nowAmmoLeft <= 0)
-        {
-            playerController.DisableAirGun();
-        }
-
-    }
-    public override void OnReset()
-    {
-    }
-
     IEnumerator PullBack()
     {
         playerController.BanMove();

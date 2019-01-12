@@ -37,7 +37,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityCircleCollider2D
             return TaskStatus.Success;
         }
 
-        public override void OnReset()
+        public override void OnChangeWeapon()
         {
             targetGameObject = null;
             storeValue = Vector2.zero;

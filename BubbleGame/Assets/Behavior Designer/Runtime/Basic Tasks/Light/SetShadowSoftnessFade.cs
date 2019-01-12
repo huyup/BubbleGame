@@ -36,7 +36,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityLight
             return TaskStatus.Success;
         }
 
-        public override void OnReset()
+        public override void OnChangeWeapon()
         {
             targetGameObject = null;
             shadowSoftnessFade = 0;

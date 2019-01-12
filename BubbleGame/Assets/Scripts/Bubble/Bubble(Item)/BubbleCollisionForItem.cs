@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleCollisionForItem : MonoBehaviour {
+public class BubbleCollisionForItem : MonoBehaviour
+{
     private BubbleSetController setController;
     // Use this for initialization
     void Start()
@@ -13,8 +14,11 @@ public class BubbleCollisionForItem : MonoBehaviour {
     {
         if (_other.gameObject.layer == 11/*PlayerTrigger*/)
         {
-            _other.GetComponent<PlayerController>().UseAirGun();
-            setController.DestroyBubbleItemSet();
+            if (_other.GetComponent<PlayerController>())
+            {
+                _other.GetComponent<PlayerController>().UseAirGun();
+                setController.DestroyBubbleItemSet();
+            }
         }
     }
 }
