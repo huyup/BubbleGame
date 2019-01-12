@@ -41,6 +41,9 @@ public class BubbleCollision : MonoBehaviour
                 {
                     _other.transform.root.GetComponent<BossStaminaCtr>()
                         .StaminaDamageByBigBubble(transform.localScale.magnitude * 2.5f);
+                    _other.transform.root.GetComponent<BossHateValueCtr>()
+                        .IncreaseHateValueByBigBubble(transform.localScale.magnitude * 2.5f,
+                            controller.PlayerSelectionWhoCreated);
                     StartCoroutine(DelayDestroy());
                     canAddStaminaDamageToBoss = false;
                 }
@@ -78,7 +81,7 @@ public class BubbleCollision : MonoBehaviour
         foreach (Collider insideCollider in insideColliderList)
         {
             if (insideCollider && insideCollider.GetComponent<ObjController>())
-                insideCollider.GetComponent<ObjController>().AddForceByPush(_direction);
+                insideCollider.GetComponent<ObjController>().AddForceByPush(_direction, controller.PlayerSelectionWhoPush);
 
         }
     }
@@ -90,7 +93,7 @@ public class BubbleCollision : MonoBehaviour
             if (insideCollider && insideCollider.GetComponent<ObjController>())
             {
                 insideCollider.GetComponent<ObjController>()
-                    .SetTakeInParamater(_destinatio, _takeInSpeed, _stopDistance);
+                    .SetTakeInParameter(_destinatio, _takeInSpeed, _stopDistance);
                 insideCollider.GetComponent<ObjController>().SetObjState(ObjState.MovingByTornado);
 
             }

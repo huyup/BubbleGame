@@ -14,6 +14,8 @@ public enum ObjState
 }
 public class ObjController : MonoBehaviour
 {
+    public PlayerSelection PlayerSelectionWhoPushed { get; private set; }
+
     public ObjState ObjState { get; private set; }
 
     [SerializeField]
@@ -93,7 +95,7 @@ public class ObjController : MonoBehaviour
 
         if (ObjState == ObjState.MovingByTornado)
         {
-            TakedInByTornado();
+            TakeInByTornado();
         }
 
         if (status.Type == ObjType.Inoshishi)
@@ -240,17 +242,17 @@ public class ObjController : MonoBehaviour
         takeInSpeed = 0;
         stopDistanceByTornado = 0;
     }
-    public void SetTakeInParamater(Vector3 _destination, float _takeInSpeedByTornado, float _stopDistanceByTornado)
+    public void SetTakeInParameter(Vector3 _destination, float _takeInSpeedByTornado, float _stopDistanceByTornado)
     {
         tornadoDestination = _destination;
         takeInSpeed = _takeInSpeedByTornado;
         stopDistanceByTornado = _stopDistanceByTornado;
     }
 
-    public void TakedInByTornado()
+    public void TakeInByTornado()
     {
         var destinationPositionInBubbleHeight = new Vector3(tornadoDestination.x, transform.position.y, tornadoDestination.z);
-        
+
         if (Vector3.Distance(destinationPositionInBubbleHeight, transform.position) < stopDistanceByTornado)
         {
             rb.velocity = Vector3.zero;
@@ -261,8 +263,9 @@ public class ObjController : MonoBehaviour
             rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeed;
         }
     }
-    public void AddForceByPush(Vector3 _direction)
+    public void AddForceByPush(Vector3 _direction, PlayerSelection _player)
     {
+        PlayerSelectionWhoPushed = _player;
         GetComponent<BoxCollider>().isTrigger = false;
         rb.velocity = Vector3.zero;
         ObjState = ObjState.MovingByAirGun;

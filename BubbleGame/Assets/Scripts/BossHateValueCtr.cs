@@ -5,58 +5,64 @@ using UnityEngine;
 public class BossHateValueCtr : MonoBehaviour
 {
     [SerializeField]
+    private GameObject player1;
+
+    [SerializeField]
+    private GameObject player2;
+
+    [SerializeField]
     private float lowerHateValueOnceTime = 120;
 
     private const float MaxHateValue = 99999;
 
-    private float player1HateValue = 100;
+    private const float MinHateValue = 100;
 
-    private float player2HateValue = 100;
+    private float player1HateValue;
+
+    private float player2HateValue;
 
     // Use this for initialization
     void Start()
     {
-        player1HateValue = 100;
+        player1HateValue = MinHateValue;
 
-        player2HateValue = 100;
-
-
+        player2HateValue = MinHateValue;
     }
-
-    private void Update()
-    {
-        Debug.Log("player1HateValue" + player1HateValue);
-        Debug.Log("player2HateValue" + player2HateValue);
-
-    }
-
-    public void SendTargetToBehavior()
+    public GameObject SendTargetToBehavior()
     {
         if (player1HateValue > player2HateValue)
         {
-            //SendPlayer1
             LowerHateValue(PlayerSelection.Player1);
+            //SendPlayer1
+            return player1;
+
         }
         else if (player2HateValue > player1HateValue)
         {
             //SendPlayer2
             LowerHateValue(PlayerSelection.Player2);
+            return player2;
         }
         else if (Mathf.FloorToInt(player1HateValue) == Mathf.FloorToInt(player2HateValue))
         {
             //RandomSelect
-            var randomValue = Random.Range(0, 1);
-            if (randomValue == 0)
+            var randomValue = Random.Range(1, 3);
+            Debug.Log("randomValue" + randomValue);
+            if (randomValue == 1)
             {
                 //SendPlayer1
                 LowerHateValue(PlayerSelection.Player1);
+                return player1;
             }
-            else if (randomValue == 1)
+            else if (randomValue == 2)
             {
                 //SendPlayer2
                 LowerHateValue(PlayerSelection.Player2);
+                return player2;
             }
         }
+
+        return null;
     }
 
     public void LowerHateValue(PlayerSelection _playerSelection)

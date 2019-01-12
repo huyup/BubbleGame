@@ -105,6 +105,8 @@ public class PlayerWeaponA : PlayerWeapon
         bubbles[bubbles.Count - 1].transform.position = bubbleStartPos;
 
         bubbles[bubbles.Count - 1].GetComponent<BubbleController>().SetBubbleState(BubbleState.Creating);
+        bubbles[bubbles.Count - 1].GetComponent<BubbleController>().PlayerSelectionWhoCreated =
+            GetComponent<PlayerStatus>().PlayerSelection;
     }
 
     public override void OnAttackButtonStay()

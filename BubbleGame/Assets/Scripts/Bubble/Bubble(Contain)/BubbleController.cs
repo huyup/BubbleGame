@@ -11,6 +11,8 @@ public enum BubbleState
 }
 public class BubbleController : MonoBehaviour
 {
+    public PlayerSelection PlayerSelectionWhoCreated { get; set; }
+    public PlayerSelection PlayerSelectionWhoPush { get; set; }
     private Vector3 tornadoPosition;
 
     private BubbleState nowBubbleState;
@@ -32,7 +34,7 @@ public class BubbleController : MonoBehaviour
 
     [SerializeField]
     private float stopDistanceByTornado = 1.5f;
-    
+
     private bool canAddForceToBubble = true;
 
     private bool canStopBubble = true;
@@ -62,7 +64,7 @@ public class BubbleController : MonoBehaviour
 
     public void TakeInByTornado()
     {
-        var tornadoPositionInBubbleHeight =  new Vector3(tornadoPosition.x, transform.position.y, tornadoPosition.z);
+        var tornadoPositionInBubbleHeight = new Vector3(tornadoPosition.x, transform.position.y, tornadoPosition.z);
         if (Vector3.Distance(tornadoPositionInBubbleHeight, transform.position) < stopDistanceByTornado)
         {
             nowBubbleState = BubbleState.StandBy;
@@ -74,7 +76,7 @@ public class BubbleController : MonoBehaviour
             var direction = (tornadoPositionInBubbleHeight - transform.position).normalized;
             rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeedByTornado;
             if (bubbleCollision)
-                bubbleCollision.TakeObjInByTornado(tornadoPosition, takeInSpeedByTornado,stopDistanceByTornado);
+                bubbleCollision.TakeObjInByTornado(tornadoPosition, takeInSpeedByTornado, stopDistanceByTornado);
         }
     }
 
@@ -95,8 +97,9 @@ public class BubbleController : MonoBehaviour
         nowBubbleState = _nextBubbleState;
     }
 
-    public void AddForceByPush(Vector3 _direction)
+    public void AddForceByPush(Vector3 _direction, PlayerSelection _playerSelection)
     {
+        PlayerSelectionWhoPush = _playerSelection;
         rb.velocity = _direction;
         if (bubbleCollision)
             bubbleCollision.AddForceToInsideObj(_direction);

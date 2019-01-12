@@ -40,6 +40,7 @@ public class ObjBodyCollision : MonoBehaviour
             {
                 controller.PlayCollisionEff(collisionPos);
                 _other.transform.root.GetComponent<ObjController>().DamageByCollision(10);
+                _other.transform.root.GetComponent<BossHateValueCtr>().IncreaseHateValueByCrash(50, controller.PlayerSelectionWhoPushed);
                 StageManager.Instance.RemoveEnemyCount(this.gameObject.GetComponent<ObjStatus>().Type);
                 Destroy(this.gameObject);
                 canHitBoss = false;

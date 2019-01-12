@@ -67,7 +67,8 @@ public class AirGunCtr : MonoBehaviour
         if (_obj.layer == 17 /*BubbleAirCollider*/)
         {
             Vector3 particleDirection = this.transform.forward;
-            _obj.transform.parent.GetComponent<BubbleController>().AddForceByPush(particleDirection * airGunPower);
+            var playerSelection = GetComponentInParent<PlayerStatus>().PlayerSelection;
+            _obj.transform.parent.GetComponent<BubbleController>().AddForceByPush(particleDirection * airGunPower, playerSelection);
             _obj.transform.parent.GetComponent<BubbleController>().SetBubbleState(BubbleState.BePressed);
         }
     }
