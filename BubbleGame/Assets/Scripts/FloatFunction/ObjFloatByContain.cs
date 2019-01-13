@@ -125,7 +125,7 @@ public class ObjFloatByContain : MonoBehaviour
         if (isCreatedByDamage)
             rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
         else
-            rb.velocity = Vector3.zero;
+            rb.velocity = bubbleInstance.GetComponent<Rigidbody>().velocity;
     }
     public void ResetFloatFlag()
     {

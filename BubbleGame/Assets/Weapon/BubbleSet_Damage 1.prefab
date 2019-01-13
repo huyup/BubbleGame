@@ -395,7 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upForceWhenContain: 2
   lastTimeByAirGun: 1
-  timeToStopBubble: 1
+  timeToStopBubble: 3
   takeInSpeedByTornado: 8
   stopDistanceByTornado: 2
 --- !u!114 &114756217497577826
