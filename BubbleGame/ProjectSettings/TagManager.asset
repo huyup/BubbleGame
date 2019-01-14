@@ -15,6 +15,12 @@ TagManager:
   - BubbleAirCollider
   - TornadoTrigger
   - Boss
+  - BossHead
+  - Harinezumi
+  - MushRoom
+  - FallDownTree
+  - Stone
+  - Uribou
   layers:
   - Default
   - TransparentFX

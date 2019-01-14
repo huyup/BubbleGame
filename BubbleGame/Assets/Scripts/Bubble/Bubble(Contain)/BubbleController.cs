@@ -35,6 +35,9 @@ public class BubbleController : MonoBehaviour
     [SerializeField]
     private float stopDistanceByTornado = 1.5f;
 
+    [SerializeField]
+    private float timeToDestroyBubble = 2;
+
     private bool canAddForceToBubble = true;
 
     private bool canStopBubble = true;
@@ -50,11 +53,19 @@ public class BubbleController : MonoBehaviour
     private void Update()
     {
         if (nowBubbleState == BubbleState.StandBy)
+        {
             Invoke("DelayStopBubble", timeToStopBubble);
-        else if (nowBubbleState == BubbleState.BeTakeIn)
-            TakeInByTornado();
+            Invoke("DelayDestroyBubble", timeToStopBubble + timeToDestroyBubble);
+        }
         else
+        {
             CancelInvoke("DelayStopBubble");
+            CancelInvoke("DelayDestroyBubble");
+        }
+        if (nowBubbleState == BubbleState.BeTakeIn)
+        {
+            TakeInByTornado();
+        }
     }
 
     public void SetTornadoPosition(Vector3 _destination)
@@ -87,6 +98,11 @@ public class BubbleController : MonoBehaviour
             rb.velocity = Vector3.zero;
             canStopBubble = false;
         }
+    }
+
+    private void DelayDestroyBubble()
+    {
+        GetComponentInParent<BubbleSetController>().DestroyBubbleSet();
     }
     public BubbleState GetBubbleState()
     {

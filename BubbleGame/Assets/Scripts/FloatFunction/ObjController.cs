@@ -11,6 +11,7 @@ public enum ObjState
     MovingByTornado,
     Dizziness,
     Falling,
+    Dead,
 }
 public class ObjController : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private BehaviorsCtr behaviorCtr;
+
+    [SerializeField]
+    private GameObject destroyEffWhenOut;
 
     [SerializeField]
     private GameObject destroyEff;
@@ -123,8 +127,11 @@ public class ObjController : MonoBehaviour
             }
             else
             {
-                if (GetComponent<BoxCollider>())
-                    GetComponent<BoxCollider>().isTrigger = true;
+                if (ObjState != ObjState.Dead)
+                {
+                    if (GetComponent<BoxCollider>())
+                        GetComponent<BoxCollider>().isTrigger = true;
+                }
             }
         }
 
@@ -132,10 +139,6 @@ public class ObjController : MonoBehaviour
             summon.SetVariableValue("Hp", NowHp);
         if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(NowHp, status.MaxHp);
-        if (ObjState == ObjState.Floating && status.Type != ObjType.Obj)
-        {
-            behaviorCtr.DisableBehaviors();
-        }
     }
 
 
@@ -169,7 +172,6 @@ public class ObjController : MonoBehaviour
         }
 
     }
-
     public int GetBossNowHp()
     {
         return bossNowHp;
@@ -195,7 +197,7 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    public void Dead()
+    public void DeadWhenOut()
     {
         if (status.Type == ObjType.Inoshishi)
         {
@@ -203,7 +205,7 @@ public class ObjController : MonoBehaviour
         }
         else if (status.Type != ObjType.Obj)
         {
-            GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
+            GameObject destroyEffInstance = Instantiate(destroyEffWhenOut) as GameObject;
 
             destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
 
@@ -214,6 +216,31 @@ public class ObjController : MonoBehaviour
         }
     }
 
+    public void ResetWhenCrash()
+    {
+        if (GetComponent<BoxCollider>())
+        {
+            Debug.Log("ResetWhenCrash");
+            GetComponent<BoxCollider>().isTrigger = false;
+            //GetComponent<BoxCollider>().size = objBoxColliderDefaultSize;
+        }
+        if (GetComponent<Rigidbody>())
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+
+        SetObjState(ObjState.Dead);
+    }
+    public void Dead()
+    {
+        GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
+
+        destroyEffInstance.transform.position = transform.position;
+
+        destroyEffInstance.GetComponent<ParticleSystem>().Play();
+        StageManager.Instance.RemoveEnemyCount(status.Type);
+        Destroy(this.gameObject, 0.5f);
+    }
     public void OnReset()
     {
         GetComponent<Rigidbody>().isKinematic = true;

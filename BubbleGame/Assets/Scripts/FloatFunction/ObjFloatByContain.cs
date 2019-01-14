@@ -31,6 +31,7 @@ public class ObjFloatByContain : MonoBehaviour
 
     private bool isCreatedByDamage = false;
 
+    private Vector3 boxColliderInitScale;
     private void Start()
     {
         behaviorCtr = GetComponent<BehaviorsCtr>();
@@ -38,6 +39,9 @@ public class ObjFloatByContain : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initAngularDrag = rb.angularDrag;
         initDrag = rb.drag;
+
+        if (GetComponent<BoxCollider>())
+            boxColliderInitScale = GetComponent<BoxCollider>().size;
     }
 
     public void SetCreatedByDamageFlag(bool _flag)
@@ -77,6 +81,7 @@ public class ObjFloatByContain : MonoBehaviour
                 GetComponent<BoxCollider>().size -= new Vector3(GetComponent<BoxCollider>().size.x * 0.7f, 0, GetComponent<BoxCollider>().size.z * 0.7f);
             }
         }
+
         rb.useGravity = false;
         rb.angularDrag = 0.05f;
         rb.drag = 0.05f;
@@ -89,7 +94,8 @@ public class ObjFloatByContain : MonoBehaviour
     private void Fallen()
     {
         rb.velocity = Physics.gravity;
-        objController.SetObjState(ObjState.Falling);
+        if (objController.ObjState != ObjState.Dead)
+            objController.SetObjState(ObjState.Falling);
         canStartFloating = false;
     }
     private void FloatByContainOnUpdate()
@@ -111,9 +117,7 @@ public class ObjFloatByContain : MonoBehaviour
         {
             FloatByBubbleVelocity();
         }
-
     }
-
     private void MoveToCenter()
     {
         Vector3 direction = (bubbleInstance.position - transform.position).normalized;
@@ -129,6 +133,8 @@ public class ObjFloatByContain : MonoBehaviour
     }
     public void ResetFloatFlag()
     {
+        if (GetComponent<BoxCollider>())
+            GetComponent<BoxCollider>().size = boxColliderInitScale;
         rb.useGravity = true;
         rb.angularDrag = initAngularDrag;
         rb.drag = initDrag;

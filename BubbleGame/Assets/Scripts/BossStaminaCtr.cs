@@ -37,6 +37,12 @@ public class BossStaminaCtr : MonoBehaviour
     }
     private void Update()
     {
+        if (stamina <= 0)
+        {
+            stamina = 0;
+            isOutOfStamina = true;
+        }
+
         if (isOutOfStamina)
         {
             OutOfStamina();
