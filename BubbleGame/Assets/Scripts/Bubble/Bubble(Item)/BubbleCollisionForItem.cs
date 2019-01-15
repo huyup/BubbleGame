@@ -4,21 +4,40 @@ using UnityEngine;
 
 public class BubbleCollisionForItem : MonoBehaviour
 {
-    private BubbleSetController setController;
+    private ItemSetCtr itemSetCtr;
     // Use this for initialization
     void Start()
     {
-        setController = transform.parent.GetComponent<BubbleSetController>();
+        itemSetCtr = transform.GetComponentInParent<ItemSetCtr>();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.transform.name);
+
     }
     private void OnTriggerEnter(Collider _other)
     {
+        Debug.Log(_other.transform.name);
+        if (_other.gameObject.layer == 12/*EnemyHit*/||
+            _other.gameObject.layer == 15/*EnemyAttack*/)
+        {
+            GetComponent<BubbleItemMovement>().IsHitBoss = true;
+        }
         if (_other.gameObject.layer == 11/*PlayerTrigger*/)
         {
-            if (_other.GetComponent<PlayerController>())
+            if (_other.transform.GetComponent<PlayerController>())
             {
-                _other.GetComponent<PlayerController>().UseAirGun();
-                setController.DestroyBubbleItemSet();
+                itemSetCtr.GetItem(_other.transform);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider _other)
+    {
+        if (_other.gameObject.layer == 12/*EnemyHit*/||
+            _other.gameObject.layer == 15/*EnemyAttack*/)
+        {
+            GetComponent<BubbleItemMovement>().IsHitBoss = false;
         }
     }
 }

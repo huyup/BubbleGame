@@ -11,49 +11,61 @@ public class BubbleItemMovement : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed = 0.05f;
-    
+
     [SerializeField]
     private float randomRange = 5;
 
     [SerializeField]
     private Transform initPos;
-    
+
     private bool hasArrivalToInitPos;
 
     private bool canSetNextDestination;
-    
+
     private Vector3 destination;
 
+    public bool IsHitBoss { get; set; }
     // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(initPos.position, transform.position) < 5 && !hasArrivalToInitPos)
-        {
-
-            canSetNextDestination = true;
-            hasArrivalToInitPos = true;
-        }
+        if (IsHitBoss)
+            return;
 
         if (!hasArrivalToInitPos)
-            MoveToInitPos();
+        {
+            if (Vector3.Distance(initPos.position, transform.position) < 5 || IsHitBoss)
+            {
+                canSetNextDestination = true;
+                hasArrivalToInitPos = true;
+            }
+            else
+            {
+                MoveToInitPos();
+            }
+        }
         else
         {
+
             if (canSetNextDestination)
             {
                 SetRandomDestination();
-                canSetNextDestination = false;
+                if (!IsHitBoss)
+                    canSetNextDestination = false;
             }
-
-            MoveToRandomPos();
-
-            if (Vector3.Distance(destination,
-                    transform.position) < 2f)
+            else
             {
-                canSetNextDestination = true;
+                if (Vector3.Distance(destination,
+                        transform.position) < 5f)
+                {
+                    canSetNextDestination = true;
+                }
+                else
+                {
+                    MoveToRandomPos();
+                }
             }
-        }
 
+        }
         transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time * pingPongSpeed, pingPongLength), transform.position.z);
     }
 
