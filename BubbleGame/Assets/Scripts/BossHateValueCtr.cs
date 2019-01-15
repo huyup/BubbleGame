@@ -73,7 +73,7 @@ public class BossHateValueCtr : MonoBehaviour
         {
             //RandomSelect
             var randomValue = Random.Range(1, 3);
-            Debug.Log("randomValue" + randomValue);
+
             if (randomValue == 1)
             {
                 //SendPlayer1

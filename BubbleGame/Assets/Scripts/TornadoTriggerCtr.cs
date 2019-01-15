@@ -32,7 +32,6 @@ public class TornadoTriggerCtr : MonoBehaviour
         nowRadius = minRadius;
         GetComponent<SphereCollider>().radius = nowRadius;
     }
-
     public void IncreaseTriggerRadius()
     {
         if (nowRadius < maxRadius)

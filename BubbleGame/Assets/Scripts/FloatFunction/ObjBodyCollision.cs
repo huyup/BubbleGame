@@ -41,10 +41,9 @@ public class ObjBodyCollision : MonoBehaviour
         if (_other.transform.root.CompareTag("Boss") &&
             Vector3.Distance(transform.position, _other.transform.root.position) > 4)
         {
-            Debug.Log("Crash");
+
             if (selfController.ObjState == ObjState.MovingByAirGun && canHitBoss)
             {
-                Debug.Log("Crash2");
                 selfController.PlayCollisionEff(transform.position);
                 Damage(_other.gameObject, _other.transform.position);
                 IncreaseHateValue(_other.gameObject);

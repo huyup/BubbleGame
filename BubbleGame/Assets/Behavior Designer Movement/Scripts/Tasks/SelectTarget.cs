@@ -33,7 +33,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                     {
 
                         returnTarget.Value = target;
-                        Debug.Log("Target" + returnTarget.Value.name);
+
                     }
                     else
                     {

@@ -17,7 +17,7 @@ public class BubbleCollisionForItem : MonoBehaviour
     }
     private void OnTriggerEnter(Collider _other)
     {
-        Debug.Log(_other.transform.name);
+
         if (_other.gameObject.layer == 12/*EnemyHit*/||
             _other.gameObject.layer == 15/*EnemyAttack*/)
         {

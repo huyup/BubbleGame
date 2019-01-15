@@ -16,7 +16,6 @@ public class PlayerCollision : MonoBehaviour
         if ((other.gameObject.layer == 15/*EnemyHit*/&& !other.gameObject.CompareTag("SearchTrigger")) ||
             (other.gameObject.layer == 16/*Environment*/&& other.GetComponent<ObjController>().ObjState == ObjState.Falling))
         {
-            Debug.Log("other" + other.name);
             controller.Damage();
         }
     }

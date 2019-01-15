@@ -31259,7 +31259,6 @@ MonoBehaviour:
     type: 2}
   behaviorCtr: {fileID: 606619133}
   destroyEffWhenOut: {fileID: 0}
-  destroyEff: {fileID: 0}
   mushroomCrashEff: {fileID: 0}
   uiCtr: {fileID: 1031786648}
 --- !u!114 &606619129
@@ -53990,7 +53989,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4397687727541646, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -28.59
+      value: 1.95
       objectReference: {fileID: 0}
     - target: {fileID: 4397687727541646, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
       propertyPath: m_LocalPosition.y
@@ -53998,7 +53997,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4397687727541646, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2.37
+      value: 6.91
       objectReference: {fileID: 0}
     - target: {fileID: 4397687727541646, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
       propertyPath: m_LocalRotation.x

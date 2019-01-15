@@ -61,10 +61,7 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private GameObject destroyEffWhenOut;
-
-    [SerializeField]
-    private GameObject destroyEff;
-
+    
     [SerializeField]
     private GameObject mushroomCrashEff;
 
@@ -103,7 +100,6 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
         }
@@ -268,17 +264,14 @@ public class ObjController : MonoBehaviour
         transform.DOScale(Vector3.zero, 2);
         SetObjState(ObjState.Dead);
 
+        transform.gameObject.layer = 21;/*GroundOnly*/
+
         StartCoroutine(DelayDestroy());
     }
 
     IEnumerator DelayDestroy()
     {
         yield return new WaitForSeconds(3);
-        GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
-
-        destroyEffInstance.transform.position = transform.position + new Vector3(0, 1, 0);
-
-        destroyEffInstance.GetComponent<ParticleSystem>().Play();
         Destroy(this.gameObject);
         StageManager.Instance.RemoveEnemyCount(status.Type);
     }
