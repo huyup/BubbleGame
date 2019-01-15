@@ -235,7 +235,7 @@ public class ObjController : MonoBehaviour
             particle.Play();
         }
     }
-    public void MushroomCrash(Vector3 _crashPointPos)
+    public void MushroomCrashWithHead(Vector3 _crashPointPos)
     {
         Destroy(this.gameObject);
         GameObject crashEff = Instantiate(mushroomCrashEff) as GameObject;
@@ -243,9 +243,7 @@ public class ObjController : MonoBehaviour
         crashEff.transform.position = _crashPointPos;
 
         crashEff.GetComponent<ParticleSystem>().Play();
-
     }
-
     public void StoneCrash()
     {
         Debug.Log("StoneCrash");
@@ -258,15 +256,16 @@ public class ObjController : MonoBehaviour
     {
         if (GetComponent<BoxCollider>())
         {
-
             GetComponent<BoxCollider>().isTrigger = false;
         }
 
         Vector3 direction = (_hitPos - transform.position).normalized * -1;
 
         rb.AddForce(direction * 50, ForceMode.VelocityChange);
-        rb.AddForce(Vector3.up * 80, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.up * 50, ForceMode.VelocityChange);
+        rb.freezeRotation = false;
 
+        transform.DOScale(Vector3.zero, 2);
         SetObjState(ObjState.Dead);
 
         StartCoroutine(DelayDestroy());

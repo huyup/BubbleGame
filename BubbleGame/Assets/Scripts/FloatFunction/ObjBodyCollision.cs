@@ -80,7 +80,7 @@ public class ObjBodyCollision : MonoBehaviour
             {
                 bossController.BossDizziness();
                 bossController.DamageByCollision(5);
-                selfController.MushroomCrash(_otherPosition);
+                selfController.MushroomCrashWithHead(_otherPosition);
             }
         }
         else
@@ -98,7 +98,7 @@ public class ObjBodyCollision : MonoBehaviour
             else if (transform.CompareTag("MushRoom"))
             {
                 bossController.DamageByCollision(5);
-                selfController.MushroomCrash(_otherPosition);
+                selfController.EnemyCrash(_otherPosition);
             }
         }
     }

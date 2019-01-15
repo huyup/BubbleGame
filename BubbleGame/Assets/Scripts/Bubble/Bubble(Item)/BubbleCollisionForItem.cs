@@ -13,7 +13,7 @@ public class BubbleCollisionForItem : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.transform.name);
-
+        
     }
     private void OnTriggerEnter(Collider _other)
     {
