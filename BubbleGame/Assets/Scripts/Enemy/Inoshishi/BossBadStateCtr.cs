@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using BehaviorDesigner.Runtime;
 public class BossBadStateCtr : MonoBehaviour
 {
+    [SerializeField] private BehaviorTree dush;
+
+    [SerializeField] private BehaviorTree think;
 
     [SerializeField]
     private GameObject dizzinessEff;
@@ -49,8 +52,6 @@ public class BossBadStateCtr : MonoBehaviour
             }
         }
     }
-
-
     public void BossPoison()
     {
         var particles = poisonEff.GetComponentsInChildren<ParticleSystem>();
@@ -58,6 +59,14 @@ public class BossBadStateCtr : MonoBehaviour
         {
             particle.Play();
         }
+
+
+        StartCoroutine(DelayPoison());
+    }
+
+    IEnumerator DelayPoison()
+    {
+        yield return new WaitForSeconds(1);
 
         var particlesStatus = poisonStatusEff.GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in particlesStatus)
@@ -67,8 +76,8 @@ public class BossBadStateCtr : MonoBehaviour
 
         isInPoison = true;
         StartCoroutine(DelayResetStatusFromPoison());
-    }
 
+    }
     IEnumerator DelayResetStatusFromPoison()
     {
         yield return new WaitForSeconds(poisonLastTime);
@@ -83,6 +92,7 @@ public class BossBadStateCtr : MonoBehaviour
         {
             particle.Stop();
         }
+
         isInPoison = false;
     }
     public void BossDizziness()
@@ -92,7 +102,16 @@ public class BossBadStateCtr : MonoBehaviour
         {
             particle.Play();
         }
+        dush.SetVariableValue("IsDizziness", true);
+        think.SetVariableValue("IsDizziness", true);
 
+        StartCoroutine(DelayDizziness());
+
+    }
+
+    IEnumerator DelayDizziness()
+    {
+        yield return new WaitForSeconds(1);
         var particlesStatus = dizzinessStatusEff.GetComponentsInChildren<ParticleSystem>();
         foreach (var particle in particlesStatus)
         {
@@ -102,7 +121,6 @@ public class BossBadStateCtr : MonoBehaviour
         isInDizziness = true;
         StartCoroutine(DelayResetStatusFromPoison());
     }
-
     IEnumerator DelayResetStatusFromDizziness()
     {
         yield return new WaitForSeconds(dizzinessLastTime);
@@ -116,6 +134,9 @@ public class BossBadStateCtr : MonoBehaviour
         {
             particle.Stop();
         }
+        dush.SetVariableValue("IsDizziness", false);
+        think.SetVariableValue("IsDizziness", false);
+
         isInDizziness = false;
     }
 }

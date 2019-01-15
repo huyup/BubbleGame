@@ -113,6 +113,7 @@ public class ObjBodyCollision : MonoBehaviour
             }
             else if (transform.CompareTag("MushRoom"))
             {
+                selfController.HitBossEff(transform.position);
                 bossController.DamageByCollision(5);
                 selfController.EnemyCrash(_otherPosition);
             }

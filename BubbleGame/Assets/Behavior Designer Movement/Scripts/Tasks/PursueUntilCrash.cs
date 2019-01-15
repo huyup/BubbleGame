@@ -15,6 +15,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The GameObject that the agent is pursuing")]
         public SharedFloat DistanceToStop;
 
+        public SharedGameObject centerPointRef;
+
+        public SharedBool IsDizziness;
+
         // The position of the target at the last frame
         private Vector3 targetPosition;
         private bool hasArrived = false;
@@ -34,9 +38,21 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             waitDuration = timeToFinish.Value;
 
             targetPosition = target.Value.transform.position;
-            Vector3 direction = (targetPosition - transform.position).normalized;
-            targetPosition += direction*10;
-            SetDestination(targetPosition);
+
+            if (IsDizziness.Value)
+            {
+                Vector3 direction = (targetPosition - transform.position).normalized;
+                targetPosition += direction * 10;
+                SetDestination(targetPosition);
+            }
+            else if (!IsDizziness.Value)
+            {
+                var randomCircle = Random.insideUnitCircle;
+                var randomPoint = centerPointRef.Value.transform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
+                Vector3 direction = (randomPoint - transform.position).normalized;
+                targetPosition += direction * 15;
+                SetDestination(targetPosition);
+            }
         }
 
         // Pursue the destination. Return success once the agent has reached the destination.
