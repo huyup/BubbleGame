@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Basic.UnityGameObject;
 using UnityEngine;
 
 public class ObjJudgeCollision : MonoBehaviour
@@ -12,10 +13,13 @@ public class ObjJudgeCollision : MonoBehaviour
 
     private bool canSetFloat = false;
 
+    private GameObject a;
+
     private BiggerObject biggerObject;
     // Use this for initialization
     void Start()
     {
+
         controller = transform.parent.GetComponent<ObjController>();
         calculationController = GameObject.Find("CalculationController").GetComponent<CalculationRef>();
 

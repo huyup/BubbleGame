@@ -119,7 +119,7 @@ public class BossBadStateCtr : MonoBehaviour
         }
 
         isInDizziness = true;
-        StartCoroutine(DelayResetStatusFromPoison());
+        StartCoroutine(DelayResetStatusFromDizziness());
     }
     IEnumerator DelayResetStatusFromDizziness()
     {
