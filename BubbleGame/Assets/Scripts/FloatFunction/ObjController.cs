@@ -14,8 +14,15 @@ public enum ObjState
     Falling,
     Dead,
 }
+public enum MushroomType
+{
+    PoisonMushroom,
+    DizzinessMushroom,
+}
 public class ObjController : MonoBehaviour
 {
+    public MushroomType MushroomType;
+
     public PlayerSelection PlayerSelectionWhoPushed { get; private set; }
 
     public ObjState ObjState { get; private set; }
@@ -28,9 +35,6 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private ObjFloatByDamage floatByDamage;
-
-    [SerializeField]
-    private GameObject dizzinessEff;
 
     [SerializeField]
     private BubbleDamageEff bubbleDamageEff;
@@ -61,9 +65,12 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private GameObject destroyEffWhenOut;
-    
+
     [SerializeField]
-    private GameObject mushroomCrashEff;
+    private GameObject dizzinessMushroomEff;
+
+    [SerializeField]
+    private GameObject poisonMushrommEff;
 
     [SerializeField]
     private UIBase uiCtr;
@@ -100,10 +107,6 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-        }
-
         if (ObjState == ObjState.MovingByTornado)
         {
             TakeInByTornado();
@@ -148,7 +151,7 @@ public class ObjController : MonoBehaviour
             SetSpeedByDamage(NowHp, status.MaxHp);
     }
 
-
+    #region 泡関連機能
     private void SetSpeedByDamage(int _nowHp, int _maxHp)
     {
         var rate = (_nowHp * 100 / _maxHp);
@@ -158,12 +161,31 @@ public class ObjController : MonoBehaviour
 
         if ((bool)attack.GetVariable("IsAttacking").GetValue())
             agent.speed = initAttackSpeed * (rate * 0.01f);
-
-
     }
     public void SetObjState(ObjState _state)
     {
         ObjState = _state;
+    }
+    #endregion
+
+    #region ダメージ
+    public void DeadWhenOut()
+    {
+        if (status.Type == ObjType.Inoshishi)
+        {
+            uiCtr.DrawClearText();
+        }
+        else if (status.Type != ObjType.Obj)
+        {
+            GameObject destroyEffInstance = Instantiate(destroyEffWhenOut) as GameObject;
+
+            destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
+
+            destroyEffInstance.GetComponent<ParticleSystem>().Play();
+
+            StageManager.Instance.RemoveEnemyCount(status.Type);
+            Destroy(this.gameObject);
+        }
     }
     public void DamageByBubble(int _power)
     {
@@ -183,15 +205,34 @@ public class ObjController : MonoBehaviour
     {
         return bossNowHp;
     }
-    public void DamageByCollision(int _Power)
+    public void DamageByCollision(int _power)
     {
         if (status.Type == ObjType.Inoshishi)
         {
             if (bossNowHp > 0)
-                bossNowHp -= _Power;
+                bossNowHp -= _power;
         }
     }
-    public void PlayCollisionEff(Vector3 _initPos)
+    public void DamageByPoison(int _power)
+    {
+        if (status.Type == ObjType.Inoshishi)
+        {
+            if (bossNowHp <= 10)
+                return;
+
+            if (bossNowHp > 10)
+                bossNowHp -= _power;
+            else
+            {
+                bossNowHp = 10;
+            }
+        }
+    }
+
+    #endregion
+
+    #region 衝突関連機能
+    public void HitBossEff(Vector3 _initPos)
     {
         GameObject collisionInstance = Instantiate(collisionEff);
         collisionInstance.transform.position = _initPos;
@@ -204,41 +245,36 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    public void DeadWhenOut()
-    {
-        if (status.Type == ObjType.Inoshishi)
-        {
-            uiCtr.DrawClearText();
-        }
-        else if (status.Type != ObjType.Obj)
-        {
-            GameObject destroyEffInstance = Instantiate(destroyEffWhenOut) as GameObject;
-
-            destroyEffInstance.transform.position = transform.position + new Vector3(0, 8, 0);
-
-            destroyEffInstance.GetComponent<ParticleSystem>().Play();
-
-            StageManager.Instance.RemoveEnemyCount(status.Type);
-            Destroy(this.gameObject);
-        }
-    }
-
-    public void BossDizziness()
-    {
-        var particles = dizzinessEff.GetComponentsInChildren<ParticleSystem>();
-        foreach (var particle in particles)
-        {
-            particle.Play();
-        }
-    }
     public void MushroomCrashWithHead(Vector3 _crashPointPos)
     {
         Destroy(this.gameObject);
-        GameObject crashEff = Instantiate(mushroomCrashEff) as GameObject;
 
-        crashEff.transform.position = _crashPointPos;
+        if (MushroomType == MushroomType.PoisonMushroom)
+        {
+            GameObject crashEff = Instantiate(poisonMushrommEff) as GameObject;
 
-        crashEff.GetComponent<ParticleSystem>().Play();
+            crashEff.transform.position = _crashPointPos;
+
+            var crashEffList = crashEff.GetComponentsInChildren<ParticleSystem>();
+
+            foreach (var eff in crashEffList)
+            {
+                eff.Play();
+            }
+        }
+        else if (MushroomType == MushroomType.DizzinessMushroom)
+        {
+            GameObject crashEff = Instantiate(dizzinessMushroomEff) as GameObject;
+
+            crashEff.transform.position = _crashPointPos;
+
+            var crashEffList = crashEff.GetComponentsInChildren<ParticleSystem>();
+
+            foreach (var eff in crashEffList)
+            {
+                eff.Play();
+            }
+        }
     }
     public void StoneCrash()
     {
@@ -266,15 +302,17 @@ public class ObjController : MonoBehaviour
 
         transform.gameObject.layer = 21;/*GroundOnly*/
 
-        StartCoroutine(DelayDestroy());
+        StartCoroutine(DelayDestroyByCrash());
     }
-
-    IEnumerator DelayDestroy()
+    IEnumerator DelayDestroyByCrash()
     {
         yield return new WaitForSeconds(3);
         Destroy(this.gameObject);
         StageManager.Instance.RemoveEnemyCount(status.Type);
     }
+    #endregion
+
+    #region 他
     public void OnReset()
     {
         GetComponent<Rigidbody>().isKinematic = true;
@@ -303,6 +341,9 @@ public class ObjController : MonoBehaviour
         takeInSpeed = 0;
         stopDistanceByTornado = 0;
     }
+    #endregion
+
+    #region 吸い込み
     public void SetTakeInParameter(Vector3 _destination, float _takeInSpeedByTornado, float _stopDistanceByTornado)
     {
         tornadoDestination = _destination;
@@ -324,6 +365,11 @@ public class ObjController : MonoBehaviour
             rb.velocity = direction * Time.fixedDeltaTime * 60 * takeInSpeed;
         }
     }
+
+
+    #endregion
+
+    #region 空気砲
     public void AddForceByPush(Vector3 _direction, PlayerSelection _player)
     {
         PlayerSelectionWhoPushed = _player;
@@ -332,4 +378,6 @@ public class ObjController : MonoBehaviour
         ObjState = ObjState.MovingByAirGun;
         rb.velocity = _direction;
     }
+    #endregion
+
 }

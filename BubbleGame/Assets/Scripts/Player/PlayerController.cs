@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus status;
     private PlayerAnimatorCtr animatorCtr;
     private GroundDetector groundDetector;
-    private BubbleDetector bubbleDetector;
     private PlayerRescueTriggerCtr rescueTriggerCtr;
     private bool isVincible = false;
     private bool isSlow = false;
@@ -56,11 +55,7 @@ public class PlayerController : MonoBehaviour
         rescueTriggerCtr = transform.Find("RescueTrigger").GetComponent<PlayerRescueTriggerCtr>();
 
         int bubbleLayer = (1 << 10) | (1 << 0);
-
-        bubbleDetector = GetComponent<BubbleDetector>();
-        bubbleDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, bubbleLayer);
-
-
+        
         int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
         groundDetector = GetComponent<GroundDetector>();
         groundDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, groundLayer);
@@ -76,13 +71,8 @@ public class PlayerController : MonoBehaviour
     #region Update
     private void Update()
     {
-        bubbleDetector.UpdateDetection(transform.forward);
         groundDetector.UpdateDetection();
-
-        if (bubbleDetector.IsHit)
-        {
-            Debug.Log("Hit");
-        }
+        
 
         CheckDied();
         if (canUseGravity)

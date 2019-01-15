@@ -7,6 +7,11 @@ public class ObjBodyCollision : MonoBehaviour
 
     private bool canHitBoss = true;
 
+    [SerializeField] private BossBadStateCtr bossBadStateCtr;
+
+    [SerializeField] private int stoneDamageInHead = 15;
+
+    [SerializeField] private int stoneDamageInBody = 10;
     private void Start()
     {
         selfController = GetComponent<ObjController>();
@@ -44,7 +49,7 @@ public class ObjBodyCollision : MonoBehaviour
 
             if (selfController.ObjState == ObjState.MovingByAirGun && canHitBoss)
             {
-                selfController.PlayCollisionEff(transform.position);
+
                 Damage(_other.gameObject, _other.transform.position);
                 IncreaseHateValue(_other.gameObject);
 
@@ -67,17 +72,27 @@ public class ObjBodyCollision : MonoBehaviour
         {
             if (transform.CompareTag("Uribou") || transform.CompareTag("Harinezumi"))
             {
+                selfController.HitBossEff(transform.position);
                 bossController.DamageByCollision(6);
                 selfController.EnemyCrash(_otherPosition);
             }
             else if (transform.CompareTag("Stone"))
             {
+                selfController.HitBossEff(transform.position);
                 selfController.StoneCrash();
-                bossController.DamageByCollision(10);
+                bossController.DamageByCollision(stoneDamageInHead);
             }
             else if (transform.CompareTag("MushRoom"))
             {
-                bossController.BossDizziness();
+                if (selfController.MushroomType == MushroomType.PoisonMushroom)
+                {
+                    _Boss.transform.root.GetComponent<BossBadStateCtr>().BossPoison();
+                }
+                else
+                {
+                    _Boss.transform.root.GetComponent<BossBadStateCtr>().BossDizziness();
+                }
+
                 bossController.DamageByCollision(5);
                 selfController.MushroomCrashWithHead(_otherPosition);
             }
@@ -86,13 +101,15 @@ public class ObjBodyCollision : MonoBehaviour
         {
             if (transform.CompareTag("Uribou") || transform.CompareTag("Harinezumi"))
             {
+                selfController.HitBossEff(transform.position);
                 bossController.DamageByCollision(10);
                 selfController.EnemyCrash(_otherPosition);
             }
             else if (transform.CompareTag("Stone"))
             {
+                selfController.HitBossEff(transform.position);
                 selfController.StoneCrash();
-                bossController.DamageByCollision(15);
+                bossController.DamageByCollision(stoneDamageInBody);
             }
             else if (transform.CompareTag("MushRoom"))
             {
