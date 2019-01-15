@@ -29,9 +29,12 @@ public class BossStaminaCtr : MonoBehaviour
     private bool isOutOfStamina = false;
 
     private float defaultDashSpeed;
+
+    private Animator animator;
     // Use this for initialization
     void Start()
     {
+        animator = GetComponent<Animator>();
         defaultDashSpeed = (float)dash.GetVariable("DashSpeed").GetValue();
         stamina = maxStamina;
     }
@@ -55,6 +58,8 @@ public class BossStaminaCtr : MonoBehaviour
     }
     private void OutOfStamina()
     {
+
+
         ParticleSystem.EmissionModule emissionModule = damageEff.GetComponent<ParticleSystem>().emission;
         emissionModule.rateOverTime = 15;
         damageEff.GetComponent<ParticleSystem>().Play();
@@ -68,7 +73,7 @@ public class BossStaminaCtr : MonoBehaviour
     {
         if (stamina >= maxStamina)
         {
-
+            animator.speed = 1;
             damageEff.GetComponent<ParticleSystem>().Clear();
             damageEff.GetComponent<ParticleSystem>().Stop();
             ParticleSystem.EmissionModule emissionModule = damageEff.GetComponent<ParticleSystem>().emission;
@@ -82,6 +87,7 @@ public class BossStaminaCtr : MonoBehaviour
         }
         else
         {
+            animator.speed = 0.7f;
             isRecovering = true;
             stamina += staminaRecoverySpeed * Time.fixedDeltaTime * 60;
         }
