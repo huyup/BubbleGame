@@ -27,22 +27,29 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             else
             {
-                if (target.GetComponent<PlayerStatus>().nowHp > 0)
+                if (target.GetComponent<PlayerStatus>())
                 {
+                    if (target.GetComponent<PlayerStatus>().nowHp > 0)
+                    {
 
-                    returnTarget.Value = target;
-                    Debug.Log("Target" + returnTarget.Value.name);
+                        returnTarget.Value = target;
+                        Debug.Log("Target" + returnTarget.Value.name);
+                    }
+                    else
+                    {
+                        if (target.GetComponent<PlayerStatus>().PlayerSelection == PlayerSelection.Player1)
+                        {
+                            returnTarget.Value = player2.Value;
+                        }
+                        else if (target.GetComponent<PlayerStatus>().PlayerSelection == PlayerSelection.Player2)
+                        {
+                            returnTarget.Value = player1.Value;
+                        }
+                    }
                 }
                 else
                 {
-                    if (target.GetComponent<PlayerStatus>().PlayerSelection == PlayerSelection.Player1)
-                    {
-                        returnTarget.Value = player2.Value;
-                    }
-                    else if (target.GetComponent<PlayerStatus>().PlayerSelection == PlayerSelection.Player2)
-                    {
-                        returnTarget.Value = player1.Value;
-                    }
+                    returnTarget.Value = target;
                 }
 
                 return TaskStatus.Success;

@@ -11,6 +11,12 @@ public class BossHateValueCtr : MonoBehaviour
     private GameObject player2;
 
     [SerializeField]
+    private GameObject randomTarget;
+
+    [SerializeField]
+    private GameObject centerPointRef;
+
+    [SerializeField]
     private float lowerHateValueOnceTime = 120;
 
     private const float MaxHateValue = 99999;
@@ -21,15 +27,35 @@ public class BossHateValueCtr : MonoBehaviour
 
     private float player2HateValue;
 
+    private bool isDizziness;
+
+    private GameObject randomInstance;
     // Use this for initialization
     void Start()
     {
+        isDizziness = false;
         player1HateValue = MinHateValue;
 
         player2HateValue = MinHateValue;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            isDizziness = true;
+
+    }
     public GameObject SendTargetToBehavior()
     {
+        if (isDizziness&&!randomInstance)
+        {
+            int a = 40;
+            var randomPoint = centerPointRef.transform.position + new Vector3(Random.insideUnitCircle.x* a, 0, Random.insideUnitCircle.y* a);
+            randomInstance = Instantiate(randomTarget) as GameObject;
+            randomInstance.transform.position = randomPoint;
+
+            return randomInstance;
+        }
+
         if (player1HateValue > player2HateValue)
         {
             LowerHateValue(PlayerSelection.Player1);

@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 114783226783975758}
   m_Layer: 12
   m_Name: Uribou
-  m_TagString: Untagged
+  m_TagString: Uribou
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1155,7 +1155,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472144079773110}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -24.155472, y: 2.3106437, z: -77.7119}
+  m_LocalPosition: {x: -40.860756, y: -6.99, z: -71.73918}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4126859428558910}
@@ -1363,7 +1363,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1472144079773110}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0aa112f8062a61947b48a23ac46f7101, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1770,6 +1770,7 @@ MonoBehaviour:
   status: {fileID: 114624587606652284}
   floatByContain: {fileID: 114443604398231806}
   floatByDamage: {fileID: 114789690920972166}
+  dizzinessEff: {fileID: 0}
   bubbleDamageEff: {fileID: 114801517140509506}
   wander: {fileID: 114495191576640966}
   attack: {fileID: 114152496366742146}
@@ -1778,7 +1779,10 @@ MonoBehaviour:
   collisionEff: {fileID: 1639469962512362, guid: 421cf5f60d3e3f14b96a472aaae81a3f,
     type: 2}
   behaviorCtr: {fileID: 114783226783975758}
-  destroyEff: {fileID: 1946385480042418, guid: 3effe04cb59e3fb4295beab44a0189bd, type: 2}
+  destroyEffWhenOut: {fileID: 1946385480042418, guid: 3effe04cb59e3fb4295beab44a0189bd,
+    type: 3}
+  destroyEff: {fileID: 1738086837140400, guid: d7266e5ed2d64e143aee61ffed051d51, type: 2}
+  mushroomCrashEff: {fileID: 0}
   uiCtr: {fileID: 0}
 --- !u!135 &135350294332611780
 SphereCollider:

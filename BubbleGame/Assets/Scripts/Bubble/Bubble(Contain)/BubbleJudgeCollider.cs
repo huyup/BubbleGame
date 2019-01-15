@@ -9,7 +9,8 @@ public class BubbleJudgeCollider : MonoBehaviour
     public bool HadObjInside { get; private set; }
 
 
-    [SerializeField] private float factorToCalScale = 1.3f;
+    [SerializeField]
+    private float factorToCalScale = 1.3f;
     // Use this for initialization
     void Start()
     {
@@ -28,7 +29,7 @@ public class BubbleJudgeCollider : MonoBehaviour
             return;
 
         transform.position = bubble.transform.position;
-        transform.localScale = bubble.transform.localScale* factorToCalScale;
+        transform.localScale = bubble.transform.localScale;
 
     }
 }

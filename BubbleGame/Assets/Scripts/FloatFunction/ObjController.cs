@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 public enum ObjState
 {
     OnGround,
@@ -27,6 +28,9 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private ObjFloatByDamage floatByDamage;
+
+    [SerializeField]
+    private GameObject dizzinessEff;
 
     [SerializeField]
     private BubbleDamageEff bubbleDamageEff;
@@ -60,6 +64,9 @@ public class ObjController : MonoBehaviour
 
     [SerializeField]
     private GameObject destroyEff;
+
+    [SerializeField]
+    private GameObject mushroomCrashEff;
 
     [SerializeField]
     private UIBase uiCtr;
@@ -96,6 +103,10 @@ public class ObjController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+        }
 
         if (ObjState == ObjState.MovingByTornado)
         {
@@ -216,30 +227,61 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    public void ResetWhenCrash()
+    public void BossDizziness()
+    {
+        var particles = dizzinessEff.GetComponentsInChildren<ParticleSystem>();
+        foreach (var particle in particles)
+        {
+            particle.Play();
+        }
+    }
+    public void MushroomCrash(Vector3 _crashPointPos)
+    {
+        Destroy(this.gameObject);
+        GameObject crashEff = Instantiate(mushroomCrashEff) as GameObject;
+
+        crashEff.transform.position = _crashPointPos;
+
+        crashEff.GetComponent<ParticleSystem>().Play();
+
+    }
+
+    public void StoneCrash()
+    {
+        Debug.Log("StoneCrash");
+        GetComponent<BoxCollider>().isTrigger = false;
+        GetComponent<BoxCollider>().size = objBoxColliderDefaultSize;
+        rb.useGravity = true;
+        SetObjState(ObjState.Dead);
+    }
+    public void EnemyCrash(Vector3 _hitPos)
     {
         if (GetComponent<BoxCollider>())
         {
-            Debug.Log("ResetWhenCrash");
+
             GetComponent<BoxCollider>().isTrigger = false;
-            //GetComponent<BoxCollider>().size = objBoxColliderDefaultSize;
         }
-        if (GetComponent<Rigidbody>())
-        {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-        }
+
+        Vector3 direction = (_hitPos - transform.position).normalized * -1;
+
+        rb.AddForce(direction * 50, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.up * 80, ForceMode.VelocityChange);
 
         SetObjState(ObjState.Dead);
+
+        StartCoroutine(DelayDestroy());
     }
-    public void Dead()
+
+    IEnumerator DelayDestroy()
     {
+        yield return new WaitForSeconds(3);
         GameObject destroyEffInstance = Instantiate(destroyEff) as GameObject;
 
-        destroyEffInstance.transform.position = transform.position;
+        destroyEffInstance.transform.position = transform.position + new Vector3(0, 1, 0);
 
         destroyEffInstance.GetComponent<ParticleSystem>().Play();
+        Destroy(this.gameObject);
         StageManager.Instance.RemoveEnemyCount(status.Type);
-        Destroy(this.gameObject, 0.5f);
     }
     public void OnReset()
     {

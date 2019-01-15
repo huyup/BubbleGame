@@ -349,7 +349,6 @@ public class PlayerController : MonoBehaviour
         animatorCtr.SetRevivalAnimation();
         StartCoroutine(DelayResetPlayer());
     }
-
     IEnumerator DelayResetPlayer()
     {
         yield return new WaitForSeconds(status.RevivalAnimationTime);
@@ -373,6 +372,7 @@ public class PlayerController : MonoBehaviour
     {
         if (status.nowHp <= 0)
         {
+            Debug.Log("Dead");
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
             IsDead = true;
             rb.isKinematic = true;

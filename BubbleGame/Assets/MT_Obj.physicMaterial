@@ -8,6 +8,6 @@ PhysicMaterial:
   m_Name: MT_Obj
   dynamicFriction: 1
   staticFriction: 1
-  bounciness: 0
+  bounciness: 0.3
   frictionCombine: 3
-  bounceCombine: 1
+  bounceCombine: 3

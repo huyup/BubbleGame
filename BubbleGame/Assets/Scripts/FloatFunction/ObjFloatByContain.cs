@@ -74,13 +74,13 @@ public class ObjFloatByContain : MonoBehaviour
             GetComponent<Animator>().applyRootMotion = false;
         }
 
-        if (status.Type == ObjType.Obj)
-        {
-            if (GetComponent<BoxCollider>())
-            {
-                GetComponent<BoxCollider>().size -= new Vector3(GetComponent<BoxCollider>().size.x * 0.7f, 0, GetComponent<BoxCollider>().size.z * 0.7f);
-            }
-        }
+        //if (status.Type == ObjType.Obj)
+        //{
+        //    if (GetComponent<BoxCollider>())
+        //    {
+        //        GetComponent<BoxCollider>().size -= new Vector3(GetComponent<BoxCollider>().size.x * 0.7f, 0, GetComponent<BoxCollider>().size.z * 0.7f);
+        //    }
+        //}
 
         rb.useGravity = false;
         rb.angularDrag = 0.05f;
@@ -93,9 +93,11 @@ public class ObjFloatByContain : MonoBehaviour
 
     private void Fallen()
     {
+        if (objController.ObjState == ObjState.Dead)
+            return;
+
         rb.velocity = Physics.gravity;
-        if (objController.ObjState != ObjState.Dead)
-            objController.SetObjState(ObjState.Falling);
+        objController.SetObjState(ObjState.Falling);
         canStartFloating = false;
     }
     private void FloatByContainOnUpdate()
@@ -135,7 +137,8 @@ public class ObjFloatByContain : MonoBehaviour
     {
         if (GetComponent<BoxCollider>())
             GetComponent<BoxCollider>().size = boxColliderInitScale;
-        rb.useGravity = true;
+        rb.isKinematic = true;
+        rb.useGravity = false;
         rb.angularDrag = initAngularDrag;
         rb.drag = initDrag;
         canMoveToCenter = false;

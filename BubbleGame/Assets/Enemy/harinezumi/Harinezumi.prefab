@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 114496365596756692}
   m_Layer: 12
   m_Name: Harinezumi
-  m_TagString: Untagged
+  m_TagString: Harinezumi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -985,7 +985,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734193950535132}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -32.534546, y: -6.58, z: -72.98662}
+  m_LocalPosition: {x: -42.39122, y: -7.14, z: -72.691864}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4026389696798388}
@@ -1236,7 +1236,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734193950535132}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0aa112f8062a61947b48a23ac46f7101, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1495,7 +1495,9 @@ MonoBehaviour:
   collisionEff: {fileID: 1639469962512362, guid: 421cf5f60d3e3f14b96a472aaae81a3f,
     type: 2}
   behaviorCtr: {fileID: 114496365596756692}
-  destroyEff: {fileID: 1946385480042418, guid: 3effe04cb59e3fb4295beab44a0189bd, type: 2}
+  destroyEffWhenOut: {fileID: 1946385480042418, guid: 3effe04cb59e3fb4295beab44a0189bd,
+    type: 3}
+  destroyEff: {fileID: 1738086837140400, guid: d7266e5ed2d64e143aee61ffed051d51, type: 2}
   uiCtr: {fileID: 0}
 --- !u!114 &114430937818152178
 MonoBehaviour:

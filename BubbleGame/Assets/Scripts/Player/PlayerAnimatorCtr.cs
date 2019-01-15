@@ -49,11 +49,11 @@ public class PlayerAnimatorCtr : MonoBehaviour
     public void SetOffFlagWhenRevival()
     {
         animator.SetBool("Revival", false);
-        animator.SetBool("DeadWhenOut", false);
+        animator.SetBool("Dead", false);
     }
     public void SetDeadAnimation()
     {
-        animator.SetBool("DeadWhenOut", true);
+        animator.SetBool("Dead", true);
     }
     #endregion
 }

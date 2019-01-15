@@ -3,38 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ObjBodyCollision : MonoBehaviour
 {
-    private ObjController controller;
+    private ObjController selfController;
 
     private bool canHitBoss = true;
 
     private void Start()
     {
-        controller = GetComponent<ObjController>();
+        selfController = GetComponent<ObjController>();
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 9 /*Ground*/)
         {
-            if (controller.ObjState == ObjState.Dead)
-            {
-                Debug.Log("Dead");
-                controller.Dead();
-            }
+            selfController.OnReset();
+            canHitBoss = true;
         }
     }
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.gameObject.layer == 9 /*Ground*/)
         {
-            Debug.Log("Dead");
-            if (controller.ObjState == ObjState.Falling)
+            if (selfController.ObjState == ObjState.Falling)
             {
-                controller.OnReset();
-            }
-            else if (controller.ObjState == ObjState.Dead)
-            {
-                Debug.Log("Dead");
-                controller.Dead();
+                selfController.OnReset();
+                canHitBoss = true;
             }
         }
         if (_other.gameObject.layer == 16 /*StageObj*/)
@@ -43,20 +35,19 @@ public class ObjBodyCollision : MonoBehaviour
         }
         if (_other.gameObject.name == "DeadZone")
         {
-            controller.DeadWhenOut();
+            selfController.DeadWhenOut();
         }
         //Bossに当たったときの処理
         if (_other.transform.root.CompareTag("Boss") &&
             Vector3.Distance(transform.position, _other.transform.root.position) > 4)
         {
-            if (controller.ObjState == ObjState.MovingByAirGun && canHitBoss)
+            Debug.Log("Crash");
+            if (selfController.ObjState == ObjState.MovingByAirGun && canHitBoss)
             {
-                controller.PlayCollisionEff(transform.position);
-
-                Damage(_other.gameObject);
+                Debug.Log("Crash2");
+                selfController.PlayCollisionEff(transform.position);
+                Damage(_other.gameObject, _other.transform.position);
                 IncreaseHateValue(_other.gameObject);
-
-                controller.ResetWhenCrash();
 
                 canHitBoss = false;
             }
@@ -67,50 +58,47 @@ public class ObjBodyCollision : MonoBehaviour
     private void IncreaseHateValue(GameObject _boss)
     {
         _boss.transform.root.GetComponent<BossHateValueCtr>()
-            .IncreaseHateValueByCrash(50, controller.PlayerSelectionWhoPushed);
+            .IncreaseHateValueByCrash(50, selfController.PlayerSelectionWhoPushed);
     }
 
-    private void Damage(GameObject _Boss)
+    private void Damage(GameObject _Boss, Vector3 _otherPosition)
     {
-        var objController = _Boss.transform.root.GetComponent<ObjController>();
+        var bossController = _Boss.transform.root.GetComponent<ObjController>();
         if (_Boss.transform.CompareTag("BossHead"))
         {
             if (transform.CompareTag("Uribou") || transform.CompareTag("Harinezumi"))
             {
-                objController.DamageByCollision(6);
+                bossController.DamageByCollision(6);
+                selfController.EnemyCrash(_otherPosition);
             }
             else if (transform.CompareTag("Stone"))
             {
-                objController.DamageByCollision(10);
+                selfController.StoneCrash();
+                bossController.DamageByCollision(10);
             }
             else if (transform.CompareTag("MushRoom"))
             {
-                Debug.Log("Mushroom");
-                objController.DamageByCollision(5);
-            }
-            else if (transform.CompareTag("FallDownTree"))
-            {
-                objController.DamageByCollision(15);
+                bossController.BossDizziness();
+                bossController.DamageByCollision(5);
+                selfController.MushroomCrash(_otherPosition);
             }
         }
         else
         {
             if (transform.CompareTag("Uribou") || transform.CompareTag("Harinezumi"))
             {
-                objController.DamageByCollision(10);
+                bossController.DamageByCollision(10);
+                selfController.EnemyCrash(_otherPosition);
             }
             else if (transform.CompareTag("Stone"))
             {
-                objController.DamageByCollision(15);
+                selfController.StoneCrash();
+                bossController.DamageByCollision(15);
             }
             else if (transform.CompareTag("MushRoom"))
             {
-                Debug.Log("Mushroom");
-                objController.DamageByCollision(5);
-            }
-            else if (transform.CompareTag("FallDownTree"))
-            {
-                objController.DamageByCollision(15);
+                bossController.DamageByCollision(5);
+                selfController.MushroomCrash(_otherPosition);
             }
         }
     }
