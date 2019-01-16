@@ -31,20 +31,15 @@ public class PlayerWeaponC : PlayerWeapon
 
     private float spaceStorage;
 
-    [SerializeField]
-    private int minShootCost = 10;
-
-    private float tmpAmmoCost;
-
-    private float nowAmmoLeft;
-    private float prevAmmoLeft;
-
     private bool canAttack = false;
+
+    private PlayerAmmoCtr ammoCtr;
     // Use this for initialization
     void Start()
     {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
+        ammoCtr = GetComponent<PlayerAmmoCtr>();
+
+
         playerController = GetComponent<PlayerController>();
         playerStatus = GetComponent<PlayerStatus>();
         rb = GetComponent<Rigidbody>();
@@ -55,29 +50,20 @@ public class PlayerWeaponC : PlayerWeapon
         //泡の発射位置を更新させる
         bubbleStartPos = weaponCStartRef.transform.position;
     }
-
-    public void Reload()
-    {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
-        tmpAmmoCost = 0;
-    }
-    public override int GetNowAmmo()
-    {
-        return (int)nowAmmoLeft;
-    }
-
     public override void OnAttackButtonDown()
     {
-        if (nowAmmoLeft < minShootCost)
+        if (ammoCtr.CanShoot())
             return;
+
+        ammoCtr.OnButtonDown();
+
         playerController.BanMove();
         spaceStorage = 0;
         canAttack = true;
         buttonStayEff.transform.position = transform.position + new Vector3(0, 1.5f, 0);
         buttonStayEff.GetComponentInChildren<ParticleSystem>().Play();
-        tmpAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+
+
     }
     public override void OnAttackButtonStay()
     {
@@ -87,6 +73,7 @@ public class PlayerWeaponC : PlayerWeapon
         if (spaceStorage < airGunMaxPower)
         {
             playerController.BanGravity();
+            ammoCtr.OnButtonStay();
             spaceStorage += spaceKeySpeed * Time.fixedDeltaTime * 60;
         }
         else
@@ -94,7 +81,7 @@ public class PlayerWeaponC : PlayerWeapon
             //最大になったら、自動的に前へ出す
             OnAttackButtonUp();
         }
-        if (nowAmmoLeft <= 0)
+        if (ammoCtr.Ammo <= 0)
         {
             //残量が足りなかったら、自動的に前へ出す
             OnAttackButtonUp();
@@ -104,23 +91,15 @@ public class PlayerWeaponC : PlayerWeapon
     {
         if (!canAttack)
             return;
-        
+
         Shoot(spaceStorage, airGunMaxPower);
         buttonStayEff.GetComponentInChildren<ParticleSystem>().Clear();
         buttonStayEff.GetComponentInChildren<ParticleSystem>().Stop();
-
+        ammoCtr.OnButtonUp();
         spaceStorage = 0;
-        prevAmmoLeft = nowAmmoLeft;
-
         canAttack = false;
         playerController.ResetMove();
         playerController.ResetGravity();
-        //使い切ったら、禁止させる
-        if (nowAmmoLeft <= 0)
-        {
-            playerController.DisableAirGun();
-        }
-
     }
 
     public void UseShootSupportLine()

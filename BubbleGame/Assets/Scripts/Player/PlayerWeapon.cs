@@ -8,16 +8,12 @@ using UnityEngine.Serialization;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [FormerlySerializedAs("weaponLeftCount")]
-
-    [SerializeField]
-    protected int MaxAmmo;
-
-    [SerializeField]
-    protected float ReloadSpeed;
-
-    [SerializeField]
     public bool CanAttack { get; private set; }
+
+    public virtual bool GetIsAttacking()
+    {
+        return false;
+    }
 
     public void BanAttack()
     {
@@ -28,12 +24,6 @@ public class PlayerWeapon : MonoBehaviour
     {
         CanAttack = true;
     }
-
-    public virtual int GetNowAmmo()
-    {
-        return MaxAmmo;
-    }
-
     public virtual void OnAttackButtonDown()
     {
 
@@ -50,11 +40,6 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     public virtual void OnChangeWeapon()
-    {
-
-    }
-
-    public virtual void AmmoRecovery(float _bubbleSize)
     {
 
     }

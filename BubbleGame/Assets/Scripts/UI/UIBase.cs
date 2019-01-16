@@ -57,8 +57,8 @@ public class UIBase : MonoBehaviour
             DrawBossStamina(boss.GetComponent<BossStaminaCtr>(), bossStaminaImage);
         }
 
-        DrawPlayerAmmo(player1.GetComponent<PlayerController>().GetWeapon(), player1AmmoImage);
-        DrawPlayerAmmo(player2.GetComponent<PlayerController>().GetWeapon(), player2AmmoImage);
+        DrawPlayerAmmo(player1.GetComponent<PlayerAmmoCtr>(), player1AmmoImage);
+        DrawPlayerAmmo(player2.GetComponent<PlayerAmmoCtr>(), player2AmmoImage);
 
         DrawPlayer1Life(player1.GetComponent<PlayerStatus>().nowHp);
         DrawPlayer2Life(player2.GetComponent<PlayerStatus>().nowHp);
@@ -93,16 +93,16 @@ public class UIBase : MonoBehaviour
         _bossHp.uvRect = new Rect(0, 1 - newRate, 1, 1);
 
     }
-    private void DrawPlayerAmmo(PlayerWeapon _weapon, RawImage _playerAmmoImage)
+    private void DrawPlayerAmmo(PlayerAmmoCtr _ammoCtr, RawImage _playerAmmoImage)
     {
-        if (!_weapon)
+        if (!_ammoCtr)
         {
             return;
         }
         else
         {
             //y=0 ammo=Max, y=1 ammo=0
-            int ammoCount = _weapon.GetNowAmmo();
+            int ammoCount = _ammoCtr.GetNowAmmo();
             _playerAmmoImage.uvRect = new Rect(0, (100 - ammoCount) * 0.01f, 1, 1);
         }
     }

@@ -18,20 +18,12 @@ public class PlayerWeaponD : PlayerWeapon
 
     private PlayerController playerController;
 
-    [SerializeField]
-    private int minShootCost = 10;
-
-    private float tmpAmmoCost;
-
-    private float nowAmmoLeft;
-    private float prevAmmoLeft;
-
+    private PlayerAmmoCtr ammoCtr;
     // Use this for initialization
     void Start()
     {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
-        playerController = GetComponent<PlayerController>();
+        ammoCtr = GetComponent<PlayerAmmoCtr>();
+           playerController = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -40,27 +32,13 @@ public class PlayerWeaponD : PlayerWeapon
         //泡の発射位置を更新させる
         bubbleStartPos = weaponDStartRef.transform.position;
     }
-
-    public void Reload()
-    {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
-        tmpAmmoCost = 0;
-    }
-    public override int GetNowAmmo()
-    {
-        return (int)nowAmmoLeft;
-    }
     public override void OnAttackButtonDown()
     {
-        if (nowAmmoLeft < minShootCost)
+        if (ammoCtr.CanShoot())
             return;
-
+        ammoCtr.OnButtonDown();
         playerController.BanMove();
         playerController.BanJump();
-        tmpAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
-
         tornadoEff.transform.position = bubbleStartPos;
 
         tornadoEff.GetComponent<ParticleSystem>().Play();
@@ -69,7 +47,7 @@ public class PlayerWeaponD : PlayerWeapon
     }
     public override void OnAttackButtonStay()
     {
-
+        ammoCtr.OnButtonStay();
         playerController.BanJump();
         playerController.BanMove();
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().TakeObjIn();
@@ -77,13 +55,13 @@ public class PlayerWeaponD : PlayerWeapon
     }
     public override void OnAttackButtonUp()
     {
+        ammoCtr.OnButtonUp();
         playerController.ResetJump();
         playerController.ResetMove();
         tornadoEff.GetComponent<ParticleSystem>().Clear();
         tornadoEff.GetComponent<ParticleSystem>().Stop();
 
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
-        prevAmmoLeft = nowAmmoLeft;
     }
     public override void OnChangeWeapon()
     {

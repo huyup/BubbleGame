@@ -237,7 +237,6 @@ public class PlayerController : MonoBehaviour
     {
         status.SetWeaponSelection(WeaponSelection.AirGun);
         GetWeapon().OnChangeWeapon();
-        weaponC.Reload();
         nowWeaponType = WeaponType.WeaponC;
 
         Invoke("DelayDisableAirGun", status.AirGunLastTime);
