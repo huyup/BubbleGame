@@ -9,6 +9,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedInt NextAttackHp;
         public override TaskStatus OnUpdate()
         {
+            Debug.Log("Hp"+ Hp);
             if (Hp.Value <= NextAttackHp.Value)
                 return TaskStatus.Success;
             else

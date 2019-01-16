@@ -146,7 +146,7 @@ public class ObjController : MonoBehaviour
         }
 
         if (status.Type == ObjType.Inoshishi)
-            summon.SetVariableValue("Hp", NowHp);
+            summon.SetVariableValue("Hp", bossNowHp);
         if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(NowHp, status.MaxHp);
     }
