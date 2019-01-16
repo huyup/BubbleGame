@@ -30,51 +30,46 @@ public class PlayerWeaponB : PlayerWeapon
 
     private float tmpAmmoCost;
 
-    private float nowAmmoLeft;
     private float prevAmmoLeft;
 
     private bool isAttacking = false;
+
+    private PlayerAmmoCtr playerAmmoCtr;
     // Use this for initialization
     void Start()
     {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
 
+        playerAmmoCtr = GetComponent<PlayerAmmoCtr>();
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+
+        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
     }
     // Update is called once per frame
     void Update()
     {
-        Reload();
-
-        if (nowAmmoLeft < 0)
-            nowAmmoLeft = 0;
+        //Reload();
 
         //泡の発射位置を更新させる
         bubbleStartPos = weaponBStartRef.transform.position;
     }
 
-    private void Reload()
-    {
-        if (nowAmmoLeft < MaxAmmo && !isAttacking)
-        {
-            prevAmmoLeft += ReloadSpeed;
-            nowAmmoLeft += ReloadSpeed;
-        }
-    }
-    public override int GetNowAmmo()
-    {
-        return (int)nowAmmoLeft;
-    }
+    //private void Reload()
+    //{
+    //    if (playerAmmoCtr.NowAmmoLeft < playerAmmoCtr.MaxAmmo && !isAttacking)
+    //    {
+    //        prevAmmoLeft += ReloadSpeed;
+    //        playerAmmoCtr.NowAmmoLeft += ReloadSpeed;
+    //    }
+    //}
     public override void OnAttackButtonDown()
     {
-        if (nowAmmoLeft < minShootCost)
+        if (playerAmmoCtr.NowAmmoLeft < minShootCost)
             return;
 
         isAttacking = true;
         tmpAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+        playerAmmoCtr.NowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
 
         rb.velocity = Vector3.zero;
         playerController.BanJump();
@@ -83,11 +78,11 @@ public class PlayerWeaponB : PlayerWeapon
 
     public override void OnAttackButtonStay()
     {
-        if (nowAmmoLeft <= 0)
+        if (playerAmmoCtr.NowAmmoLeft <= 0)
             OnAttackButtonUp();
         isAttacking = true;
         tmpAmmoCost += buttonStayCost * Time.fixedDeltaTime * 60;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+        playerAmmoCtr.NowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
 
 
         playerController.BanJump();
@@ -101,14 +96,7 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.GetComponent<ParticleSystem>().Stop();
 
         isAttacking = false;
-        prevAmmoLeft = nowAmmoLeft;
-    }
-    public override void AmmoRecovery(float _bubbleSize)
-    {
-        nowAmmoLeft += _bubbleSize * factorToCalAmmoRecovery;
-
-        if (nowAmmoLeft >= MaxAmmo)
-            nowAmmoLeft = MaxAmmo;
+        prevAmmoLeft = playerAmmoCtr.NowAmmoLeft;
     }
     private void OnCreateBubble()
     {
@@ -118,9 +106,9 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.GetComponent<ParticleSystem>().Play();
     }
 
-    public override void OnChangeWeapon()
+    public override void OnChange()
     {
-        base.OnChangeWeapon();
+        base.OnChange();
         playerController.ResetAttack();
         playerController.ResetJump();
         rapidFireBubble.GetComponent<ParticleSystem>().Stop();

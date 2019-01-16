@@ -23,15 +23,15 @@ public class PlayerWeaponD : PlayerWeapon
 
     private float tmpAmmoCost;
 
-    private float nowAmmoLeft;
     private float prevAmmoLeft;
-
+    private PlayerAmmoCtr playerAmmoCtr;
     // Use this for initialization
     void Start()
     {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
+        playerAmmoCtr = GetComponent<PlayerAmmoCtr>();
         playerController = GetComponent<PlayerController>();
+
+        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
     }
 
     // Update is called once per frame
@@ -40,26 +40,15 @@ public class PlayerWeaponD : PlayerWeapon
         //泡の発射位置を更新させる
         bubbleStartPos = weaponDStartRef.transform.position;
     }
-
-    public void Reload()
-    {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
-        tmpAmmoCost = 0;
-    }
-    public override int GetNowAmmo()
-    {
-        return (int)nowAmmoLeft;
-    }
     public override void OnAttackButtonDown()
     {
-        if (nowAmmoLeft < minShootCost)
+        if (playerAmmoCtr.NowAmmoLeft < minShootCost)
             return;
 
         playerController.BanMove();
         playerController.BanJump();
         tmpAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
+        playerAmmoCtr.NowAmmoLeft = prevAmmoLeft - tmpAmmoCost;
 
         tornadoEff.transform.position = bubbleStartPos;
 
@@ -83,9 +72,9 @@ public class PlayerWeaponD : PlayerWeapon
         tornadoEff.GetComponent<ParticleSystem>().Stop();
 
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
-        prevAmmoLeft = nowAmmoLeft;
+        prevAmmoLeft = playerAmmoCtr.NowAmmoLeft;
     }
-    public override void OnChangeWeapon()
+    public override void OnChange()
     {
     }
 

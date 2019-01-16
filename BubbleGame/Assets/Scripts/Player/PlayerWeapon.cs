@@ -11,13 +11,34 @@ public class PlayerWeapon : MonoBehaviour
     [FormerlySerializedAs("weaponLeftCount")]
 
     [SerializeField]
-    protected int MaxAmmo;
-
-    [SerializeField]
     protected float ReloadSpeed;
 
     [SerializeField]
     public bool CanAttack { get; private set; }
+
+    [SerializeField]
+    protected int minShootCost;
+
+    [SerializeField]
+    protected float buttonStayCost;
+
+    [SerializeField]
+    protected int maxAmmoCost;
+
+    public virtual int GetMinShootCost()
+    {
+        return minShootCost;
+    }
+
+    public virtual float GetButtonStayCost()
+    {
+        return buttonStayCost;
+    }
+
+    public virtual int GetMaxAmmoCost()
+    {
+        return maxAmmoCost;
+    }
 
     public void BanAttack()
     {
@@ -27,11 +48,6 @@ public class PlayerWeapon : MonoBehaviour
     public void ResetAttack()
     {
         CanAttack = true;
-    }
-
-    public virtual int GetNowAmmo()
-    {
-        return MaxAmmo;
     }
 
     public virtual void OnAttackButtonDown()
@@ -49,12 +65,7 @@ public class PlayerWeapon : MonoBehaviour
 
     }
 
-    public virtual void OnChangeWeapon()
-    {
-
-    }
-
-    public virtual void AmmoRecovery(float _bubbleSize)
+    public virtual void OnChange()
     {
 
     }

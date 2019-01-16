@@ -30,7 +30,7 @@ public class BubbleCollision : MonoBehaviour
             && !_other.gameObject.CompareTag("TornadoTrigger"))
         {
             if (_other.gameObject.GetComponent<PlayerStatus>().WeaponSelection != WeaponSelection.AirGun)
-                _other.gameObject.GetComponent<PlayerController>().GetWeapon().AmmoRecovery(this.transform.localScale.magnitude);
+                _other.gameObject.GetComponent<PlayerAmmoCtr>().AmmoRecovery(this.transform.localScale.magnitude);
             setController.DestroyBubbleSet();
         }
         if (_other.gameObject.layer == 12 /*EnemyHit*/ || _other.gameObject.layer == 15 /*EnemyAttack*/)

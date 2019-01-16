@@ -31,48 +31,36 @@ public class PlayerWeaponA : PlayerWeapon
     #endregion
 
     #region 消費用
-    [SerializeField]
-    private int minShootCost = 10;
-
-    [SerializeField]
-    private float buttonStayCost = 0.3f;
-
-    [SerializeField]
-    private int maxAmmoCost = 30;
-
-    [SerializeField]
-    private float factorToCalAmmoRecovery = 1.5f;
-
-
     private bool isPushed = false;
 
     private bool isAttacking = false;
 
     private float storeAmmoCost;
 
-    private float nowAmmoLeft;
+    private PlayerAmmoCtr playerAmmoCtr;
 
     private float prevAmmoLeft;
     #endregion
 
     void Start()
     {
-        prevAmmoLeft = MaxAmmo;
-        nowAmmoLeft = MaxAmmo;
-
+        playerAmmoCtr = GetComponent<PlayerAmmoCtr>();
         animatorCtr = GetComponent<PlayerAnimatorCtr>();
         rb = GetComponent<Rigidbody>();
         status = GetComponent<PlayerStatus>();
         controller = GetComponent<PlayerController>();
         bubbleProperty = bubbleSet.transform.Find("Bubble").GetComponent<BubbleProperty>();
+
+        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
+
+        minShootCost = 10;
+        buttonStayCost = 0.3f;
+        maxAmmoCost = 30;
     }
 
     void Update()
     {
-        Reload();
-
-        if (nowAmmoLeft < 0)
-            nowAmmoLeft = 0;
+        //Reload();
 
         ////泡の発射位置を更新させる
         bubbleStartPos = weaponAStartRef.transform.position;
@@ -80,13 +68,6 @@ public class PlayerWeaponA : PlayerWeapon
 
     public override void OnAttackButtonDown()
     {
-        if (nowAmmoLeft < minShootCost)
-            return;
-
-        isAttacking = true;
-        storeAmmoCost = minShootCost;
-        nowAmmoLeft = prevAmmoLeft - storeAmmoCost;
-
         //発射
         animatorCtr.SetAttackAnimationOnButtonDown();
         controller.BanMove();
@@ -120,7 +101,7 @@ public class PlayerWeaponA : PlayerWeapon
             return;
         }
 
-        if (nowAmmoLeft <= 0)
+        if (playerAmmoCtr.NowAmmoLeft <= 0)
         {
             StartCoroutine(DelayReset());
             return;
@@ -133,12 +114,7 @@ public class PlayerWeaponA : PlayerWeapon
         {
             if (spaceKeyStorage < bubbleProperty.MaxSize)
             {
-                //弾薬計算
-                if (storeAmmoCost < maxAmmoCost)
-                {
-                    storeAmmoCost += buttonStayCost * Time.fixedDeltaTime * 60;
-                }
-                nowAmmoLeft = prevAmmoLeft - storeAmmoCost;
+
                 spaceKeyStorage += status.SpaceKeySpeed * Time.fixedDeltaTime;
                 bubbles[bubbles.Count - 1].transform.localScale += new Vector3(spaceKeyStorage, spaceKeyStorage, spaceKeyStorage);
                 //少しずつ前に移動させる
@@ -177,17 +153,11 @@ public class PlayerWeaponA : PlayerWeapon
         }
 
         isAttacking = false;
-        prevAmmoLeft = nowAmmoLeft;
+        prevAmmoLeft = playerAmmoCtr.NowAmmoLeft;
     }
-
-    public override int GetNowAmmo()
+    public override void OnChange()
     {
-        return (int)nowAmmoLeft;
-    }
-
-    public override void OnChangeWeapon()
-    {
-        base.OnChangeWeapon();
+        base.OnChange();
         controller.ResetJump();
         controller.ResetMove();
         controller.ResetAttack();
@@ -200,20 +170,28 @@ public class PlayerWeaponA : PlayerWeapon
         }
     }
 
-    public override void AmmoRecovery(float _bubbleSize)
+    public override int GetMinShootCost()
     {
-        nowAmmoLeft += _bubbleSize * factorToCalAmmoRecovery;
-        if (nowAmmoLeft >= MaxAmmo)
-            nowAmmoLeft = MaxAmmo;
+        return minShootCost;
     }
-    private void Reload()
+
+    public override float GetButtonStayCost()
     {
-        if (nowAmmoLeft < MaxAmmo && !isAttacking)
-        {
-            prevAmmoLeft += ReloadSpeed;
-            nowAmmoLeft += ReloadSpeed;
-        }
+        return buttonStayCost;
     }
+
+    public override int GetMaxAmmoCost()
+    {
+        return maxAmmoCost;
+    }
+    //private void Reload()
+    //{
+    //    if (playerAmmoCtr.NowAmmoLeft < playerAmmoCtr.MaxAmmo && !isAttacking)
+    //    {
+    //        prevAmmoLeft += ReloadSpeed;
+    //        playerAmmoCtr.NowAmmoLeft += ReloadSpeed;
+    //    }
+    //}
 
     private void PushTheBubbleOnceTime()
     {

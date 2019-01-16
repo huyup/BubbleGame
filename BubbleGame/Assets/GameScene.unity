@@ -35236,7 +35236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &606619118
 Animator:
   serializedVersion: 3
@@ -35932,6 +35932,7 @@ GameObject:
   - component: {fileID: 608048320}
   - component: {fileID: 608048319}
   - component: {fileID: 608048318}
+  - component: {fileID: 608048326}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Player
@@ -35969,7 +35970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2d1b6147ea24b4b8217af0fb704677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.1
   tornadoEff: {fileID: 279112005}
   tornadoTrigger: {fileID: 1264368625}
@@ -36040,7 +36040,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf70473b5860eb46a4eb961705adc21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.1
   airGun: {fileID: 1533140657}
   weaponCStartRef: {fileID: 449909343}
@@ -36061,7 +36060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eba901fc9beaa84084f4e10772a09fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.2
   rapidFireBubble: {fileID: 2054772661}
   weaponBStartRef: {fileID: 715467841}
@@ -36080,7 +36078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae70aab762c01bb48b2a1eb6a2117d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.2
   bubbleSet: {fileID: 1799036004492406, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
   weaponAStartRef: {fileID: 59303586}
@@ -36089,7 +36086,6 @@ MonoBehaviour:
   minShootCost: 10
   buttonStayCost: 0.3
   maxAmmoCost: 30
-  factorToCalAmmoRecovery: 0.5
 --- !u!114 &608048325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36102,6 +36098,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c9064314494344bba3c2edcf602344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &608048326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 608048316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24979bdba1b0fef4ca23c92ab6f24f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmmo: 100
+  factorToCalAmmoRecovery: 1.5
 --- !u!114 &608048327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56413,6 +56422,7 @@ GameObject:
   - component: {fileID: 1004251315}
   - component: {fileID: 1004251314}
   - component: {fileID: 1004251313}
+  - component: {fileID: 1004251320}
   - component: {fileID: 1004251326}
   m_Layer: 11
   m_Name: Player1
@@ -56505,7 +56515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf70473b5860eb46a4eb961705adc21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.1
   airGun: {fileID: 505709301}
   weaponCStartRef: {fileID: 1679719832}
@@ -56526,7 +56535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eba901fc9beaa84084f4e10772a09fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.2
   rapidFireBubble: {fileID: 527990671}
   weaponBStartRef: {fileID: 217360088}
@@ -56545,7 +56553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae70aab762c01bb48b2a1eb6a2117d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.2
   bubbleSet: {fileID: 1799036004492406, guid: f13ed699178531c4d9b47c56194a91ce, type: 2}
   weaponAStartRef: {fileID: 326852703}
@@ -56554,7 +56561,6 @@ MonoBehaviour:
   minShootCost: 10
   buttonStayCost: 0.3
   maxAmmoCost: 30
-  factorToCalAmmoRecovery: 0.5
 --- !u!114 &1004251319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56567,6 +56573,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c9064314494344bba3c2edcf602344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1004251320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004251311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24979bdba1b0fef4ca23c92ab6f24f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmmo: 100
+  factorToCalAmmoRecovery: 1.5
 --- !u!114 &1004251321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56656,7 +56675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2d1b6147ea24b4b8217af0fb704677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmmo: 100
   ReloadSpeed: 0.1
   tornadoEff: {fileID: 1907830724}
   tornadoTrigger: {fileID: 1717762845}
