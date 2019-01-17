@@ -47,23 +47,24 @@ public class ObjFloatByContain : MonoBehaviour
         if (GetComponent<BoxCollider>())
             boxColliderInitScale = GetComponent<BoxCollider>().size;
     }
-
-    public void SetCreatedByDamageFlag(bool _flag)
-    {
-        isCreatedByDamage = _flag;
-    }
+    
     void Update()
     {
         if (canStartFloating)
         {
             if (bubbleInstance == null)
             {
+                Debug.Log("Fallen");
                 Fallen();
             }
             else
             {
+                Debug.Log("Float");
                 if (objController.ObjState == ObjState.Floating)
+                {
+                    Debug.Log("Float");
                     FloatByContainOnUpdate();
+                }
             }
         }
     }
@@ -78,19 +79,19 @@ public class ObjFloatByContain : MonoBehaviour
             behaviorCtr.DisableBehaviors();
             GetComponent<Animator>().applyRootMotion = false;
         }
-        if (GetComponent<BoxCollider>())
-        {
-            GetComponent<BoxCollider>().size = new Vector3(GetComponent<BoxCollider>().size.x * 0.5f, 0,
-                GetComponent<BoxCollider>().size.z * 0.5f);
-        }
+        //if (GetComponent<BoxCollider>())
+        //{
+        //    GetComponent<BoxCollider>().size = new Vector3(GetComponent<BoxCollider>().size.x * 0.5f, 0,
+        //        GetComponent<BoxCollider>().size.z * 0.5f);
+        //}
 
         StartCoroutine(DelayResetBoxCollider());
         rb.useGravity = false;
-        rb.angularDrag = 0.05f;
-        rb.drag = 0.05f;
+        //rb.angularDrag = 0.05f;
+        //rb.drag = 0.05f;
         canStartFloating = true;
         canMoveToCenter = true;
-        rb.velocity = Vector3.zero;
+        //rb.velocity = Vector3.zero;
     }
 
     IEnumerator DelayResetBoxCollider()
@@ -140,10 +141,7 @@ public class ObjFloatByContain : MonoBehaviour
 
     private void FloatByBubbleVelocity()
     {
-        if (isCreatedByDamage)
-            rb.velocity = new Vector3(0, bubbleInstance.GetComponent<Rigidbody>().velocity.y, 0);
-        else
-            rb.velocity = bubbleInstance.GetComponent<Rigidbody>().velocity;
+        rb.velocity = bubbleInstance.GetComponent<Rigidbody>().velocity;
     }
     public void ResetFloatFlag()
     {

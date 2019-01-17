@@ -45,8 +45,8 @@ public class EnemyJudgeCollision : MonoBehaviour
         //FIXME:ずっと探すではなく、一回だけにする
         if (_boxCollider.transform.parent.Find("Bubble"))
         {
-            GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
-            bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+            //GameObject bubble = _boxCollider.transform.parent.Find("Bubble").gameObject;
+            //bubble.GetComponent<BubbleController>().SetFloatVelocityToBubble();
         }
 
         enemyFunctionRef.GetEnemyController().FloatByContain(_boxCollider.transform.parent.Find("Bubble"));

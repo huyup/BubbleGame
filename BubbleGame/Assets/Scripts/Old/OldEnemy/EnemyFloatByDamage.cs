@@ -108,7 +108,7 @@ public class EnemyFloatByDamage : MonoBehaviour
             }
             else
             {
-                bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
+                //bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
                 FloatByContainOnInit();
                 canFloat = true;
             }

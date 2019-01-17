@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastTime: 8
-  maxSize: 0.11
+  maxSize: 0.18
   maxSizeInDamageCreated: 4
 --- !u!114 &114181117281657990
 MonoBehaviour:
@@ -398,7 +398,9 @@ MonoBehaviour:
   timeToStopBubble: 2
   takeInSpeedByTornado: 8
   stopDistanceByTornado: 0.1
-  timeToDestroyBubble: 6
+  timeToDestroyBubble: 4
+  pingPongSpeed: 0.5
+  pingPongLength: 2
 --- !u!114 &114756217497577826
 MonoBehaviour:
   m_ObjectHideFlags: 1

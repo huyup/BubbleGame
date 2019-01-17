@@ -42,7 +42,13 @@ public class BubbleController : MonoBehaviour
 
     private bool canStopBubble = true;
 
+    [SerializeField]
+    private float pingPongSpeed = 0.5f;
 
+    [SerializeField]
+    private float pingPongLength = 2;
+
+    private bool canStartMove = true;
     // Use this for initialization
     void Start()
     {
@@ -52,14 +58,20 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("BubbleState" + nowBubbleState);
         if (nowBubbleState == BubbleState.StandBy)
         {
-            Invoke("DelayStopBubble", timeToStopBubble);
+            if (canStartMove)
+            {
+                StartCoroutine(BubbleMovement());
+                canStartMove = false;
+            }
+
             Invoke("DelayDestroyBubble", timeToStopBubble + timeToDestroyBubble);
         }
         else
         {
-            CancelInvoke("DelayStopBubble");
+            //CancelInvoke("DelayStopBubble");
             CancelInvoke("DelayDestroyBubble");
         }
         if (nowBubbleState == BubbleState.BeTakeIn)
@@ -68,6 +80,19 @@ public class BubbleController : MonoBehaviour
         }
     }
 
+    IEnumerator BubbleMovement()
+    {
+        Debug.Log("up");
+        //rb.AddForce(Vector3.left * 0.2f, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.up, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log("down");
+        //rb.AddForce(Vector3.right * 0.5f, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.down * 2, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(1.5f);
+        //rb.AddForce(Vector3.left * 0.3f, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.up, ForceMode.VelocityChange);
+    }
     public void SetTornadoPosition(Vector3 _destination)
     {
         tornadoPosition = _destination;
@@ -131,13 +156,14 @@ public class BubbleController : MonoBehaviour
             yield break;
         transform.parent.GetComponent<BubbleSetController>().DestroyBubbleSet();
     }
-    public void SetFloatVelocityToBubble()
+    public void SetFloatVelocityToBubble(float _bubbleForwardPower, float _bubbleUpPower)
     {
         if (canAddForceToBubble)
         {
-            nowBubbleState = BubbleState.Floating;
             rb.velocity = Vector3.zero;
-            rb.velocity = Vector3.up * upForceWhenContain;
+            nowBubbleState = BubbleState.StandBy;
+            rb.AddForce(transform.forward * _bubbleForwardPower);
+            rb.AddForce(transform.up * _bubbleUpPower);
             canAddForceToBubble = false;
         }
     }

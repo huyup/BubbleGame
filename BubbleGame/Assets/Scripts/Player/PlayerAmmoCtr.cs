@@ -81,10 +81,8 @@ public class PlayerAmmoCtr : MonoBehaviour
     {
         if (Ammo < MaxAmmo)
         {
-            Debug.Log("Reload");
             prevAmmoLeft += reloadSpeed;
             Ammo += reloadSpeed;
-            Debug.Log("Ammo" + Ammo);
         }
     }
 

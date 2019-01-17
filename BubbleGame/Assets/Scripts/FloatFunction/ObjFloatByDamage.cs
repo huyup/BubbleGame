@@ -44,12 +44,18 @@ public class ObjFloatByDamage : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         status = GetComponent<ObjStatus>();
     }
+
+
     public void CreateBubbleByDamage()
     {
+        if (GetComponent<ObjController>().ObjState == ObjState.Floating)
+            return;
+
         if (canCreateBubbleInstanceByDamage)
         {
             CreateBubbleByDamageOnInit();
             canCreateBubbleInstanceByDamage = false;
+            GetComponent<ObjController>().SetObjState(ObjState.Floating);
         }
 
         if (!bubbleInstance)
@@ -62,12 +68,11 @@ public class ObjFloatByDamage : MonoBehaviour
         }
         else
         {
-            bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble();
-            if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
-            {
-                objFloatByContain.SetCreatedByDamageFlag(true);
-                objFloatByContain.FloatByContain(bubbleInstance);
-            }
+            //bubbleInstance.GetComponent<BubbleController>().SetFloatVelocityToBubble(30, 30);
+            //if (GetComponent<ObjController>().ObjState == ObjState.OnGround)
+            //{
+            objFloatByContain.FloatByContain(bubbleInstance);
+            //}
         }
     }
 
@@ -97,6 +102,9 @@ public class ObjFloatByDamage : MonoBehaviour
 
         bubbleInstance.localScale += scaleVelocity;
         bubbleInstance.GetComponent<Rigidbody>().velocity = upVelocity;
+
+        //rb.isKinematic = false;
+        //rb.velocity = bubbleInstance.GetComponent<Rigidbody>().velocity;
     }
     public void ResetFloatFlag()
     {

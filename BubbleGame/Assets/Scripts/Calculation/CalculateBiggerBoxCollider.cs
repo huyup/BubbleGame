@@ -25,7 +25,7 @@ public class CalculateBiggerBoxCollider : MonoBehaviour
         float bubbleLength = (bubbleVertices.LengthVertices[0] - bubbleVertices.LengthVertices[1]).magnitude;
         float bubbleHeight = (bubbleVertices.HeightVertices[0] - bubbleVertices.HeightVertices[1]).magnitude;
         
-        if (bubbleLength >= objLength && bubbleHeight >= objHeight)
+        if (bubbleLength >= 2f*objLength && bubbleHeight >= objHeight*2f)
         {
             biggerObject = BiggerObject.Bubble;
         }
