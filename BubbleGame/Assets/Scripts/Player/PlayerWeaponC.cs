@@ -43,8 +43,7 @@ public class PlayerWeaponC : PlayerWeapon
         playerController = GetComponent<PlayerController>();
         playerStatus = GetComponent<PlayerStatus>();
         rb = GetComponent<Rigidbody>();
-
-        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
+        
     }
     // Update is called once per frame
     void Update()
@@ -54,7 +53,7 @@ public class PlayerWeaponC : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
-        if (ammoCtr.CanShoot())
+        if (ammoCtr.Ammo < ammoCtr.GetMinShootCost())
             return;
 
         ammoCtr.OnButtonDown();

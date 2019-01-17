@@ -35615,8 +35615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b6fd87d0445334eb8986e60309fa2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubbleSetInstanceRef: {fileID: 4104882626856780, guid: 1f4956e688253ce4790d2017b0607066,
-    type: 2}
+  bubbleSetInstanceRef: {fileID: 0}
   bubbleInstanceStartRef: {fileID: 1602957296}
   objFloatByContain: {fileID: 606619129}
   increaseScaleVelocity: 0.05
@@ -36099,10 +36098,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxAmmo: 100
   minShootCost: 10
+  minShootCostB: 2
   buttonStayCost: 0.3
+  buttonStayCostByTakeInMachine: 0.15
   maxAmmoCost: 30
-  factorToCalAmmoRecovery: 1.5
-  reloadSpeed: 0
+  factorToCalAmmoRecovery: 0.5
+  reloadSpeed: 0.3
+  stageMain: {fileID: 2093494109}
 --- !u!114 &608048327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45266,8 +45268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyFunctionRef: {fileID: 890432345}
-  bubbleSetInstanceRef: {fileID: 4104882626856780, guid: 1f4956e688253ce4790d2017b0607066,
-    type: 2}
+  bubbleSetInstanceRef: {fileID: 0}
   bubbleInstanceStartRef: {fileID: 1262417637}
   bubbleMaxSize: 3.5
   increaseScaleVelocity: 0.05
@@ -50932,7 +50933,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4660498077081874, guid: d218d3cf2f4d79e4ea9734365290bfe1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -39.04
+      value: -31.74
       objectReference: {fileID: 0}
     - target: {fileID: 4660498077081874, guid: d218d3cf2f4d79e4ea9734365290bfe1, type: 2}
       propertyPath: m_LocalPosition.y
@@ -50940,7 +50941,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4660498077081874, guid: d218d3cf2f4d79e4ea9734365290bfe1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -7.06
+      value: -11.78
       objectReference: {fileID: 0}
     - target: {fileID: 4660498077081874, guid: d218d3cf2f4d79e4ea9734365290bfe1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -50968,6 +50969,36 @@ Prefab:
       value: 
       objectReference: {fileID: 1203540361984294, guid: e36a2371d1eeb4a408759f9366528e88,
         type: 2}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.76504093
+      objectReference: {fileID: 0}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.68485856
+      objectReference: {fileID: 0}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 0.62264633
+      objectReference: {fileID: 0}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0.062378407
+      objectReference: {fileID: 0}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0.3367287
+      objectReference: {fileID: 0}
+    - target: {fileID: 65586974557166178, guid: d218d3cf2f4d79e4ea9734365290bfe1,
+        type: 2}
+      propertyPath: m_Center.z
+      value: 0.06660341
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d218d3cf2f4d79e4ea9734365290bfe1, type: 2}
   m_IsPrefabAsset: 0
@@ -56416,7 +56447,6 @@ GameObject:
   - component: {fileID: 1004251313}
   - component: {fileID: 1004251320}
   - component: {fileID: 1004251326}
-  - component: {fileID: 1004251320}
   m_Layer: 11
   m_Name: Player1
   m_TagString: Player
@@ -56432,7 +56462,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1004251311}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.53, y: -3.7936704, z: 1.71}
+  m_LocalPosition: {x: 1.69, y: -3.7936704, z: -8.35}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1126785494}
@@ -56569,10 +56599,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxAmmo: 100
   minShootCost: 10
+  minShootCostB: 2
   buttonStayCost: 0.3
+  buttonStayCostByTakeInMachine: 0.15
   maxAmmoCost: 30
-  factorToCalAmmoRecovery: 1.5
-  reloadSpeed: 2
+  factorToCalAmmoRecovery: 0.5
+  reloadSpeed: 0.3
+  stageMain: {fileID: 2093494109}
 --- !u!114 &1004251321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74868,7 +74901,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314105081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -56.053425, y: -22.6, z: -45.761097}
+  m_LocalPosition: {x: -56.053425, y: -22.6, z: -47.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1953116365}
@@ -81051,7 +81084,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4237089264108390, guid: dd74ef3311e4e83479e98486305a19c4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -9.17
+      value: 5.73
       objectReference: {fileID: 0}
     - target: {fileID: 4237089264108390, guid: dd74ef3311e4e83479e98486305a19c4, type: 2}
       propertyPath: m_LocalPosition.y
@@ -81059,7 +81092,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4237089264108390, guid: dd74ef3311e4e83479e98486305a19c4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 10.9
+      value: 18.97
       objectReference: {fileID: 0}
     - target: {fileID: 4237089264108390, guid: dd74ef3311e4e83479e98486305a19c4, type: 2}
       propertyPath: m_LocalRotation.x

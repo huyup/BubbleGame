@@ -112,6 +112,8 @@ public class ObjController : MonoBehaviour
             TakeInByTornado();
         }
 
+
+
         if (status.Type == ObjType.Inoshishi)
         {
             if (bossNowHp <= 0)

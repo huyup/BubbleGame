@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 public class ObjFloatByContain : MonoBehaviour
 {
     [SerializeField]
@@ -32,6 +34,8 @@ public class ObjFloatByContain : MonoBehaviour
     private bool isCreatedByDamage = false;
 
     private Vector3 boxColliderInitScale;
+
+    private Vector3 defaultBoxColliderSize;
     private void Start()
     {
         behaviorCtr = GetComponent<BehaviorsCtr>();
@@ -63,8 +67,11 @@ public class ObjFloatByContain : MonoBehaviour
             }
         }
     }
+
+
     public void FloatByContain(Transform _bubble)
     {
+        objController.SetObjState(ObjState.Floating);
         this.bubbleInstance = _bubble;
         rb.isKinematic = false;
         if (status.Type == ObjType.Uribou || status.Type == ObjType.Harinezemi || status.Type == ObjType.Inoshishi)
@@ -73,23 +80,31 @@ public class ObjFloatByContain : MonoBehaviour
             behaviorCtr.DisableBehaviors();
             GetComponent<Animator>().applyRootMotion = false;
         }
+        if (GetComponent<BoxCollider>())
+        {
+            GetComponent<BoxCollider>().size = new Vector3(GetComponent<BoxCollider>().size.x * 0.5f, 0,
+                GetComponent<BoxCollider>().size.z * 0.5f);
+        }
 
-        //if (status.Type == ObjType.Obj)
-        //{
-        //    if (GetComponent<BoxCollider>())
-        //    {
-        //        GetComponent<BoxCollider>().size -= new Vector3(GetComponent<BoxCollider>().size.x * 0.7f, 0, GetComponent<BoxCollider>().size.z * 0.7f);
-        //    }
-        //}
-
+        StartCoroutine(DelayResetBoxCollider());
         rb.useGravity = false;
         rb.angularDrag = 0.05f;
         rb.drag = 0.05f;
         canStartFloating = true;
         canMoveToCenter = true;
         rb.velocity = Vector3.zero;
-        objController.SetObjState(ObjState.Floating);
+
     }
+
+    IEnumerator DelayResetBoxCollider()
+    {
+        yield return new WaitForSeconds(1.5f);
+        if (GetComponent<BoxCollider>())
+        {
+            GetComponent<BoxCollider>().size = boxColliderInitScale;
+        }
+    }
+
 
     private void Fallen()
     {

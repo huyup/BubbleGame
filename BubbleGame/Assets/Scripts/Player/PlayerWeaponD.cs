@@ -23,7 +23,7 @@ public class PlayerWeaponD : PlayerWeapon
     void Start()
     {
         ammoCtr = GetComponent<PlayerAmmoCtr>();
-           playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class PlayerWeaponD : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
-        if (ammoCtr.CanShoot())
+        if (ammoCtr.Ammo < ammoCtr.GetMinShootCost())
             return;
         ammoCtr.OnButtonDown();
         playerController.BanMove();

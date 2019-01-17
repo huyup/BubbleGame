@@ -27,12 +27,12 @@ public class PlayerWeaponB : PlayerWeapon
     {
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
-
-        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
+        
     }
     // Update is called once per frame
     void Update()
     {
+        ammoCtr = GetComponent<PlayerAmmoCtr>();
         //泡の発射位置を更新させる
         bubbleStartPos = weaponBStartRef.transform.position;
     }

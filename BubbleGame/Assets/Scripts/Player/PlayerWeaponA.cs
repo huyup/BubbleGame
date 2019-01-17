@@ -151,9 +151,8 @@ public class PlayerWeaponA : PlayerWeapon
 
 
 
-    public override void OnChangeWeapon()
+    public override void OnChange()
     {
-        base.OnChangeWeapon();
         controller.ResetJump();
         controller.ResetMove();
         controller.ResetAttack();

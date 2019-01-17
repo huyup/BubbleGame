@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private PlayerStatus status;
     private PlayerAnimatorCtr animatorCtr;
+    private PlayerAmmoCtr ammoCtr;
     private GroundDetector groundDetector;
     private PlayerRescueTriggerCtr rescueTriggerCtr;
     private bool isVincible = false;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     #region 初期化
     void Start()
     {
+        ammoCtr = GetComponent<PlayerAmmoCtr>();
         nowWeapon = weaponA;
         animatorCtr = GetComponent<PlayerAnimatorCtr>();
         rb = GetComponent<Rigidbody>();
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour
         rescueTriggerCtr = transform.Find("RescueTrigger").GetComponent<PlayerRescueTriggerCtr>();
 
         int bubbleLayer = (1 << 10) | (1 << 0);
-        
+
         int groundLayer = (1 << 9) | (1 << 12) | (1 << 16);
         groundDetector = GetComponent<GroundDetector>();
         groundDetector.Initialize(0.5f, 2.0f, 0.01f, 0.08f, groundLayer);
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         groundDetector.UpdateDetection();
-        
+
 
         CheckDied();
         if (canUseGravity)
@@ -236,7 +238,8 @@ public class PlayerController : MonoBehaviour
     public void UseAirGun()
     {
         status.SetWeaponSelection(WeaponSelection.AirGun);
-        GetWeapon().OnChangeWeapon();
+        GetWeapon().OnChange();
+        ammoCtr.AmmoRecovertByGetItem();
         nowWeaponType = WeaponType.WeaponC;
 
         Invoke("DelayDisableAirGun", status.AirGunLastTime);
@@ -245,6 +248,8 @@ public class PlayerController : MonoBehaviour
     {
         status.SetWeaponSelection(WeaponSelection.Bubble);
         GetWeapon().OnChange();
+        GetWeapon().OnAttackButtonUp();
+        ammoCtr.AmmoRecovertByGetItem();
         nowWeaponType = WeaponType.WeaponA;
         //if (stageMain)
         //    stageMain.CreateItemInRandomPoint();
@@ -363,6 +368,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Dead");
             //TODO:ここにプレイヤーの死亡した後の操作を入れる
+            GetWeapon().OnAttackButtonUp();
             IsDead = true;
             rb.isKinematic = true;
             animatorCtr.SetDeadAnimation();
