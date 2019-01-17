@@ -9,7 +9,8 @@ public class SnapAttackEffCtr : MonoBehaviour
     {
         if (_other.CompareTag("Player"))
         {
-            _other.GetComponent<PlayerController>().Damage();
+            if (transform.GetComponent<ParticleSystem>())
+                _other.GetComponent<PlayerController>().Damage();
         }
     }
 }
