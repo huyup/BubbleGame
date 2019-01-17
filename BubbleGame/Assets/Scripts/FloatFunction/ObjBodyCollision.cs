@@ -37,6 +37,7 @@ public class ObjBodyCollision : MonoBehaviour
         if (_other.gameObject.layer == 16 /*StageObj*/)
         {
             //オブジェクトにぶつかったときの処理
+            _other.GetComponent<ObjController>().ObjCrash();
         }
         if (_other.gameObject.name == "DeadZone")
         {
@@ -46,7 +47,6 @@ public class ObjBodyCollision : MonoBehaviour
         if (_other.transform.root.CompareTag("Boss") &&
             Vector3.Distance(transform.position, _other.transform.root.position) > 4)
         {
-
             if (selfController.ObjState == ObjState.MovingByAirGun && canHitBoss)
             {
 

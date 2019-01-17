@@ -6,8 +6,8 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: MT_Obj
-  dynamicFriction: 1
-  staticFriction: 1
-  bounciness: 0.3
-  frictionCombine: 3
+  dynamicFriction: 0.5
+  staticFriction: 0.5
+  bounciness: 0.8
+  frictionCombine: 1
   bounceCombine: 3

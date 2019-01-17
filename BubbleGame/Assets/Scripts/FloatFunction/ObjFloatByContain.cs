@@ -67,8 +67,6 @@ public class ObjFloatByContain : MonoBehaviour
             }
         }
     }
-
-
     public void FloatByContain(Transform _bubble)
     {
         objController.SetObjState(ObjState.Floating);
@@ -93,7 +91,6 @@ public class ObjFloatByContain : MonoBehaviour
         canStartFloating = true;
         canMoveToCenter = true;
         rb.velocity = Vector3.zero;
-
     }
 
     IEnumerator DelayResetBoxCollider()

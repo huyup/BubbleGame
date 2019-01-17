@@ -52,6 +52,9 @@ public class ObjController : MonoBehaviour
     private BehaviorTree summon;
 
     [SerializeField]
+    private BehaviorTree think;
+
+    [SerializeField]
     private NavMeshAgent agent;
 
     private float initWanderSpeed;
@@ -86,6 +89,8 @@ public class ObjController : MonoBehaviour
     private float takeInSpeed;
 
     private float stopDistanceByTornado;
+
+    private bool isRotateting;
     // Use this for initialization
     void Start()
     {
@@ -112,6 +117,11 @@ public class ObjController : MonoBehaviour
             TakeInByTornado();
         }
 
+        if (isRotateting)
+        {
+            int a = 240;
+            transform.Rotate(new Vector3(Time.fixedDeltaTime* a, Time.fixedDeltaTime * a, Time.fixedDeltaTime * a));
+        }
 
 
         if (status.Type == ObjType.Inoshishi)
@@ -148,7 +158,10 @@ public class ObjController : MonoBehaviour
         }
 
         if (status.Type == ObjType.Inoshishi)
+        {
+            think.SetVariableValue("Hp", bossNowHp);
             summon.SetVariableValue("Hp", bossNowHp);
+        }
         if (status.Type == ObjType.Uribou)
             SetSpeedByDamage(NowHp, status.MaxHp);
     }
@@ -278,11 +291,19 @@ public class ObjController : MonoBehaviour
             }
         }
     }
+
+    public void ObjCrash()
+    {
+        rb.isKinematic = false;
+        rb.AddForce(Vector3.forward * 40, ForceMode.VelocityChange);
+    }
+
     public void StoneCrash()
     {
         Debug.Log("StoneCrash");
         GetComponent<BoxCollider>().isTrigger = false;
         GetComponent<BoxCollider>().size = objBoxColliderDefaultSize;
+        rb.AddForce(Vector3.forward * 17, ForceMode.VelocityChange);
         rb.useGravity = true;
         SetObjState(ObjState.Dead);
     }
@@ -298,6 +319,8 @@ public class ObjController : MonoBehaviour
         rb.AddForce(direction * 50, ForceMode.VelocityChange);
         rb.AddForce(Vector3.up * 50, ForceMode.VelocityChange);
         rb.freezeRotation = false;
+
+        isRotateting = true;
 
         transform.DOScale(Vector3.zero, 2);
         SetObjState(ObjState.Dead);
