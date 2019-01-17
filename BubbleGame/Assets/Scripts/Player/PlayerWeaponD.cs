@@ -63,7 +63,7 @@ public class PlayerWeaponD : PlayerWeapon
 
         tornadoTrigger.GetComponent<TornadoTriggerCtr>().ResetTriggerRadius();
     }
-    public override void OnChangeWeapon()
+    public override void OnChange()
     {
     }
 

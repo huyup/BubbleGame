@@ -27,6 +27,8 @@ public class PlayerWeaponB : PlayerWeapon
     {
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+
+        prevAmmoLeft = playerAmmoCtr.MaxAmmo;
     }
     // Update is called once per frame
     void Update()
@@ -79,9 +81,9 @@ public class PlayerWeaponB : PlayerWeapon
         rapidFireBubble.GetComponent<ParticleSystem>().Play();
     }
 
-    public override void OnChangeWeapon()
+    public override void OnChange()
     {
-        base.OnChangeWeapon();
+        base.OnChange();
         playerController.ResetAttack();
         playerController.ResetJump();
         rapidFireBubble.GetComponent<ParticleSystem>().Stop();
