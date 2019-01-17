@@ -113,8 +113,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1174329313267936}
   m_LocalRotation: {x: -0, y: 0.38300502, z: -0, w: 0.92374635}
-  m_LocalPosition: {x: -2.4125, y: -5.5383, z: -10.551}
-  m_LocalScale: {x: 2.444929, y: 1.940039, z: 2.5303385}
+  m_LocalPosition: {x: 23.33, y: -5.5383, z: -2.8}
+  m_LocalScale: {x: 2.4449303, y: 1.94004, z: 2.5303404}
   m_Children:
   - {fileID: 4838639425801544}
   - {fileID: 4297552994256416}
@@ -280,7 +280,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1174329313267936}
-  m_Material: {fileID: 13400000, guid: b6b72457f039edc4fbf6ad8cac3b3c13, type: 2}
+  m_Material: {fileID: 13400000, guid: a07f64338903a6b4a8bf6236ab833cd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -344,20 +344,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fad5fa9b4918847bfde3679c1c9b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MushroomType: 0
   status: {fileID: 114054410833722030}
   floatByContain: {fileID: 114672980454161836}
   floatByDamage: {fileID: 114520875348312494}
-  dizzinessEff: {fileID: 0}
   bubbleDamageEff: {fileID: 114529414471703166}
   wander: {fileID: 0}
   attack: {fileID: 0}
   summon: {fileID: 0}
+  think: {fileID: 0}
   agent: {fileID: 0}
   collisionEff: {fileID: 1639469962512362, guid: 421cf5f60d3e3f14b96a472aaae81a3f,
     type: 2}
   behaviorCtr: {fileID: 0}
   destroyEffWhenOut: {fileID: 0}
-  mushroomCrashEff: {fileID: 0}
+  dizzinessMushroomEff: {fileID: 0}
+  poisonMushrommEff: {fileID: 0}
   uiCtr: {fileID: 0}
 --- !u!114 &114520875348312494
 MonoBehaviour:
@@ -429,6 +431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa23171c92222b540b58d8a284b5d686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossBadStateCtr: {fileID: 0}
+  stoneDamageInHead: 10
+  stoneDamageInBody: 8
 --- !u!198 &198481421190266430
 ParticleSystem:
   m_ObjectHideFlags: 1

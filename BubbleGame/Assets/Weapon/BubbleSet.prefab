@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastTime: 8
-  maxSize: 0.17
+  maxSize: 0.18
   maxSizeInDamageCreated: 4
 --- !u!135 &135547606254239340
 SphereCollider:

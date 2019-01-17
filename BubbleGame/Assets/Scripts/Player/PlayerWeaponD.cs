@@ -34,8 +34,6 @@ public class PlayerWeaponD : PlayerWeapon
     }
     public override void OnAttackButtonDown()
     {
-        if (ammoCtr.Ammo < ammoCtr.GetMinShootCost())
-            return;
         ammoCtr.OnButtonDown();
         playerController.BanMove();
         playerController.BanJump();

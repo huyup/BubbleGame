@@ -62,7 +62,7 @@ public class ObjBodyCollision : MonoBehaviour
     private void IncreaseHateValue(GameObject _boss)
     {
         _boss.transform.root.GetComponent<BossHateValueCtr>()
-            .IncreaseHateValueByCrash(50, selfController.PlayerSelectionWhoPushed);
+            .IncreaseHateValueByCrash(10, selfController.PlayerSelectionWhoPushed);
     }
 
     private void Damage(GameObject _Boss, Vector3 _otherPosition)

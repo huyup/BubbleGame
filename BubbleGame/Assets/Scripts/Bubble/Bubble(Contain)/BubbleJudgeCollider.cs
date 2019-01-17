@@ -29,7 +29,7 @@ public class BubbleJudgeCollider : MonoBehaviour
             return;
 
         transform.position = bubble.transform.position;
-        transform.localScale = bubble.transform.localScale;
+        transform.localScale = bubble.transform.localScale* factorToCalScale;
 
     }
 }
