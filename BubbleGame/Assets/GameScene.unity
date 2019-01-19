@@ -7718,7 +7718,7 @@ GameObject:
   - component: {fileID: 218261083}
   - component: {fileID: 218261082}
   m_Layer: 5
-  m_Name: PlayerHpImg (1)
+  m_Name: Hp_2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8735,7 +8735,7 @@ GameObject:
   - component: {fileID: 287370522}
   - component: {fileID: 287370521}
   m_Layer: 5
-  m_Name: PlayerHpImg
+  m_Name: Hp_2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46531,7 +46531,7 @@ GameObject:
   - component: {fileID: 877718254}
   - component: {fileID: 877718253}
   m_Layer: 5
-  m_Name: PlayerHpImg (2)
+  m_Name: Hp_2_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58723,12 +58723,12 @@ MonoBehaviour:
   player2WeaponText: {fileID: 1181937008}
   player1AmmoImage: {fileID: 1804498556}
   player2AmmoImage: {fileID: 459999651}
-  player1Heart1: {fileID: 1286193562}
-  player1Heart2: {fileID: 661471373}
-  player1Heart3: {fileID: 770720392}
-  player2Heart1: {fileID: 1311189901}
-  player2Heart2: {fileID: 479734659}
-  player2Heart3: {fileID: 2125930401}
+  player1Heart1: {fileID: 1592157877}
+  player1Heart2: {fileID: 1384579590}
+  player1Heart3: {fileID: 1657071647}
+  player2Heart1: {fileID: 877718253}
+  player2Heart2: {fileID: 218261082}
+  player2Heart3: {fileID: 287370521}
   clearText: {fileID: 1611857818}
   scaleRect:
     serializedVersion: 2
@@ -78101,7 +78101,7 @@ GameObject:
   - component: {fileID: 1384579591}
   - component: {fileID: 1384579590}
   m_Layer: 5
-  m_Name: PlayerHpImg (1)
+  m_Name: Hp_1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94462,7 +94462,7 @@ GameObject:
   - component: {fileID: 1592157878}
   - component: {fileID: 1592157877}
   m_Layer: 5
-  m_Name: PlayerHpImg (2)
+  m_Name: Hp_1_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95792,7 +95792,7 @@ GameObject:
   - component: {fileID: 1657071648}
   - component: {fileID: 1657071647}
   m_Layer: 5
-  m_Name: PlayerHpImg
+  m_Name: Hp_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

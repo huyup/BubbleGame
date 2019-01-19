@@ -51,6 +51,9 @@ public class UIBase : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            PlayerGetDamage(3);
+
         if (boss)
         {
             DrawBossHp(boss.GetComponent<ObjController>(), bossHpImage);
@@ -134,9 +137,7 @@ public class UIBase : MonoBehaviour
         switch (_nowHp)
         {
             case 3:
-                player1Heart1.enabled = true;
-                player1Heart2.enabled = true;
-                player1Heart3.enabled = true;
+                DisableHpImg(player1Heart1);
                 break;
             case 2:
                 player1Heart1.enabled = true;
@@ -158,8 +159,10 @@ public class UIBase : MonoBehaviour
 
     private void DisableHpImg(Image _hpImg)
     {
+        Debug.Log("DisableHpImg");
         var sequence = DOTween.Sequence();
-        sequence.Append(_hpImg.transform.DOScale(Vector3.one * 1.5f, 1));
+        sequence.Append(_hpImg.transform.DOScale(Vector3.one * 2f, 1.5f));
+        sequence.Join(_hpImg.DOFade(0, 1.5f));
         //sequence.Append(_hpImg.DOFade(Vector3.zero, 1));
     }
 
