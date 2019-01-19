@@ -47,22 +47,20 @@ public class ObjFloatByContain : MonoBehaviour
         if (GetComponent<BoxCollider>())
             boxColliderInitScale = GetComponent<BoxCollider>().size;
     }
-    
+
     void Update()
     {
         if (canStartFloating)
         {
             if (bubbleInstance == null)
             {
-                Debug.Log("Fallen");
                 Fallen();
             }
             else
             {
-                Debug.Log("Float");
+
                 if (objController.ObjState == ObjState.Floating)
                 {
-                    Debug.Log("Float");
                     FloatByContainOnUpdate();
                 }
             }
@@ -70,6 +68,7 @@ public class ObjFloatByContain : MonoBehaviour
     }
     public void FloatByContain(Transform _bubble)
     {
+
         objController.SetObjState(ObjState.Floating);
         this.bubbleInstance = _bubble;
         rb.isKinematic = false;
@@ -79,13 +78,13 @@ public class ObjFloatByContain : MonoBehaviour
             behaviorCtr.DisableBehaviors();
             GetComponent<Animator>().applyRootMotion = false;
         }
-        //if (GetComponent<BoxCollider>())
-        //{
-        //    GetComponent<BoxCollider>().size = new Vector3(GetComponent<BoxCollider>().size.x * 0.5f, 0,
-        //        GetComponent<BoxCollider>().size.z * 0.5f);
-        //}
+        if (GetComponent<BoxCollider>())
+        {
+            GetComponent<BoxCollider>().size = new Vector3(GetComponent<BoxCollider>().size.x * 0.5f, GetComponent<BoxCollider>().size.y,
+                GetComponent<BoxCollider>().size.z * 0.5f);
+        }
 
-        StartCoroutine(DelayResetBoxCollider());
+        //StartCoroutine(DelayResetBoxCollider());
         rb.useGravity = false;
         //rb.angularDrag = 0.05f;
         //rb.drag = 0.05f;

@@ -58,7 +58,7 @@ public class BubbleController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("BubbleState" + nowBubbleState);
+
         if (nowBubbleState == BubbleState.StandBy)
         {
             if (canStartMove)
@@ -82,15 +82,11 @@ public class BubbleController : MonoBehaviour
 
     IEnumerator BubbleMovement()
     {
-        Debug.Log("up");
-        //rb.AddForce(Vector3.left * 0.2f, ForceMode.VelocityChange);
+        
         rb.AddForce(Vector3.up, ForceMode.VelocityChange);
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("down");
-        //rb.AddForce(Vector3.right * 0.5f, ForceMode.VelocityChange);
         rb.AddForce(Vector3.down * 2, ForceMode.VelocityChange);
         yield return new WaitForSeconds(1.5f);
-        //rb.AddForce(Vector3.left * 0.3f, ForceMode.VelocityChange);
         rb.AddForce(Vector3.up, ForceMode.VelocityChange);
     }
     public void SetTornadoPosition(Vector3 _destination)

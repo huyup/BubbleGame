@@ -120,7 +120,7 @@ public class ObjController : MonoBehaviour
         if (isRotateting)
         {
             int a = 240;
-            transform.Rotate(new Vector3(Time.fixedDeltaTime* a, Time.fixedDeltaTime * a, Time.fixedDeltaTime * a));
+            transform.Rotate(new Vector3(Time.fixedDeltaTime * a, Time.fixedDeltaTime * a, Time.fixedDeltaTime * a));
         }
 
 
@@ -340,7 +340,7 @@ public class ObjController : MonoBehaviour
     #region 他
     public void OnReset()
     {
-        GetComponent<Rigidbody>().isKinematic = true;
+
         ObjState = ObjState.OnGround;
 
         if (GetComponent<BoxCollider>())
@@ -358,8 +358,14 @@ public class ObjController : MonoBehaviour
 
         if (status.Type != ObjType.Obj)
         {
+            GetComponent<Rigidbody>().isKinematic = true;
             agent.enabled = true;
             behaviorCtr.RestartBehaviors();
+        }
+        else
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().useGravity = true;
         }
 
         tornadoDestination = Vector3.zero;

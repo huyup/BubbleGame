@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 5
   powerForStamina: 1
+  powerForHateValue: 3
 --- !u!114 &114845376956808002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 5
   powerForStamina: 1
+  powerForHateValue: 3
 --- !u!198 &198373268340123942
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -9421,8 +9423,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.3
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:

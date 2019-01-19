@@ -20,8 +20,12 @@ public class ObjBodyCollision : MonoBehaviour
     {
         if (collision.gameObject.layer == 9 /*Ground*/)
         {
-            selfController.OnReset();
-            canHitBoss = true;
+            if (selfController.ObjState != ObjState.Floating)
+            {
+                Debug.Log("Reset");
+                selfController.OnReset();
+                canHitBoss = true;
+            }
         }
     }
     private void OnTriggerEnter(Collider _other)
@@ -30,14 +34,15 @@ public class ObjBodyCollision : MonoBehaviour
         {
             if (selfController.ObjState == ObjState.Falling)
             {
+                Debug.Log("Reset");
                 selfController.OnReset();
                 canHitBoss = true;
             }
         }
         if (_other.gameObject.layer == 16 /*StageObj*/)
         {
-            //オブジェクトにぶつかったときの処理
-            _other.GetComponent<ObjController>().ObjCrash();
+            ////オブジェクトにぶつかったときの処理
+            //_other.GetComponent<ObjController>().ObjCrash();
         }
         if (_other.gameObject.name == "DeadZone")
         {
