@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PlayerWeaponD weaponD;
+
+    [SerializeField]
+    private UIBase uiCtr;
     /// <summary>
     /// アタッチするコンポーネント
     /// </summary>
@@ -319,7 +322,10 @@ public class PlayerController : MonoBehaviour
         if (status.nowHp > 0)
             status.nowHp--;
 
+        uiCtr.PlayerGetDamage(status.nowHp);
+
         StartCoroutine(Blink());
+        
     }
 
     IEnumerator Blink()

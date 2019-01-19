@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 /// <summary>
 /// TODO:UIの配置に関する修正
 /// </summary>
@@ -128,6 +128,42 @@ public class UIBase : MonoBehaviour
                 break;
         }
     }
+
+    public void PlayerGetDamage(int _nowHp)
+    {
+        switch (_nowHp)
+        {
+            case 3:
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = true;
+                player1Heart3.enabled = true;
+                break;
+            case 2:
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = true;
+                player1Heart3.enabled = false;
+                break;
+            case 1:
+                player1Heart1.enabled = true;
+                player1Heart2.enabled = false;
+                player1Heart3.enabled = false;
+                break;
+            case 0:
+                player1Heart1.enabled = false;
+                player1Heart2.enabled = false;
+                player1Heart3.enabled = false;
+                break;
+        }
+    }
+
+    private void DisableHpImg(Image _hpImg)
+    {
+        var sequence = DOTween.Sequence();
+        sequence.Append(_hpImg.transform.DOScale(Vector3.one * 1.5f, 1));
+        //sequence.Append(_hpImg.DOFade(Vector3.zero, 1));
+    }
+
+
 
     void DrawPlayer1Life(int _player1Hp)
     {
